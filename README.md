@@ -79,7 +79,8 @@ part, or copy `template/` into your project by hand.
 
 Add this repository as a plugin marketplace under **Customize → Plugins** and install it, then
 create a project that points at the folder you want to work in and paste
-`template/project-instructions.txt` into the project instructions.
+`template/project-instructions.txt` into the project instructions. That file is the whole block,
+nothing to trim — it is the standing instruction Claude Code would read from `CLAUDE.md`.
 
 *Being tested. Two things are known today: the plugin carries the skills but not the files, so the
 folder still needs `template/` copied into it; and what this repository states as working is what

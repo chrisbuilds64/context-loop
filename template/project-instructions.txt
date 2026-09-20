@@ -1,7 +1,3 @@
-Paste this into the standing instructions of your project or folder
-(Claude apps: Customize / project settings. Claude Code reads CLAUDE.md instead.)
--------------------------------------------------------------------------------
-
 Every session in this project runs the loop.
 
 1. Begin with /context-loop:session-start. It reads context/ and tells you where the
