@@ -3,7 +3,9 @@
 #
 #   ContextLoop-<version>.zip         Claude Code: skills, hook, CLAUDE.md, the installer
 #   ContextLoop-App-<version>.zip     Claude apps: context/, loop/, the instruction block
-#   skills/<name>.zip                 Claude apps: one per skill, uploaded under Customize > Skills
+#
+# Both are for people who do not want the plugin, which is the recommended route and needs no
+# build step at all — the marketplace serves this repository as it stands.
 #
 # Run this rather than zipping by hand: the payloads are assembled from the repository, the macOS
 # metadata has to stay out, and the executable bit on the installer has to survive — a ZIP built
@@ -35,26 +37,13 @@ mkdir -p "$STAGE/app/ContextLoop"
 rm -f "$APP"
 ( cd "$STAGE/app" && zip -q -r -X "$APP" . -x '.DS_Store' -x '__MACOSX/*' )
 
-# --- The five skills, one ZIP each -------------------------------------------
-# The apps take one skill per upload, and they list it by its own name — so these keep the
-# names they have in Claude Code.
-SKILLDIR="$ROOT/dist-skills"
-rm -rf "$SKILLDIR" && mkdir -p "$SKILLDIR"
-"$HERE/assemble.sh" "$STAGE/skills" --skills
-for D in "$STAGE"/skills/*/; do
-  NAME="$(basename "$D")"
-  ( cd "$STAGE/skills" && zip -q -r -X "$SKILLDIR/$NAME.zip" "$NAME" -x '.DS_Store' -x '__MACOSX/*' )
-done
-
 echo "Built:"
 echo "  $CC"
 echo "  $APP"
-echo "  $SKILLDIR/ — $(ls -1 "$SKILLDIR" | tr '\n' ' ')"
 echo
 echo "Check before shipping:"
 echo "  - unzip the Claude Code one and confirm pack/.claude/skills holds all five skills"
 echo "  - confirm 'Install Context Loop.command' is still executable after unzipping"
 echo "  - unzip the app one and confirm loop/ holds five procedures and no .claude/ came along"
-echo "  - each skill ZIP must contain its own directory at the root, not SKILL.md loose"
 echo "  - Gatekeeper blocks the downloaded .command on first run: System Settings >"
 echo "    Privacy & Security > Open Anyway (macOS 15+); older systems: right-click > Open"
