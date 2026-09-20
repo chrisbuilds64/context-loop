@@ -9,6 +9,7 @@
 #
 #   assemble.sh <dir>          Claude Code: skills and hook under .claude/
 #   assemble.sh <dir> --app    Claude apps: no .claude/, the procedures as plain files in loop/
+#   assemble.sh <dir> --skill  Claude apps: one uploadable skill that routes to the procedures
 #
 # The app layout exists because Cowork and the other app surfaces do not read .claude/. They read
 # the folder and the standing instructions of the project — so the loop travels as files and a
@@ -21,13 +22,30 @@ OUT="${1:?usage: assemble.sh <target directory> [--app]}"
 MODE="${2:-claude-code}"
 
 mkdir -p "$OUT"
-cp -R "$ROOT/template/context" "$OUT/context"
-cp "$ROOT/template/example-session-log.md" "$OUT/"
-cp "$ROOT/LICENSE" "$OUT/LICENSE"
 
 strip_frontmatter() {
   awk 'NR==1 && /^---$/ {fm=1; next} fm==1 && /^---$/ {fm=2; next} fm!=1 {print}' "$1"
 }
+
+if [ "$MODE" = "--skill" ]; then
+  # --- One skill for Customize > Skills ---------------------------------------
+  # Uploaded once, it gives the app a real /context-loop command instead of prose. The five
+  # procedures ride along as references; the router says which one to read.
+  mkdir -p "$OUT/context-loop/references"
+  cp "$ROOT/template/skill-router.md" "$OUT/context-loop/SKILL.md"
+  for SKILL in "$ROOT"/skills/*/; do
+    NAME="$(basename "$SKILL")"
+    strip_frontmatter "$SKILL/SKILL.md" > "$OUT/context-loop/references/$NAME.md"
+  done
+  COUNT=$(ls -1 "$OUT/context-loop/references" | wc -l | tr -d ' ')
+  [ "$COUNT" = "5" ] || { echo "assemble: expected 5 procedures, found $COUNT" >&2; exit 1; }
+  find "$OUT" -name '.DS_Store' -delete 2>/dev/null || true
+  exit 0
+fi
+
+cp -R "$ROOT/template/context" "$OUT/context"
+cp "$ROOT/template/example-session-log.md" "$OUT/"
+cp "$ROOT/LICENSE" "$OUT/LICENSE"
 
 if [ "$MODE" = "--app" ]; then
   # --- Claude apps -----------------------------------------------------------

@@ -59,8 +59,13 @@ No plugin, nothing to configure.
 2. In the app, create a project and point it at that folder.
 3. Open the project's **Instructions** and paste in the whole of `project-instructions.txt`.
 
-Then say *"Start the session"* to begin and *"Close the session"* to end. The procedures live in
-`loop/` as plain files — the agent reads them, and so can you.
+Then say *"start"* to begin, *"close"* to end, and *"loop?"* to see what else there is. The
+procedures live in `loop/` as plain files — the agent reads them, and so can you.
+
+**If you would rather type a command than a word**, upload `ContextLoop-Skill.zip` from the same
+release under **Customize → Skills**. That gives you `/context-loop start`, `/context-loop close`
+and `/context-loop` on its own for the list — in every project. It is one upload and it carries
+the same five procedures.
 
 ### In Claude Code
 

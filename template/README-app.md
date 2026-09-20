@@ -20,13 +20,19 @@ That is the setup.
 
 ## Then, every session
 
-Start by saying: **"Start the session."**
-Work.
-End by saying: **"Close the session."**
+Say **"start"** to begin and **"close"** to end. Say **"loop?"** to see every procedure and which
+ones have run here before.
 
-The first one reads `context/` and tells you where the last session stopped. The last one writes
-the log, the decisions and the state. If you skip the close, the next session has nothing to read
-— that is the only way to break this.
+The first reads `context/` and tells you where the last session stopped. The last writes the log,
+the decisions and the state. If you skip the close, the next session has nothing to read — that is
+the only way to break this.
+
+### Prefer a real command?
+
+Upload `ContextLoop-Skill.zip` from the same release under **Customize → Skills**. You then have
+`/context-loop start`, `/context-loop close`, and `/context-loop` on its own to list what exists —
+in every project, not just this one. Same five procedures, same files; only the way you call them
+changes.
 
 ## What is here
 

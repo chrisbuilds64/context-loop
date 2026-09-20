@@ -21,5 +21,21 @@ Two adjustments to the procedures in loop/, because they were written for a term
 - Where they tell you to commit, do that only if this folder is a git repository. If it is not,
   say so once and carry on.
 
+What I will say, and what it means:
+
+  "start"        begin the session   (loop/session-start.md)
+  "close"        end it              (loop/session-end.md)
+  "security"     the security audit  (loop/security-audit.md)
+  "docs"         the documentation audit
+  "new agent"    add a second agent with a different stance
+  "loop?"        list these and say which ones have run in this project before
+
+If the Context Loop skill is installed in this app, /context-loop start does the same thing and
+/context-loop on its own lists the procedures.
+
+There is no session-start hook in this environment. Where a procedure says the hook reports
+something, work it out from the files instead — the newest file in context/audits/ tells you
+whether an audit is due.
+
 How to work here: read before writing. Ask before anything irreversible. If it matters, it goes
 into a file — the conversation carries the decision, the file carries the substance.
