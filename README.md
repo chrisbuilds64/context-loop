@@ -47,35 +47,43 @@ And five skills:
 
 ## Install
 
+Two halves: the **skills** are what the agent does, the **files** are what it reads and writes.
+Install both once, in the project folder you want the loop in.
+
 ### Claude Code
 
-As a plugin:
+```
+git clone https://github.com/chrisbuilds64/context-loop.git
+context-loop/install/install.sh /path/to/your/project
+```
+
+That puts the files and the skills in your project. Then open the project, start Claude Code and
+run `/session-start`.
+
+On macOS you can instead download the ZIP from
+[Releases](https://github.com/chrisbuilds64/context-loop/releases) and double-click the installer.
+Everything in it is plain text you can read first.
+
+**Or take the skills as a plugin**, available in every project instead of copied into one:
 
 ```
 /plugin marketplace add chrisbuilds64/context-loop
 /plugin install context-loop@chrisbuilds64
 ```
 
-Then, in the project folder you want the loop in, run `/session-start`. The first run creates the
-files and walks you through the signature.
-
-Prefer files in your repository instead of a plugin? Clone this repo and run:
-
-```
-install/install.sh /path/to/your/project
-```
-
-Or download the ZIP from [Releases](https://github.com/chrisbuilds64/context-loop/releases) and
-double-click the installer (macOS). Everything in it is plain text you can read first.
+They are then called `/context-loop:session-start` and so on. The plugin carries the skills, not
+the files — the first session still needs a `context/` folder, so run the installer above for that
+part, or copy `template/` into your project by hand.
 
 ### Claude apps (Cowork)
 
-Add this repository as a plugin marketplace under **Customize → Plugins**, then create a project
-that points at the folder you want to work in, and paste `template/project-instructions.txt`
-into the project instructions.
+Add this repository as a plugin marketplace under **Customize → Plugins** and install it, then
+create a project that points at the folder you want to work in and paste
+`template/project-instructions.txt` into the project instructions.
 
-*This path is being tested right now. What the repository states as working is what somebody has
-actually run — this line will change when the run is done.*
+*Being tested. Two things are known today: the plugin carries the skills but not the files, so the
+folder still needs `template/` copied into it; and what this repository states as working is what
+somebody has actually run.*
 
 ---
 
