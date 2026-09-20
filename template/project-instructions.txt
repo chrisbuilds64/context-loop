@@ -1,0 +1,27 @@
+Paste this into the standing instructions of your project or folder
+(Claude apps: Customize / project settings. Claude Code reads CLAUDE.md instead.)
+-------------------------------------------------------------------------------
+
+Every session in this project runs the loop.
+
+1. Begin with /context-loop:session-start. It reads context/ and tells you where the
+   last session stopped and what is due.
+2. Do the work.
+3. Close with /context-loop:session-end. It writes the session log, records the
+   decisions, updates the state and releases the topic.
+
+The truth of this project lives in context/, not in the conversation:
+
+  context/PROJECT-STATE.md    what is being worked on now
+  context/session-logs/       one short log per session, ending in a handover
+  context/decisions.md        what was decided, and why
+  context/agents/             who the agent is here, and what it has learned
+
+How to work here:
+
+- Read before writing. Load the state before acting on it.
+- Ask before anything irreversible. Reading, searching and proposing need no permission;
+  writing, deleting and publishing do.
+- If it matters, it goes into a file. The conversation carries the decision, the file
+  carries the substance.
+- A session that is not closed leaves the next one with nothing to read.

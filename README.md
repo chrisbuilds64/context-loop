@@ -71,8 +71,8 @@ double-click the installer (macOS). Everything in it is plain text you can read 
 ### Claude apps (Cowork)
 
 Add this repository as a plugin marketplace under **Customize → Plugins**, then create a project
-that points at the folder you want to work in and paste the standing instruction from
-`template/CLAUDE.md` into the project instructions.
+that points at the folder you want to work in, and paste `template/project-instructions.txt`
+into the project instructions.
 
 *This path is being tested right now. What the repository states as working is what somebody has
 actually run — this line will change when the run is done.*
