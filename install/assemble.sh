@@ -1,8 +1,10 @@
 #!/bin/bash
 # Assemble an installable pack from this repository into a directory.
 #
-# The repository keeps each piece once: the skills in skills/, the hook in hooks/, everything a
-# project starts with in template/. An installed project wants them arranged differently — and
+# The repository keeps each piece once: the procedures in skills/, the hook in hooks/, the
+# project's instruction files in template/ — and the state a project starts with inside
+# skills/session-start/scaffold/, because that skill creates it on a first run and a skill can
+# only reach its own directory. An installed project wants all of it arranged differently, and
 # differently again depending on where the agent runs. This script is the only place those
 # mappings exist, because two copies of an assembly drift and nobody notices until a download is
 # missing a piece.
@@ -26,7 +28,7 @@ strip_frontmatter() {
   awk 'NR==1 && /^---$/ {fm=1; next} fm==1 && /^---$/ {fm=2; next} fm!=1 {print}' "$1"
 }
 
-cp -R "$ROOT/template/context" "$OUT/context"
+cp -R "$ROOT/skills/session-start/scaffold" "$OUT/context"
 cp "$ROOT/template/example-session-log.md" "$OUT/"
 cp "$ROOT/LICENSE" "$OUT/LICENSE"
 

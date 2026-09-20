@@ -16,23 +16,26 @@ step 6 is done.
 entirely and never mention it.
 
 This is the case when the loop arrives as a plugin: the procedures are installed, the files are
-not. Do not improvise a structure — the pack ships one.
+not. Do not improvise a structure — this skill ships one.
 
-1. **Find the template that came with this skill.** It sits in the pack, two levels above this
-   file, at `template/context`. In Claude Code the pack root is `${CLAUDE_PLUGIN_ROOT}`. Copy that
-   whole folder into the project as `context/`, and copy `template/example-session-log.md` to the
-   project root beside it.
-2. **If you cannot find it**, create the folder yourself with these files, each one short and
-   with a heading that says what it is for: `context/PROJECT-STATE.md` (a Focus line and an empty
-   list of open items), `context/session-active.md` (a three-column table: topic, started, slug),
-   `context/decisions.md` (append-only, newest at the bottom), `context/key-inventory.md` (secrets
-   by name, never by value), `context/agents/agent-registry.md` (one row per agent: name, topics,
-   signature path), `context/agents/main/main-signature.md` (the placeholder signature, containing
-   the line `**Rename this.**`), `context/agents/main/working-notes.md` (empty, self-maintained),
-   and empty `context/session-logs/` and `context/audits/` folders.
-3. **Say what you created**, in one line, and carry straight on with Step 0. Do not ask for
-   permission first — a project without state cannot start a session, and nothing here overwrites
-   anything.
+**The starting files are in `scaffold/`, in this skill's own directory, beside this file.** Copy
+that folder into the project as `context/`. That is the whole step.
+
+**Write first, explain after.** Do not announce the copy and do not go looking elsewhere for it:
+a first run that talks for five minutes without a file appearing looks broken, and it was —
+an earlier version of this step sent the agent hunting for a folder outside its reach.
+
+If `scaffold/` is genuinely not readable from where you are, do not search for it. Write the
+files yourself, short, each with a heading that says what it is for: `PROJECT-STATE.md` (a Focus
+line and an empty list of open items), `session-active.md` (a three-column table: topic, started,
+slug), `decisions.md` (append-only, newest at the bottom), `key-inventory.md` (secrets by name,
+never by value), `agents/agent-registry.md` (one row per agent: name, topics, signature path),
+`agents/main/main-signature.md` (the placeholder signature, carrying the line `**Rename this.**`),
+`agents/main/working-notes.md` (empty, self-maintained), and the folders `session-logs/` and
+`audits/`.
+
+Then say in one line what was created and carry straight on with Step 0. Do not ask permission
+first — a project without state cannot start a session, and nothing here overwrites anything.
 
 ## Step 0: First run — draft the signature
 
@@ -163,6 +166,23 @@ invented each session is worse than no field.
 Look at `context/session-active.md`. If another session already holds this topic, say so and
 give the time it was claimed. Do not refuse — an entry that was never released looks exactly
 like a live session, and only the user knows which it is.
+
+### If the user says that session is over, repair it rather than mourn it
+
+A claimed row with no session log for it means a session ended without being closed. The handover
+is missing, not the work: the state, the decisions and the earlier logs are all still there. And
+the row itself is the signal — undisciplined work without this loop does not even leave that.
+
+Offer to reconstruct it, and do it if they say yes:
+
+1. The row gives you the start time. Collect what happened after it: `git log --since` for the
+   commits, and the modification times under `context/` and in the project for what changed.
+2. Write the missing log to `context/session-logs/<date>_<slug>.md` in the normal shape, and
+   **mark it as reconstructed** in one line at the top: what it is based on, and that nobody was
+   asked. A reconstructed thread is thinner than a written one and must not pretend otherwise.
+3. Remove the stale row, then claim your own.
+
+If they say the session is still running elsewhere, leave the row alone and carry on.
 
 ## Step 4: Claim the topic
 
