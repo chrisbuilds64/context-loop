@@ -47,56 +47,42 @@ And five skills:
 
 ## Install
 
-The loop has two halves: **files** the agent reads and writes, and **procedures** it follows.
-Which shape they take depends on where your agent runs — pick the route, not the product.
+One way for both environments: **install the plugin.** It carries the five procedures, and the
+first `/session-start` creates the `context/` folder in whichever project you are in.
 
 ### In the Claude apps (Cowork)
 
-No plugin, nothing to configure.
-
-1. Download **`ContextLoop-App.zip`** from [Releases](https://github.com/chrisbuilds64/context-loop/releases)
-   and unzip it where you want to work.
-2. In the app, create a project and point it at that folder.
-3. Open the project's **Instructions** and paste in the whole of `project-instructions.txt`.
-
-Then say *"start"* to begin, *"close"* to end, and *"loop?"* to see what else there is. The
-procedures live in `loop/` as plain files — the agent reads them, and so can you.
-
-**If you would rather type a command than a word**, upload `ContextLoop-Skill.zip` from the same
-release under **Customize → Skills**. That gives you `/context-loop start`, `/context-loop close`
-and `/context-loop` on its own for the list — in every project. It is one upload and it carries
-the same five procedures.
+1. **Customize → Plugins → Add marketplace** → `chrisbuilds64/context-loop`
+2. Select **Context Loop** and **Install**
+3. Open a project on the folder you want to work in, and run `/session-start`
 
 ### In Claude Code
-
-```
-git clone https://github.com/chrisbuilds64/context-loop.git
-context-loop/install/install.sh /path/to/your/project
-```
-
-That puts `context/` in your project and the five skills in `.claude/skills/`, plus a hook that
-reports the state before the first word. Then open the project, start Claude Code and run
-`/session-start`.
-
-On macOS you can instead download **`ContextLoop.zip`** from
-[Releases](https://github.com/chrisbuilds64/context-loop/releases) and double-click the installer.
-Everything in it is plain text you can read first.
-
-**Or take the skills as a plugin**, available in every project instead of copied into one:
 
 ```
 /plugin marketplace add chrisbuilds64/context-loop
 /plugin install context-loop@chrisbuilds64
 ```
 
-They are then called `/context-loop:session-start` and so on. The plugin carries the procedures,
-not the files — the project still needs its `context/` folder, so run the installer above for
-that part.
+Then `/context-loop:session-start` in any project — Claude Code prefixes plugin procedures with
+the plugin name so they cannot collide with your own.
 
-*Verified 2026-09-20: the Claude Code route, installed from a clean folder. The plugin install in
-the Claude apps does **not** reach Cowork — a plugin enabled for a project is a Claude Code
-setting — which is why the app route above ships files instead. What this repository states as
-working is what somebody has actually run.*
+### Without installing anything
+
+Two packages in [Releases](https://github.com/chrisbuilds64/context-loop/releases), for when a
+plugin is not wanted or not possible:
+
+- **`ContextLoop-App.zip`** — for the apps. Unzip it, point a project at the folder, paste
+  `project-instructions.txt` into the project instructions. The procedures sit in `loop/` as plain
+  files; say *"start"* to begin, *"close"* to end, *"loop?"* for the list.
+- **`ContextLoop.zip`** — for Claude Code on macOS. Double-click the installer, or clone this repo
+  and run `install/install.sh /path/to/your/project`. This is the only package that brings the
+  session-start hook, which puts the state in front of the agent before the first word.
+
+Everything in both is plain text you can read before you run anything.
+
+*Verified 2026-09-20: installed from a clean folder in Claude Code, and the whole loop run in
+Cowork — signature, topic, session log with its handover. What this repository states as working
+is what somebody has actually run.*
 
 ---
 

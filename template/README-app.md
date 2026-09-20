@@ -27,12 +27,12 @@ The first reads `context/` and tells you where the last session stopped. The las
 the decisions and the state. If you skip the close, the next session has nothing to read — that is
 the only way to break this.
 
-### Prefer a real command?
+### Prefer real commands?
 
-Upload `ContextLoop-Skill.zip` from the same release under **Customize → Skills**. You then have
-`/context-loop start`, `/context-loop close`, and `/context-loop` on its own to list what exists —
-in every project, not just this one. Same five procedures, same files; only the way you call them
-changes.
+Then take the plugin instead of this package: in the app, **Customize → Plugins → Add
+marketplace** → `chrisbuilds64/context-loop`, then **Install**. You get `/session-start` and the
+other four as commands, in every project, and the first run creates the `context/` folder for you.
+This package exists for the case where you would rather not install anything at all.
 
 ## What is here
 

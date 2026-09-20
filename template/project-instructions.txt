@@ -30,9 +30,6 @@ What I will say, and what it means:
   "new agent"    add a second agent with a different stance
   "loop?"        list these and say which ones have run in this project before
 
-If the Context Loop skill is installed in this app, /context-loop start does the same thing and
-/context-loop on its own lists the procedures.
-
 There is no session-start hook in this environment. Where a procedure says the hook reports
 something, work it out from the files instead — the newest file in context/audits/ tells you
 whether an audit is due.

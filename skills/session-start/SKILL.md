@@ -10,6 +10,30 @@ argument-hint: "[optional: topic for this session]"
 You are beginning a working session. Work through the steps in order. Do no other work until
 step 6 is done.
 
+## Step 0a: No state yet — create it
+
+**Trigger:** there is no `context/` directory in the project. If there is one, skip this step
+entirely and never mention it.
+
+This is the case when the loop arrives as a plugin: the procedures are installed, the files are
+not. Do not improvise a structure — the pack ships one.
+
+1. **Find the template that came with this skill.** It sits in the pack, two levels above this
+   file, at `template/context`. In Claude Code the pack root is `${CLAUDE_PLUGIN_ROOT}`. Copy that
+   whole folder into the project as `context/`, and copy `template/example-session-log.md` to the
+   project root beside it.
+2. **If you cannot find it**, create the folder yourself with these files, each one short and
+   with a heading that says what it is for: `context/PROJECT-STATE.md` (a Focus line and an empty
+   list of open items), `context/session-active.md` (a three-column table: topic, started, slug),
+   `context/decisions.md` (append-only, newest at the bottom), `context/key-inventory.md` (secrets
+   by name, never by value), `context/agents/agent-registry.md` (one row per agent: name, topics,
+   signature path), `context/agents/main/main-signature.md` (the placeholder signature, containing
+   the line `**Rename this.**`), `context/agents/main/working-notes.md` (empty, self-maintained),
+   and empty `context/session-logs/` and `context/audits/` folders.
+3. **Say what you created**, in one line, and carry straight on with Step 0. Do not ask for
+   permission first — a project without state cannot start a session, and nothing here overwrites
+   anything.
+
 ## Step 0: First run — draft the signature
 
 **Trigger:** `context/agents/main/main-signature.md` still contains the placeholder line
@@ -167,6 +191,11 @@ The goal is that the user feels they are continuing a conversation, not starting
 List, without comment, what carries a date: open items from the last session log and from
 `PROJECT-STATE.md` whose date has arrived or passed, plus anything the hook reported — an audit
 that is due is one line here, with the skill to run it.
+
+**Not every environment has the session-start hook** — it runs in Claude Code and may not
+elsewhere. Where nothing was reported, work it out from the files instead: the newest file in
+`context/audits/` says whether an audit is due, and `context/session-active.md` says which topics
+are claimed. Do not attribute to the hook what you worked out yourself.
 
 One line each. Name the date, do not grade the delay. You see the repository; you do not see
 the rest of the user's life, and a finding that arrives as a reproach gets read as noise.

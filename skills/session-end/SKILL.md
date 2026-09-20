@@ -122,6 +122,15 @@ git commit -m "session <YYYY-MM-DD>: <topic>"
 Check `git status` first and do not commit if nothing changed. Never commit secrets, `.env`
 files or credentials.
 
+**Only if the project is a git repository.** Many are not, and that is a legitimate way to use
+this. If there is no repository, say so once — "nothing committed, not a git repository" — and do
+not raise it again in later sessions.
+
+**If the repository has a remote, push.** A commit that only exists on this machine is not a
+handover, and in an environment whose workspace is discarded between sessions it is lost
+outright. If the push fails or the branch has diverged, say so plainly rather than working
+around it.
+
 ## Step 7: Report
 
 Short: the name of the session log, what was committed, anything still open that carries a date.

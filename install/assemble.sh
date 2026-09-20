@@ -9,7 +9,7 @@
 #
 #   assemble.sh <dir>          Claude Code: skills and hook under .claude/
 #   assemble.sh <dir> --app    Claude apps: no .claude/, the procedures as plain files in loop/
-#   assemble.sh <dir> --skill  Claude apps: one uploadable skill that routes to the procedures
+#   assemble.sh <dir> --skills Claude apps: the five skills, each ready to zip and upload
 #
 # The app layout exists because Cowork and the other app surfaces do not read .claude/. They read
 # the folder and the standing instructions of the project — so the loop travels as files and a
@@ -27,18 +27,27 @@ strip_frontmatter() {
   awk 'NR==1 && /^---$/ {fm=1; next} fm==1 && /^---$/ {fm=2; next} fm!=1 {print}' "$1"
 }
 
-if [ "$MODE" = "--skill" ]; then
-  # --- One skill for Customize > Skills ---------------------------------------
-  # Uploaded once, it gives the app a real /context-loop command instead of prose. The five
-  # procedures ride along as references; the router says which one to read.
-  mkdir -p "$OUT/context-loop/references"
-  cp "$ROOT/template/skill-router.md" "$OUT/context-loop/SKILL.md"
+if [ "$MODE" = "--skills" ]; then
+  # --- One directory per skill, for Customize > Skills -------------------------
+  # The apps list uploaded skills by their own name, so these keep the names they have in
+  # Claude Code: /session-start there is /session-start here. Two frontmatter fields are
+  # dropped because they are Claude Code's, and a short note is appended for what that
+  # environment does not have.
   for SKILL in "$ROOT"/skills/*/; do
     NAME="$(basename "$SKILL")"
-    strip_frontmatter "$SKILL/SKILL.md" > "$OUT/context-loop/references/$NAME.md"
+    mkdir -p "$OUT/$NAME"
+    {
+      echo "---"
+      echo "name: $NAME"
+      grep -m1 '^description:' "$SKILL/SKILL.md"
+      echo "---"
+      echo
+      strip_frontmatter "$SKILL/SKILL.md"
+      cat "$ROOT/template/environment-note.md"
+    } > "$OUT/$NAME/SKILL.md"
   done
-  COUNT=$(ls -1 "$OUT/context-loop/references" | wc -l | tr -d ' ')
-  [ "$COUNT" = "5" ] || { echo "assemble: expected 5 procedures, found $COUNT" >&2; exit 1; }
+  COUNT=$(ls -1 "$OUT" | wc -l | tr -d ' ')
+  [ "$COUNT" = "5" ] || { echo "assemble: expected 5 skills, found $COUNT" >&2; exit 1; }
   find "$OUT" -name '.DS_Store' -delete 2>/dev/null || true
   exit 0
 fi
