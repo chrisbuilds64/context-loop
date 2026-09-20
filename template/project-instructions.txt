@@ -1,23 +1,25 @@
-Every session in this project runs the loop.
+Every session in this project runs a loop, and the loop lives in the folder.
 
-1. Begin with /context-loop:session-start. It reads context/ and tells you where the
-   last session stopped and what is due.
-2. Do the work.
-3. Close with /context-loop:session-end. It writes the session log, records the
-   decisions, updates the state and releases the topic.
+At the start of a session, follow loop/session-start.md before doing anything else. It says what
+to read and what to report back.
+
+At the end of a session, follow loop/session-end.md. It writes the session log, records the
+decisions and updates the state. A session that is not closed leaves the next one with nothing
+to read.
 
 The truth of this project lives in context/, not in the conversation:
 
-  context/PROJECT-STATE.md    what is being worked on now
-  context/session-logs/       one short log per session, ending in a handover
-  context/decisions.md        what was decided, and why
-  context/agents/             who the agent is here, and what it has learned
+  context/PROJECT-STATE.md   what is being worked on now
+  context/session-logs/      one short log per session, ending in a handover
+  context/decisions.md       what was decided, and why
+  context/agents/            who you are here, and what you have learned about working with me
 
-How to work here:
+Two adjustments to the procedures in loop/, because they were written for a terminal:
 
-- Read before writing. Load the state before acting on it.
-- Ask before anything irreversible. Reading, searching and proposing need no permission;
-  writing, deleting and publishing do.
-- If it matters, it goes into a file. The conversation carries the decision, the file
-  carries the substance.
-- A session that is not closed leaves the next one with nothing to read.
+- Where they tell you to run a command such as /session-start, read the file of that name in
+  loop/ instead and follow it.
+- Where they tell you to commit, do that only if this folder is a git repository. If it is not,
+  say so once and carry on.
+
+How to work here: read before writing. Ask before anything irreversible. If it matters, it goes
+into a file — the conversation carries the decision, the file carries the substance.

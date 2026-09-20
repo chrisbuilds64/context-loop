@@ -47,20 +47,33 @@ And five skills:
 
 ## Install
 
-Two halves: the **skills** are what the agent does, the **files** are what it reads and writes.
-Install both once, in the project folder you want the loop in.
+The loop has two halves: **files** the agent reads and writes, and **procedures** it follows.
+Which shape they take depends on where your agent runs — pick the route, not the product.
 
-### Claude Code
+### In the Claude apps (Cowork)
+
+No plugin, nothing to configure.
+
+1. Download **`ContextLoop-App.zip`** from [Releases](https://github.com/chrisbuilds64/context-loop/releases)
+   and unzip it where you want to work.
+2. In the app, create a project and point it at that folder.
+3. Open the project's **Instructions** and paste in the whole of `project-instructions.txt`.
+
+Then say *"Start the session"* to begin and *"Close the session"* to end. The procedures live in
+`loop/` as plain files — the agent reads them, and so can you.
+
+### In Claude Code
 
 ```
 git clone https://github.com/chrisbuilds64/context-loop.git
 context-loop/install/install.sh /path/to/your/project
 ```
 
-That puts the files and the skills in your project. Then open the project, start Claude Code and
-run `/session-start`.
+That puts `context/` in your project and the five skills in `.claude/skills/`, plus a hook that
+reports the state before the first word. Then open the project, start Claude Code and run
+`/session-start`.
 
-On macOS you can instead download the ZIP from
+On macOS you can instead download **`ContextLoop.zip`** from
 [Releases](https://github.com/chrisbuilds64/context-loop/releases) and double-click the installer.
 Everything in it is plain text you can read first.
 
@@ -71,20 +84,14 @@ Everything in it is plain text you can read first.
 /plugin install context-loop@chrisbuilds64
 ```
 
-They are then called `/context-loop:session-start` and so on. The plugin carries the skills, not
-the files — the first session still needs a `context/` folder, so run the installer above for that
-part, or copy `template/` into your project by hand.
+They are then called `/context-loop:session-start` and so on. The plugin carries the procedures,
+not the files — the project still needs its `context/` folder, so run the installer above for
+that part.
 
-### Claude apps (Cowork)
-
-Add this repository as a plugin marketplace under **Customize → Plugins** and install it, then
-create a project that points at the folder you want to work in and paste
-`template/project-instructions.txt` into the project instructions. That file is the whole block,
-nothing to trim — it is the standing instruction Claude Code would read from `CLAUDE.md`.
-
-*Being tested. Two things are known today: the plugin carries the skills but not the files, so the
-folder still needs `template/` copied into it; and what this repository states as working is what
-somebody has actually run.*
+*Verified 2026-09-20: the Claude Code route, installed from a clean folder. The plugin install in
+the Claude apps does **not** reach Cowork — a plugin enabled for a project is a Claude Code
+setting — which is why the app route above ships files instead. What this repository states as
+working is what somebody has actually run.*
 
 ---
 
@@ -105,14 +112,15 @@ The loop is four files and the discipline of closing a session. None of that bel
 ## What is in this repository
 
 ```
-skills/           the five skills — the source of truth for them
+skills/           the five procedures — the source of truth for them
 hooks/            the session-start hook (Claude Code only)
-template/         what a project starts with: context/, CLAUDE.md, .gitignore
+template/         what a project starts with: context/, CLAUDE.md, the instruction block
 install/          assemble.sh, install.sh, build-zip.sh, the macOS installer
 ```
 
-`install/assemble.sh` is the one place that knows how the pieces become an installed project.
-Both the installer and the ZIP build call it, so there is nothing to keep in sync by hand.
+`install/assemble.sh` is the one place that knows how those pieces become an installed project —
+under `.claude/` for Claude Code, as plain files in `loop/` for the apps. The installer and both
+ZIP builds call it, so there is nothing to keep in sync by hand.
 
 ---
 
