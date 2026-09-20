@@ -1,0 +1,6 @@
+.DS_Store
+
+# Built artefacts — the ZIP is attached to a release, never committed.
+ContextLoop-*.zip
+dist/
+tmp/

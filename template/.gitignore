@@ -1,0 +1,13 @@
+.DS_Store
+
+# Scratch space for the agent. Never committed.
+tmp/
+
+# Never commit these. /security-audit checks that this list is still here.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+.claude/settings.local.json

@@ -1,0 +1,15 @@
+{
+  "name": "context-loop",
+  "displayName": "Context Loop",
+  "version": "0.1.0",
+  "description": "Session continuity in your own files: start a session by loading the state, end it by writing down what the next one needs. Includes a security audit, a documentation audit, a decision log and a key inventory.",
+  "author": {
+    "name": "Christian Moser",
+    "url": "https://chrisbuilds64.com"
+  },
+  "homepage": "https://github.com/chrisbuilds64/context-loop",
+  "repository": "https://github.com/chrisbuilds64/context-loop",
+  "license": "MIT",
+  "keywords": ["session", "context", "continuity", "handover", "audit"],
+  "hooks": "./hooks/hooks.json"
+}

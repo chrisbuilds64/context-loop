@@ -1,0 +1,14 @@
+{
+  "name": "chrisbuilds64",
+  "owner": {
+    "name": "Christian Moser",
+    "url": "https://chrisbuilds64.com"
+  },
+  "plugins": [
+    {
+      "name": "context-loop",
+      "source": "./",
+      "description": "Session continuity in your own files: /session-start loads the state, /session-end writes the handover. Plus two audits, a decision log and a key inventory."
+    }
+  ]
+}
