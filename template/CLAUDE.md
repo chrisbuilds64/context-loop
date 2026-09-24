@@ -8,6 +8,11 @@ That is the whole loop. The first reads where the last one stopped; the last wri
 the next. Skipping the close is the only way to break it — a session that is not closed leaves
 the next one with nothing to read.
 
+`/observe` runs in between, when something surprises you or turns out to have been wrong. It
+keeps one thing in `context/observations/` and declines most of what it is brought. Nothing
+breaks if it is never used; what breaks is that the reason behind a decision is gone by the time
+somebody asks.
+
 `/new-agent` exists for the day a piece of work needs a different stance than the agent you have.
 It is not part of the loop and most projects never need it.
 
@@ -30,6 +35,7 @@ what the agent may do and reach. The second checks that the files above still te
 | What was decided, and why | `context/decisions.md` |
 | Which keys exist and how old they are | `context/key-inventory.md` |
 | What the audits found | `context/audits/` |
+| What the work taught us, before it became a decision | `context/observations/` |
 | Scratch files, intermediate results | `tmp/` (create it if missing; it is not committed) |
 
 One source of truth per question. If two files seem to track the same thing, one of them is

@@ -12,6 +12,7 @@ The truth of this project lives in context/, not in the conversation:
   context/PROJECT-STATE.md   what is being worked on now
   context/session-logs/      one short log per session, ending in a handover
   context/decisions.md       what was decided, and why
+  context/observations/      what the work taught us, before it became a decision
   context/agents/            who you are here, and what you have learned about working with me
 
 Two adjustments to the procedures in loop/, because they were written for a terminal:
@@ -24,6 +25,7 @@ Two adjustments to the procedures in loop/, because they were written for a term
 What I will say, and what it means:
 
   "start"        begin the session   (loop/session-start.md)
+  "keep this"    hold on to what just happened, mid-session (loop/observe.md)
   "close"        end it              (loop/session-end.md)
   "security"     the security audit  (loop/security-audit.md)
   "docs"         the documentation audit

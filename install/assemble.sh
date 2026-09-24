@@ -43,7 +43,7 @@ if [ "$MODE" = "--app" ]; then
   cp "$ROOT/template/README-app.md" "$OUT/README.md"
 
   COUNT=$(ls -1 "$OUT/loop" | wc -l | tr -d ' ')
-  [ "$COUNT" = "5" ] || { echo "assemble: expected 5 procedures, found $COUNT" >&2; exit 1; }
+  [ "$COUNT" = "6" ] || { echo "assemble: expected 6 procedures, found $COUNT" >&2; exit 1; }
 else
   # --- Claude Code -----------------------------------------------------------
   mkdir -p "$OUT/.claude/hooks"
@@ -56,7 +56,7 @@ else
   chmod +x "$OUT/.claude/hooks/session-context.sh"
 
   COUNT=$(ls -1 "$OUT/.claude/skills" | wc -l | tr -d ' ')
-  [ "$COUNT" = "5" ] || { echo "assemble: expected 5 skills, found $COUNT" >&2; exit 1; }
+  [ "$COUNT" = "6" ] || { echo "assemble: expected 6 skills, found $COUNT" >&2; exit 1; }
 fi
 
 find "$OUT" -name '.DS_Store' -delete 2>/dev/null || true

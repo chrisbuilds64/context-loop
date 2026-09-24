@@ -31,8 +31,8 @@ line and an empty list of open items), `session-active.md` (a three-column table
 slug), `decisions.md` (append-only, newest at the bottom), `key-inventory.md` (secrets by name,
 never by value), `agents/agent-registry.md` (one row per agent: name, topics, signature path),
 `agents/main/main-signature.md` (the placeholder signature, carrying the line `**Rename this.**`),
-`agents/main/working-notes.md` (empty, self-maintained), and the folders `session-logs/` and
-`audits/`.
+`agents/main/working-notes.md` (empty, self-maintained), and the folders `session-logs/`,
+`audits/` and `observations/`.
 
 Then say in one line what was created and carry straight on with Step 0. Do not ask permission
 first — a project without state cannot start a session, and nothing here overwrites anything.

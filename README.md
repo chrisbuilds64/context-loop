@@ -7,10 +7,12 @@ the thing you were halfway through. Context Loop is the small habit that ends th
 starts by reading where the last one stopped, and ends by writing down what the next one needs —
 into plain files in your own folder.
 
-Five skills, a handful of files, MIT licensed. No account, no service, no telemetry.
+Six skills, a handful of files, MIT licensed. No account, no service, no telemetry.
 
 ```
 /session-start   loads the state, the agent's signature, and the last session's handover
+   ... work ...
+/observe         keeps the thing you noticed at 14:20 and can't reconstruct at 19:00
    ... work ...
 /session-end     writes the session log, records decisions, updates the state
 ```
@@ -30,11 +32,15 @@ Everything it writes is text you can read, correct, diff and take somewhere else
 | `context/decisions.md` | what was decided and why, so it isn't re-argued next month |
 | `context/key-inventory.md` | every secret by name — never by value — and how old it is |
 | `context/audits/` | what the two audits found, dated |
+| `context/observations/` | what the work taught you, one file at a time |
 
-And five skills:
+And six skills:
 
 - **`/session-start`** — loads the state, declares a topic, picks up the thread, lists what is due.
   On the very first run it walks you through drafting the agent's signature.
+- **`/observe`** — mid-session, when you notice something: friction that points at something
+  structural, a decision whose reasoning will be invisible in three months, a moment where somebody
+  overruled the agent and was right. One file, two minutes. It says no to the rest.
 - **`/session-end`** — writes the log with its handover paragraph, records decisions, updates the
   state, releases the topic, commits.
 - **`/security-audit`** — every 14 days: secrets in tracked files, `.gitignore` coverage, history,
@@ -47,7 +53,7 @@ And five skills:
 
 ## Install
 
-One way for both environments: **install the plugin.** It carries the five procedures, and the
+One way for both environments: **install the plugin.** It carries the six procedures, and the
 first `/session-start` creates the `context/` folder in whichever project you are in.
 
 ### In the Claude apps (Cowork)
@@ -131,7 +137,7 @@ The loop is four files and the discipline of closing a session. None of that bel
 ## What is in this repository
 
 ```
-skills/           the five procedures — the source of truth for them
+skills/           the six procedures — the source of truth for them
   session-start/scaffold/   the state files a new project starts with
 hooks/            the session-start hook (Claude Code only)
 template/         CLAUDE.md, .gitignore, the instruction block, the example log

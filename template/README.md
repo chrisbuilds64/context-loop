@@ -63,6 +63,7 @@ Claude Code reads skills at startup. If it was already running when you installe
 ```
 CLAUDE.md                      how to work here — yours to extend
 .claude/skills/session-start/  set up on first run, then load context and pick up the thread
+.claude/skills/observe/        keep what the work taught you, mid-session, one file at a time
 .claude/skills/session-end/    write the log, update state, release the topic
 .claude/skills/new-agent/      define a second agent, when one stance is not enough
 .claude/skills/security-audit/ every 14 days: secrets, .gitignore, history, dependencies, agent reach
@@ -76,6 +77,7 @@ context/agents/                who the agent is, and which agent handles what
 context/decisions.md           what was decided and why — append-only, never reopened by accident
 context/key-inventory.md       every key by name and age, never by value — the audit reads it
 context/audits/                one dated file per audit run
+context/observations/          what the work taught you, one dated file at a time
 tmp/                           the agent's scratch space, never committed (create when needed)
 example-session-log.md         what a good log looks like — an example, not your history
 ```
@@ -97,6 +99,9 @@ loaded at the start of every session, and the agent does not edit it. When the w
 together changes, you change it.
 
 Then do some work, and run `/session-end`.
+
+Somewhere in between, when something surprises you or turns out to have been wrong, run
+`/observe`. It keeps one thing, and it declines most of what you bring it — that is deliberate.
 
 Open the log it wrote in `context/session-logs/`. The last section is the point:
 
