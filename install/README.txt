@@ -32,8 +32,8 @@ behind, and that folder is the pack. Then check:
 
     ls /path/to/your/project/.claude/skills
 
-You should see five: session-start, session-end, security-audit, doc-audit
-and new-agent.
+You should see nine: session-start, session-end, observe, todo, todo-add,
+todo-done, security-audit, doc-audit and new-agent.
 
 
 WHY NOT JUST DRAG THE FOLDER

@@ -8,7 +8,7 @@
     {
       "name": "context-loop",
       "source": "./",
-      "description": "Session continuity in your own files: /session-start loads the state, /observe keeps what the work taught you, /session-end writes the handover. Plus two audits, a decision log and a key inventory."
+      "description": "Session continuity in your own files: /session-start loads the state, /observe keeps what the work taught you, /todo says what is due, /session-end writes the handover. With a schema-checked work list, two audits, a decision log and a key inventory."
     }
   ]
 }

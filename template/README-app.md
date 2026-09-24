@@ -43,13 +43,13 @@ project-instructions.txt   the paragraph you paste into the project
 example-session-log.md     what a good session log looks like
 ```
 
-`loop/` holds six procedures: `session-start`, `session-end`, `observe` for the thing you notice
-mid-session, two audits to run every couple of weeks, and `new-agent` for the day a piece of work
-needs a different stance.
+`loop/` holds nine procedures: `session-start`, `session-end`, `observe` for the thing you notice
+mid-session, `todo`, `todo-add` and `todo-done` for the work list, two audits to run every couple
+of weeks, and `new-agent` for the day a piece of work needs a different stance.
 
 ## Working in a terminal as well?
 
-There is a second version of this pack for **Claude Code**, where the same six procedures are
+There is a second version of this pack for **Claude Code**, where the same nine procedures are
 installed as skills and a hook puts the state in front of the agent before the first word. Same
 files, same `context/` folder — you can use both on the same project.
 

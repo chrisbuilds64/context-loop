@@ -38,10 +38,10 @@ done
 
 echo
 COUNT=$(ls -1 "$DEST/.claude/skills" 2>/dev/null | wc -l | tr -d ' ')
-if [ "$COUNT" = "6" ]; then
-  echo "All six skills are in place."
+if [ "$COUNT" = "9" ]; then
+  echo "All nine skills are in place."
 else
-  echo "WARNING: expected six skills, found $COUNT — check $DEST/.claude/skills/"
+  echo "WARNING: expected nine skills, found $COUNT — check $DEST/.claude/skills/"
   exit 1
 fi
 

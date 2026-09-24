@@ -1,0 +1,111 @@
+{
+  "$schema": "./todo.schema.json",
+  "schemaVersion": 1,
+  "meta": {
+    "title": "Work list",
+    "updated": "2026-01-01",
+    "defaultAssignee": "me",
+    "note": "The one place open items live. Session logs are history, PROJECT-STATE is state, audits are dated snapshots. Nothing writes this file directly — every change goes through scripts/todo.py, which validates before it saves."
+  },
+  "lov": {
+    "clusters": [
+      {
+        "id": "work",
+        "label": "Work",
+        "order": 1,
+        "prefix": "WRK"
+      },
+      {
+        "id": "admin",
+        "label": "Admin",
+        "order": 2,
+        "prefix": "ADM"
+      },
+      {
+        "id": "later",
+        "label": "Later",
+        "order": 3,
+        "prefix": "LTR",
+        "note": "Rename these, or replace them with your own. Add a cluster here and it exists."
+      }
+    ],
+    "statuses": [
+      {
+        "id": "next",
+        "label": "Next",
+        "order": 1
+      },
+      {
+        "id": "doing",
+        "label": "Doing",
+        "order": 2
+      },
+      {
+        "id": "waiting",
+        "label": "Waiting",
+        "order": 3,
+        "note": "With someone else. Not a stall — a state."
+      },
+      {
+        "id": "backlog",
+        "label": "Backlog",
+        "order": 4
+      },
+      {
+        "id": "done",
+        "label": "Done",
+        "order": 5,
+        "terminal": true
+      }
+    ],
+    "priorities": [
+      {
+        "id": "high",
+        "label": "high",
+        "rank": 3
+      },
+      {
+        "id": "medium",
+        "label": "medium",
+        "rank": 2
+      },
+      {
+        "id": "low",
+        "label": "low",
+        "rank": 1
+      }
+    ],
+    "people": [
+      {
+        "id": "me",
+        "name": "Me",
+        "kind": "human"
+      },
+      {
+        "id": "someone-else",
+        "name": "Someone else",
+        "kind": "human",
+        "note": "Add the people you actually work with, and use their names."
+      }
+    ],
+    "sourceKinds": [
+      {
+        "id": "session",
+        "label": "Came up in a session"
+      },
+      {
+        "id": "audit",
+        "label": "Audit finding"
+      },
+      {
+        "id": "decision",
+        "label": "Decision"
+      },
+      {
+        "id": "other",
+        "label": "Other"
+      }
+    ]
+  },
+  "todos": []
+}

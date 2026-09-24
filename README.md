@@ -33,8 +33,9 @@ Everything it writes is text you can read, correct, diff and take somewhere else
 | `context/key-inventory.md` | every secret by name — never by value — and how old it is |
 | `context/audits/` | what the two audits found, dated |
 | `context/observations/` | what the work taught you, one file at a time |
+| `context/todo.json` | the one place open items live — with a schema beside it, and a command that guards the way in |
 
-And six skills:
+And nine skills:
 
 - **`/session-start`** — loads the state, declares a topic, picks up the thread, lists what is due.
   On the very first run it walks you through drafting the agent's signature.
@@ -47,13 +48,16 @@ And six skills:
   dependencies, what the agent is allowed to do and reach, how old the keys are. It never prints a
   secret.
 - **`/doc-audit`** — every 14 days: does the documentation still say what is true?
+- **`/todo`** — what is due, what is next, what is with someone else, what is blocked. Read-only.
+- **`/todo-add`** — put an item on the list mid-session, when it comes up rather than at the close.
+- **`/todo-done`** — close an item, and see what that unblocks.
 - **`/new-agent`** — for the day a piece of work needs a different stance than the agent you have.
 
 ---
 
 ## Install
 
-One way for both environments: **install the plugin.** It carries the six procedures, and the
+One way for both environments: **install the plugin.** It carries the nine procedures, and the
 first `/session-start` creates the `context/` folder in whichever project you are in.
 
 ### In the Claude apps (Cowork)
@@ -137,7 +141,7 @@ The loop is four files and the discipline of closing a session. None of that bel
 ## What is in this repository
 
 ```
-skills/           the six procedures — the source of truth for them
+skills/           the nine procedures — the source of truth for them
   session-start/scaffold/   the state files a new project starts with
 hooks/            the session-start hook (Claude Code only)
 template/         CLAUDE.md, .gitignore, the instruction block, the example log
