@@ -5,3 +5,7 @@ ContextLoop-*.zip
 dist/
 tmp/
 dist-skills/
+
+# Python-Bytecode aus Testlaeufen — gehoert nie ins Paket
+__pycache__/
+*.pyc

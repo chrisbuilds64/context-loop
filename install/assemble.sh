@@ -60,3 +60,4 @@ else
 fi
 
 find "$OUT" -name '.DS_Store' -delete 2>/dev/null || true
+find "$OUT" -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null || true
