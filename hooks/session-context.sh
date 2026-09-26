@@ -12,10 +12,16 @@
 #
 # Output contract: JSON on stdout, exit 0. This script never fails hard — a broken hook must not
 # stop a session from starting.
+#
+# With --plain it prints the same text without the JSON envelope. That is the OpenCode route:
+# there is no session-start event there, so the /session-start command embeds this output in its
+# template instead. One script, two output forms — the logic is not worth having twice.
 
 set -uo pipefail
 
 ROOT="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+PLAIN=0
+[ "${1:-}" = "--plain" ] && PLAIN=1
 OUT=""
 
 # --- Topics currently claimed ----------------------------------------------
@@ -58,6 +64,11 @@ done
 [ -n "$MISSING" ] && OUT+="AUDITS: none run yet. Start the 14-day cadence with:$MISSING"$'\n'
 
 [ -z "$OUT" ] && OUT="State clean: nothing claimed, nothing uncommitted, audits current."
+
+if [ "$PLAIN" = "1" ]; then
+  printf '%s\n' "$OUT"
+  exit 0
+fi
 
 python3 -c '
 import json, sys

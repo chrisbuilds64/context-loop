@@ -173,14 +173,19 @@ A claimed row with no session log for it means a session ended without being clo
 is missing, not the work: the state, the decisions and the earlier logs are all still there. And
 the row itself is the signal — undisciplined work without this loop does not even leave that.
 
-Offer to reconstruct it, and do it if they say yes:
+**Look for traces before you offer anything.** The row gives you the start time; `git log --since`
+and the modification times under `context/` and in the project say whether work followed it. That
+check decides what happens next, and it comes first:
 
-1. The row gives you the start time. Collect what happened after it: `git log --since` for the
-   commits, and the modification times under `context/` and in the project for what changed.
-2. Write the missing log to `context/session-logs/<date>_<slug>.md` in the normal shape, and
-   **mark it as reconstructed** in one line at the top: what it is based on, and that nobody was
-   asked. A reconstructed thread is thinner than a written one and must not pretend otherwise.
-3. Remove the stale row, then claim your own.
+- **No traces** — remove the row, say in one line that nothing followed the claim, and carry on.
+  Do not write a log. A session log built from a claim alone describes work that never happened,
+  and once it sits in `session-logs/` nothing distinguishes it from a real one.
+- **Traces** — offer to reconstruct, and do it if they say yes:
+  1. Write the missing log to `context/session-logs/<date>_<slug>.md` in the normal shape, from
+     the commits and the changed files.
+  2. **Mark it as reconstructed** in one line at the top: what it is based on, and that nobody was
+     asked. A reconstructed thread is thinner than a written one and must not pretend otherwise.
+  3. Remove the stale row, then claim your own.
 
 If they say the session is still running elsewhere, leave the row alone and carry on.
 

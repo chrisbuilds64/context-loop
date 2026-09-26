@@ -1,8 +1,9 @@
 #!/bin/bash
-# Build the two distributable ZIPs.
+# Build the three distributable ZIPs.
 #
-#   ContextLoop-<version>.zip         Claude Code: skills, hook, CLAUDE.md, the installer
-#   ContextLoop-App-<version>.zip     Claude apps: context/, loop/, the instruction block
+#   ContextLoop-<version>.zip           Claude Code: skills, hook, CLAUDE.md, the installer
+#   ContextLoop-App-<version>.zip       Claude apps: context/, loop/, the instruction block
+#   ContextLoop-OpenCode-<version>.zip  OpenCode: .opencode/, AGENTS.md, opencode.json
 #
 # Both are for people who do not want the plugin, which is the recommended route and needs no
 # build step at all — the marketplace serves this repository as it stands.
@@ -37,13 +38,22 @@ mkdir -p "$STAGE/app/ContextLoop"
 rm -f "$APP"
 ( cd "$STAGE/app" && zip -q -r -X "$APP" . -x '.DS_Store' -x '__MACOSX/*' )
 
+# --- OpenCode ----------------------------------------------------------------
+OC="$ROOT/ContextLoop-OpenCode-$VERSION.zip"
+mkdir -p "$STAGE/oc/ContextLoop"
+"$HERE/assemble.sh" "$STAGE/oc/ContextLoop" --opencode
+rm -f "$OC"
+( cd "$STAGE/oc" && zip -q -r -X "$OC" . -x '.DS_Store' -x '__MACOSX/*' )
+
 echo "Built:"
 echo "  $CC"
 echo "  $APP"
+echo "  $OC"
 echo
 echo "Check before shipping:"
 echo "  - unzip the Claude Code one and confirm pack/.claude/skills holds all nine skills"
 echo "  - confirm 'Install Context Loop.command' is still executable after unzipping"
 echo "  - unzip the app one and confirm loop/ holds nine procedures and no .claude/ came along"
+echo "  - unzip the OpenCode one and confirm .opencode/skills holds nine and .opencode/commands one"
 echo "  - Gatekeeper blocks the downloaded .command on first run: System Settings >"
 echo "    Privacy & Security > Open Anyway (macOS 15+); older systems: right-click > Open"

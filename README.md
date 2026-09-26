@@ -57,7 +57,7 @@ And nine skills:
 
 ## Install
 
-One way for both environments: **install the plugin.** It carries the nine procedures, and the
+In the Claude environments the way in is the plugin; in OpenCode it is files. Either way the
 first `/session-start` creates the `context/` folder in whichever project you are in.
 
 ### In the Claude apps (Cowork)
@@ -76,19 +76,50 @@ first `/session-start` creates the `context/` folder in whichever project you ar
 Then `/context-loop:session-start` in any project — Claude Code prefixes plugin procedures with
 the plugin name so they cannot collide with your own.
 
+### In OpenCode
+
+OpenCode reads the procedures straight from the project, so there is no plugin to install — the
+loop travels as files.
+
+**In one project:**
+
+```bash
+install/install.sh /path/to/your/project --opencode
+cd /path/to/your/project && opencode
+```
+
+**Once, for every project:** clone this repository and point the global config at it —
+`~/.config/opencode/opencode.json`:
+
+```json
+{
+  "skills": { "paths": ["~/context-loop/skills"] }
+}
+```
+
+A leading `~` is resolved. The procedures are then available everywhere; the `context/` folder is
+still created per project by the first `/session-start`.
+
+Two things are specific to OpenCode: the state block at the top of `/session-start` is produced by
+an embedded shell call, which runs in the terminal interface but not in `opencode run`; and the
+procedures need a model with a real context window — `session-start` is around 3,000 tokens and
+OpenCode's own system prompt takes roughly 10,000, so a 16k local model has nothing left.
+
 ### Without installing anything
 
-Two packages in [Releases](https://github.com/chrisbuilds64/context-loop/releases), for when a
+Three packages in [Releases](https://github.com/chrisbuilds64/context-loop/releases), for when a
 plugin is not wanted or not possible:
 
 - **`ContextLoop-App.zip`** — for the apps. Unzip it, point a project at the folder, paste
   `project-instructions.txt` into the project instructions. The procedures sit in `loop/` as plain
   files; say *"start"* to begin, *"close"* to end, *"loop?"* for the list.
+- **`ContextLoop-OpenCode.zip`** — for OpenCode. Unzip it, `cd` in, run `opencode`, type
+  `/session-start`.
 - **`ContextLoop.zip`** — for Claude Code on macOS. Double-click the installer, or clone this repo
   and run `install/install.sh /path/to/your/project`. This is the only package that brings the
   session-start hook, which puts the state in front of the agent before the first word.
 
-Everything in both is plain text you can read before you run anything.
+Everything in all three is plain text you can read before you run anything.
 
 *Verified 2026-09-20: installed from a clean folder in Claude Code, and the whole loop run in
 Cowork — signature, topic, session log with its handover. What this repository states as working
@@ -98,18 +129,19 @@ is what somebody has actually run.*
 
 ## What runs where
 
-The loop is the same in both environments. Four things differ, and it is better to know them
-before you rely on one:
+The loop is the same everywhere. Five things differ, and it is better to know them before you
+rely on one:
 
-| | Claude Code | Claude apps (Cowork) |
-|---|---|---|
-| **How you call it** | `/context-loop:session-start` — plugin procedures are prefixed with the plugin name | `/session-start` — listed under its own name |
-| **State before the first word** | The session-start hook reports claimed topics, uncommitted work and a due audit | No hook output. `/session-start` works it out from the files instead |
-| **git** | Assumed. `/session-end` commits, and pushes if there is a remote | Often no repository at all. The close says so once and carries on |
-| **Where it lives** | Files in your project, or the plugin in your Claude Code config | The plugin on your account; the state files in the project's folder |
+| | Claude Code | Claude apps (Cowork) | OpenCode |
+|---|---|---|---|
+| **How you call it** | `/context-loop:session-start` — plugin procedures are prefixed with the plugin name | `/session-start` — listed under its own name | `/session-start` — the nine procedures ship with a command each |
+| **State before the first word** | The session-start hook reports claimed topics, uncommitted work and a due audit | No hook output. `/session-start` works it out from the files instead | The `/session-start` command embeds the same report — in the terminal interface, not in `opencode run` |
+| **git** | Assumed. `/session-end` commits, and pushes if there is a remote | Often no repository at all. The close says so once and carries on | Assumed, same as Claude Code |
+| **Where it lives** | Files in your project, or the plugin in your Claude Code config | The plugin on your account; the state files in the project's folder | Files in your project under `.opencode/`, or one global `skills.paths` entry |
+| **Model** | Claude | Claude | whatever you point it at — needs a 32k context and reliable tool calling |
 
-Two things are the same and matter more: the `context/` folder has the identical shape on both
-sides, and the procedures are the same text. **One project can be worked on from either side** —
+Two things are the same and matter more: the `context/` folder has the identical shape in all
+three, and the procedures are the same text. **One project can be worked on from any of them** —
 terminal in the morning, app in the evening, one loop.
 
 ### About the shell script
@@ -143,7 +175,8 @@ The loop is four files and the discipline of closing a session. None of that bel
 ```
 skills/           the nine procedures — the source of truth for them
   session-start/scaffold/   the state files a new project starts with
-hooks/            the session-start hook (Claude Code only)
+hooks/            the session-start hook (Claude Code; OpenCode calls the same script with --plain)
+adapters/         the per-environment wiring — currently opencode/ (one command, one config)
 template/         CLAUDE.md, .gitignore, the instruction block, the example log
 install/          assemble.sh, install.sh, build-zip.sh, the macOS installer
 ```
@@ -153,7 +186,8 @@ and a skill can reliably read its own directory and nothing above it. Everything
 ship is assembled from there, so the starting files exist once.
 
 `install/assemble.sh` is the one place that knows how those pieces become an installed project —
-under `.claude/` for Claude Code, as plain files in `loop/` for the apps. The installer and both
+under `.claude/` for Claude Code, as plain files in `loop/` for the apps, under `.opencode/` for
+OpenCode. The installer and both
 ZIP builds call it, so there is nothing to keep in sync by hand.
 
 ---
