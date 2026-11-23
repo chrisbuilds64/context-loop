@@ -59,8 +59,8 @@ And nine procedures. They carry the steps; the settings are in `context/rules.md
 
 ## Install
 
-In the Claude environments the way in is the plugin; in OpenCode it is files. Either way the
-first `/session-start` creates the `context/` folder in whichever project you are in.
+In the Claude environments the way in is the plugin; in OpenCode and Codex it is files. Either
+way the first session start creates the `context/` folder in whichever project you are in.
 
 ### In the Claude apps (Cowork)
 
@@ -107,31 +107,50 @@ an embedded shell call, which runs in the terminal interface but not in `opencod
 procedures need a model with a real context window — `session-start` is around 3,000 tokens and
 OpenCode's own system prompt takes roughly 10,000, so a 16k local model has nothing left.
 
+### In Codex, and in other tools that read AGENTS.md
+
+Take **`ContextLoop-Codex.zip`** from [Releases](https://github.com/chrisbuilds64/context-loop/releases),
+unzip it and open the folder as your project. Say *"start"* to begin and *"close"* to end. The
+procedures sit in `loop/` as plain files and `AGENTS.md` tells the agent they are there. Nothing
+in this layout is specific to one vendor.
+
 ### Without installing anything
 
-Three packages in [Releases](https://github.com/chrisbuilds64/context-loop/releases), for when a
+Four packages in [Releases](https://github.com/chrisbuilds64/context-loop/releases), for when a
 plugin is not wanted or not possible:
 
 - **`ContextLoop-App.zip`** — for the apps. Unzip it, point a project at the folder, paste
   `project-instructions.txt` into the project instructions. The procedures sit in `loop/` as plain
   files; say *"start"* to begin, *"close"* to end, *"loop?"* for the list.
+- **`ContextLoop-Codex.zip`** — for Codex and other tools that read `AGENTS.md`. Unzip it, open the
+  folder, say *"start"*.
 - **`ContextLoop-OpenCode.zip`** — for OpenCode. Unzip it, `cd` in, run `opencode`, type
   `/session-start`.
 - **`ContextLoop.zip`** — for Claude Code on macOS. Double-click the installer, or clone this repo
   and run `install/install.sh /path/to/your/project`. This is the only package that brings the
   session-start hook, which puts the state in front of the agent before the first word.
 
-Everything in all three is plain text you can read before you run anything.
+Everything in all four is plain text you can read before you run anything.
 
-*Verified 2026-09-20: installed from a clean folder in Claude Code, and the whole loop run in
-Cowork — signature, topic, session log with its handover. What this repository states as working
-is what somebody has actually run.*
+*What has been run, and when. A row is here because somebody ran it, not because it should work.*
+
+| Environment | Run | What |
+|---|---|---|
+| Claude Code, as files | 2026-11-23 | from an empty folder: first start, close, second start picks up the handover |
+| OpenCode | 2026-11-23 | from an empty folder: first start |
+| Codex | 2026-11-23 | first start, close, second start |
+| Claude Code and Claude apps, as a plugin | 2026-09-20 | the loop as it was then: signature, topic, session log with its handover. Not yet repeated with the rules file |
+| Windows | not run | |
+
+*The three runs of 2026-11-23 were made without the question dialogs: the answers to the first-run
+questions were given in advance.*
 
 ---
 
 ## What runs where
 
-The loop is the same everywhere. Five things differ, and it is better to know them before you
+The loop is the same everywhere. Codex works like the app column, with `AGENTS.md` in place of the
+project instructions. Five things differ, and it is better to know them before you
 rely on one:
 
 | | Claude Code | Claude apps (Cowork) | OpenCode |
@@ -179,18 +198,22 @@ skills/           the nine procedures — the source of truth for them
   session-start/scaffold/   the state files a new project starts with
 hooks/            the session-start hook (Claude Code; OpenCode calls the same script with --plain)
 adapters/         the per-environment wiring — currently opencode/ (one command, one config)
-template/         CLAUDE.md, .gitignore, the instruction block, the example log
+template/         the pointer files (CLAUDE.md, the instruction block that also becomes AGENTS.md),
+                  .gitignore, the example log, the README of each package
 install/          assemble.sh, install.sh, build-zip.sh, the macOS installer
 ```
+
+How the loop behaves is not in the procedures. It is in `context/rules.md`, a plain-text file in
+the user's folder that an update never overwrites; `context/README.md` is the map of every file.
+Both start in the scaffold.
 
 The scaffold sits inside the skill on purpose: `session-start` creates the state on a first run,
 and a skill can reliably read its own directory and nothing above it. Everything the packages
 ship is assembled from there, so the starting files exist once.
 
 `install/assemble.sh` is the one place that knows how those pieces become an installed project —
-under `.claude/` for Claude Code, as plain files in `loop/` for the apps, under `.opencode/` for
-OpenCode. The installer and both
-ZIP builds call it, so there is nothing to keep in sync by hand.
+under `.claude/` for Claude Code, as plain files in `loop/` for the apps and for Codex, under
+`.opencode/` for OpenCode. The installer and the ZIP builds call it, so there is nothing to keep in sync by hand.
 
 ---
 

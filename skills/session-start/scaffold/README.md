@@ -58,6 +58,7 @@ Where they sit depends on how Context Loop was installed:
 | Claude apps, installed as a plugin | on your account, under Customize → Plugins |
 | Claude apps, from the ZIP | `loop/` in this project |
 | OpenCode | `.opencode/skills/` in this project |
+| Codex, and other tools that read `AGENTS.md` | `loop/` in this project |
 
 They are replaced when Context Loop is updated. Change the behaviour in `rules.md`, not in a
 procedure, or the next update takes your change with it.
@@ -72,6 +73,7 @@ sentence: read `context/rules.md` and follow it.
 | Claude Code | `CLAUDE.md` |
 | Claude apps | the project's Instructions |
 | OpenCode | `AGENTS.md` |
+| Codex | `AGENTS.md` |
 
 Installed as a plugin, there is no such file. `session-start` reads the rules itself.
 

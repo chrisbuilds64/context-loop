@@ -1,11 +1,12 @@
 #!/bin/bash
-# Build the three distributable ZIPs.
+# Build the four distributable ZIPs.
 #
 #   ContextLoop-<version>.zip           Claude Code: skills, hook, CLAUDE.md, the installer
 #   ContextLoop-App-<version>.zip       Claude apps: context/, loop/, the instruction block
 #   ContextLoop-OpenCode-<version>.zip  OpenCode: .opencode/, AGENTS.md, opencode.json
+#   ContextLoop-Codex-<version>.zip     Codex and other AGENTS.md readers: context/, loop/, AGENTS.md
 #
-# Both are for people who do not want the plugin, which is the recommended route and needs no
+# All are for people who do not want the plugin, which is the recommended route and needs no
 # build step at all — the marketplace serves this repository as it stands.
 #
 # Run this rather than zipping by hand: the payloads are assembled from the repository, the macOS
@@ -45,15 +46,24 @@ mkdir -p "$STAGE/oc/ContextLoop"
 rm -f "$OC"
 ( cd "$STAGE/oc" && zip -q -r -X "$OC" . -x '.DS_Store' -x '__MACOSX/*' )
 
+# --- Codex and other AGENTS.md readers ----------------------------------------
+CX="$ROOT/ContextLoop-Codex-$VERSION.zip"
+mkdir -p "$STAGE/cx/ContextLoop"
+"$HERE/assemble.sh" "$STAGE/cx/ContextLoop" --agents
+rm -f "$CX"
+( cd "$STAGE/cx" && zip -q -r -X "$CX" . -x '.DS_Store' -x '__MACOSX/*' )
+
 echo "Built:"
 echo "  $CC"
 echo "  $APP"
 echo "  $OC"
+echo "  $CX"
 echo
 echo "Check before shipping:"
 echo "  - unzip the Claude Code one and confirm pack/.claude/skills holds all nine skills"
 echo "  - confirm 'Install Context Loop.command' is still executable after unzipping"
 echo "  - unzip the app one and confirm loop/ holds nine procedures and no .claude/ came along"
+echo "  - unzip the Codex one and confirm loop/ holds nine procedures and AGENTS.md is at the top"
 echo "  - unzip the OpenCode one and confirm .opencode/skills holds nine and .opencode/commands one"
 echo "  - Gatekeeper blocks the downloaded .command on first run: System Settings >"
 echo "    Privacy & Security > Open Anyway (macOS 15+); older systems: right-click > Open"

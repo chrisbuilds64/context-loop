@@ -12,6 +12,7 @@
 #   assemble.sh <dir>              Claude Code: skills and hook under .claude/
 #   assemble.sh <dir> --app        Claude apps: no .claude/, the procedures as plain files in loop/
 #   assemble.sh <dir> --opencode   OpenCode: skills and commands under .opencode/, AGENTS.md
+#   assemble.sh <dir> --agents     Codex and any tool that reads AGENTS.md: procedures in loop/
 #
 # The app layout exists because Cowork and the other app surfaces do not read .claude/. They read
 # the folder and the standing instructions of the project — so the loop travels as files and a
@@ -25,7 +26,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-OUT="${1:?usage: assemble.sh <target directory> [--app|--opencode]}"
+OUT="${1:?usage: assemble.sh <target directory> [--app|--opencode|--agents]}"
 MODE="${2:-claude-code}"
 
 mkdir -p "$OUT"
@@ -48,6 +49,23 @@ case "$MODE" in
   done
   cp "$ROOT/template/project-instructions.txt" "$OUT/"
   cp "$ROOT/template/README-app.md" "$OUT/README.md"
+
+  COUNT=$(ls -1 "$OUT/loop" | wc -l | tr -d ' ')
+  [ "$COUNT" = "9" ] || { echo "assemble: expected 9 procedures, found $COUNT" >&2; exit 1; }
+  ;;
+
+--agents)
+  # --- Codex, and any tool that reads AGENTS.md --------------------------------
+  # The same shape as the app layout, with one difference: the paragraph that the app wants
+  # pasted into its project instructions is the file the tool reads by itself. Nothing here is
+  # specific to one vendor, which is the point — a tool we have never run starts from this.
+  mkdir -p "$OUT/loop"
+  for SKILL in "$ROOT"/skills/*/; do
+    NAME="$(basename "$SKILL")"
+    strip_frontmatter "$SKILL/SKILL.md" > "$OUT/loop/$NAME.md"
+  done
+  cp "$ROOT/template/project-instructions.txt" "$OUT/AGENTS.md"
+  cp "$ROOT/template/README-agents.md" "$OUT/README.md"
 
   COUNT=$(ls -1 "$OUT/loop" | wc -l | tr -d ' ')
   [ "$COUNT" = "9" ] || { echo "assemble: expected 9 procedures, found $COUNT" >&2; exit 1; }
