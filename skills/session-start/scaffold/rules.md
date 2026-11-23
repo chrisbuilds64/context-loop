@@ -42,6 +42,8 @@ The chat keeps the full conversation; the session log keeps what is worth carryi
 - Pick up the thread from the last session log in two or three sentences. Begin with the sentence
   the last session left, do not read it out.
 - List what is due, one line each. Name the date. Do not grade the delay.
+- If earlier sessions were never closed, say so and ask whether to close them. Always ask;
+  never close one silently.
 - Do not propose a focus. What happens today is worked out in conversation.
 
 **Your own steps at the start.** Add them here as a list. The agent runs them after the context
@@ -55,6 +57,7 @@ is loaded.
 - Commit `context/` if this folder is a git repository. Push if it has a remote. If it is not a
   repository, say so once and do not raise it again.
 - Never commit secrets, `.env` files or credentials.
+- After closing, say once that the next session is best started in a new chat.
 
 **Your own steps at the end.** Add them here as a list. The agent runs them before the commit.
 

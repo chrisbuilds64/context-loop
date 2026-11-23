@@ -219,33 +219,39 @@ If the tool is not available, ask the same question in plain text.
 Do not ask anything else. Not the time, not the mood, not the location. A field that has to be
 invented each session is worse than no field.
 
-## Step 3: Check for collisions
+## Step 3: Sessions that are still open
 
-Look at `context/session-active.md`. If another session already holds this topic, say so and
-give the time it was claimed. Do not refuse — an entry that was never released looks exactly
-like a live session, and only the user knows which it is.
+Look at every row in `context/session-active.md`, not only the one for this topic. Each row is a
+session that was started and not closed. Most people do not know a row exists, so this step is
+where open sessions get cleared up; without it they pile up.
 
-### If the user says that session is over, repair it rather than mourn it
+**Say it in plain words.** No "claimed", no "slug", no "row". Say which session is still open,
+since when, and what it was about: "The session about <topic> from <date, time> was not closed."
 
-A claimed row with no session log for it means a session ended without being closed. The handover
-is missing, not the work: the state, the decisions and the earlier logs are all still there. And
-the row itself is the signal — undisciplined work without this loop does not even leave that.
+**If this chat itself holds an open session** — `/session-start` was typed here before and no
+`/session-end` followed — close that one first. You still have the whole conversation, so write
+its log properly with the session-end procedure, say in one line that you did, and carry on with
+the new start. Starting again means the last stretch is finished.
 
-**Look for traces before you offer anything.** The row gives you the start time; `git log --since`
-and the modification times under `context/` and in the project say whether work followed it. That
-check decides what happens next, and it comes first:
+**For every other open session, look for traces before you ask.** The row gives the start time;
+`git log --since` and the modification times under `context/` and in the project say whether work
+followed it. Then ask, once per open session, with the AskUserQuestion tool where it exists.
+Always ask; never close a session silently. First option, the usual case:
 
-- **No traces** — remove the row, say in one line that nothing followed the claim, and carry on.
-  Do not write a log. A session log built from a claim alone describes work that never happened,
-  and once it sits in `session-logs/` nothing distinguishes it from a real one.
-- **Traces** — offer to reconstruct, and do it if they say yes:
-  1. Write the missing log to `context/session-logs/<date>_<slug>.md` in the normal shape, from
-     the commits and the changed files.
-  2. **Mark it as reconstructed** in one line at the top: what it is based on, and that nobody was
-     asked. A reconstructed thread is thinner than a written one and must not pretend otherwise.
-  3. Remove the stale row, then claim your own.
+- **It is finished, close it.**
+  - *Traces:* write the missing log to `context/session-logs/<date>_<slug>.md` in the normal
+    shape, from the commits and the changed files. **Mark it as reconstructed** in one line at
+    the top: what it is based on, and that it was written afterwards. A reconstructed log is
+    thinner than a written one and must not pretend otherwise. Then remove the row.
+  - *No traces:* remove the row and say in one line that nothing followed that start. Do not
+    write a log. A log built from a start alone describes work that never happened.
+- **It is still running somewhere else.** Leave the row alone and carry on. If it is the same
+  topic as this session, say once that two sessions now work on it.
 
-If they say the session is still running elsewhere, leave the row alone and carry on.
+Put what will happen into the option text, so the person sees it before choosing.
+
+**More than three open sessions:** do not ask one by one. List them with their dates and ask
+once: close all that are finished, or go through them. Then act as above for each.
 
 ## Step 4: Claim the topic
 
@@ -309,8 +315,8 @@ The topic declared in step 2 is the anchor for this session, not just for its fi
 **Trigger:** three or more consecutive exchanges clearly outside the topic that are building a
 new thread of their own. A single lookup, a quick question, a short aside does not count.
 
-**Immediate trigger:** a request that clearly belongs to a topic another session already holds
-in `session-active.md`. Name it before working, not after.
+**Immediate trigger:** a request that clearly belongs to a topic another session still holds
+open in `session-active.md`. Name it before working, not after.
 
 When it triggers, say it once:
 

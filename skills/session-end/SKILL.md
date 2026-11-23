@@ -83,6 +83,7 @@ plainly rather than working around it.
 ## Step 7: Report
 
 Short: the name of the session log, what was committed, anything still open that carries a date.
+Then whatever the rules ask to be said after closing, in one sentence.
 
 ## Step 8: Label
 
