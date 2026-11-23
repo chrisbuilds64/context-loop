@@ -31,13 +31,15 @@ the only way to break this.
 
 Then take the plugin instead of this package: in the app, **Customize → Plugins → Add
 marketplace** → `chrisbuilds64/context-loop`, then **Install**. You get `/session-start` and the
-other four as commands, in every project, and the first run creates the `context/` folder for you.
+other eight as commands, in every project, and the first run creates the `context/` folder for you.
 This package exists for the case where you would rather not install anything at all.
 
 ## What is here
 
 ```
 context/             the state: what is being worked on, what happened, what was decided
+context/README.md    the map: every file, what it holds, what to edit to change behaviour
+context/rules.md     how the loop behaves here — yours to change
 loop/                the procedures the agent follows — read them, they are plain text
 project-instructions.txt   the paragraph you paste into the project
 example-session-log.md     what a good session log looks like

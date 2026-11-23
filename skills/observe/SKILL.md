@@ -7,6 +7,9 @@ argument-hint: "[what you noticed, in your own words — or nothing, and I work 
 
 # Observe
 
+**The rules of this project are in `context/rules.md`.** If you have not read that file in this
+session, read it now. Where it says something different from this procedure, the rules win.
+
 `/session-start` loads the state and `/session-end` writes the handover. This is the one in the
 middle: the thing you notice at 14:20 and cannot reconstruct at 19:00.
 

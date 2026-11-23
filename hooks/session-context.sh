@@ -44,11 +44,24 @@ if [ -d "$ROOT/.git" ]; then
 fi
 
 # --- Audit age --------------------------------------------------------------
-# The date is in the filename, so no file has to be opened. 14 days is the cadence both audit
-# skills assume. No audit yet is reported once per start, as a fact — the first run starts the
-# clock.
+# The date is in the filename, so no file has to be opened. How many days may pass is the
+# project's own rule: audit-interval-days in context/rules.md, 14 when the file or the line is
+# missing. No audit yet is reported once per start, as a fact — the first run starts the clock.
+#
+# The age is worked out with date(1) alone, GNU form first, BSD form second. Where neither
+# works, the line is left out: /session-start works the same thing out from the files.
+RULES="$ROOT/context/rules.md"
+INTERVAL=""
+[ -f "$RULES" ] && INTERVAL=$(grep -m1 -E '^audit-interval-days:' "$RULES" 2>/dev/null | tr -dc '0-9')
+[ -z "$INTERVAL" ] && INTERVAL=14
+
+epoch() {
+  date -d "$1" +%s 2>/dev/null || date -j -f "%Y-%m-%d %H:%M:%S" "$1 00:00:00" +%s 2>/dev/null
+}
+
 AUDITS="$ROOT/context/audits"
 MISSING=""
+NOW=$(epoch "$(date +%Y-%m-%d)")
 for KIND in security-audit doc-audit; do
   LATEST=$(ls -1 "$AUDITS" 2>/dev/null | grep -- "_$KIND\.md$" | sort | tail -1)
   if [ -z "$LATEST" ]; then
@@ -56,12 +69,14 @@ for KIND in security-audit doc-audit; do
     continue
   fi
   DATE="${LATEST%%_*}"
-  DAYS=$(python3 -c 'import sys, datetime; print((datetime.date.today() - datetime.date.fromisoformat(sys.argv[1])).days)' "$DATE" 2>/dev/null || echo "")
-  if [ -n "$DAYS" ] && [ "$DAYS" -ge 14 ]; then
+  THEN=$(epoch "$DATE")
+  DAYS=""
+  [ -n "$NOW" ] && [ -n "$THEN" ] && DAYS=$(( (NOW - THEN + 43200) / 86400 ))   # +12h: a clock change must not eat a day
+  if [ -n "$DAYS" ] && [ "$DAYS" -ge "$INTERVAL" ]; then
     OUT+="AUDIT DUE: last $KIND was $DAYS days ago ($DATE). Run /$KIND."$'\n'
   fi
 done
-[ -n "$MISSING" ] && OUT+="AUDITS: none run yet. Start the 14-day cadence with:$MISSING"$'\n'
+[ -n "$MISSING" ] && OUT+="AUDITS: none run yet. Start the $INTERVAL-day cadence with:$MISSING"$'\n'
 
 [ -z "$OUT" ] && OUT="State clean: nothing claimed, nothing uncommitted, audits current."
 
@@ -70,13 +85,10 @@ if [ "$PLAIN" = "1" ]; then
   exit 0
 fi
 
-python3 -c '
-import json, sys
-print(json.dumps({
-    "hookSpecificOutput": {
-        "hookEventName": "SessionStart",
-        "additionalContext": sys.stdin.read().rstrip()
-    }
-}))' <<< "$OUT"
+# The JSON envelope is built here rather than by a helper program, so the hook needs nothing but
+# a shell: backslashes and quotes escaped, tabs turned into spaces, line ends into \n.
+ESC=$(printf '%s' "$OUT" | tr '\t' ' ' | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' | awk 'BEGIN{ORS="\\n"} {print}')
+ESC="${ESC%\\n}"
+printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}\n' "$ESC"
 
 exit 0

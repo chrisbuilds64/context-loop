@@ -15,7 +15,8 @@ how old the keys are that it uses.
 It runs in about ten minutes. It is deliberately basic. Every check here is one that has bitten
 someone; nothing is here because it is theoretically possible.
 
-**Cadence: every 14 days.** The session hook reports how old the last audit is. The date is in
+**Cadence: the number of days set as `audit-interval-days` in `context/rules.md`** (14 if the
+file or the line is missing). The session hook reports how old the last audit is. The date is in
 the filename, so the age is visible without opening anything.
 
 ## Step 0: Load context
@@ -204,7 +205,7 @@ Create `context/audits/<YYYY-MM-DD>_security-audit.md`:
 
 ## Next audit
 
-<date + 14 days>
+<date + audit-interval-days>
 ```
 
 ## Step 5: Update the state

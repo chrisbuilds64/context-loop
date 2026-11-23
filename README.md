@@ -7,7 +7,7 @@ the thing you were halfway through. Context Loop is the small habit that ends th
 starts by reading where the last one stopped, and ends by writing down what the next one needs —
 into plain files in your own folder.
 
-Six skills, a handful of files, MIT licensed. No account, no service, no telemetry.
+Nine procedures, a handful of files, MIT licensed. No account, no service, no telemetry.
 
 ```
 /session-start   loads the state, the agent's signature, and the last session's handover
@@ -25,6 +25,8 @@ Everything it writes is text you can read, correct, diff and take somewhere else
 
 | File | What it holds |
 |------|---------------|
+| `context/README.md` | the map: every file, what it holds, and what to edit to change the behaviour |
+| `context/rules.md` | how the loop behaves here, in plain text. Yours to change; an update never overwrites it |
 | `context/PROJECT-STATE.md` | what is being worked on right now |
 | `context/session-logs/` | one short log per session, ending in a handover paragraph |
 | `context/session-active.md` | which topics are claimed, so parallel sessions don't collide |
@@ -35,7 +37,7 @@ Everything it writes is text you can read, correct, diff and take somewhere else
 | `context/observations/` | what the work taught you, one file at a time |
 | `context/todo.json` | the one place open items live — with a schema beside it, and a command that guards the way in |
 
-And nine skills:
+And nine procedures. They carry the steps; the settings are in `context/rules.md`:
 
 - **`/session-start`** — loads the state, declares a topic, picks up the thread, lists what is due.
   On the very first run it walks you through drafting the agent's signature.
@@ -44,10 +46,10 @@ And nine skills:
   overruled the agent and was right. One file, two minutes. It says no to the rest.
 - **`/session-end`** — writes the log with its handover paragraph, records decisions, updates the
   state, releases the topic, commits.
-- **`/security-audit`** — every 14 days: secrets in tracked files, `.gitignore` coverage, history,
+- **`/security-audit`** — every 14 days unless you set another interval: secrets in tracked files, `.gitignore` coverage, history,
   dependencies, what the agent is allowed to do and reach, how old the keys are. It never prints a
   secret.
-- **`/doc-audit`** — every 14 days: does the documentation still say what is true?
+- **`/doc-audit`** — on the same interval: does the documentation still say what is true?
 - **`/todo`** — what is due, what is next, what is with someone else, what is blocked. Read-only.
 - **`/todo-add`** — put an item on the list mid-session, when it comes up rather than at the close.
 - **`/todo-done`** — close an item, and see what that unblocks.

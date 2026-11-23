@@ -7,10 +7,23 @@ argument-hint: "[what needs doing, in your own words]"
 
 # Todo Add
 
+**The rules of this project are in `context/rules.md`.** If you have not read that file in this
+session, read it now. Where it says something different from this procedure, the rules win.
+
 Something that comes up mid-session otherwise survives only if somebody writes it into the
 session log at the close — so precisely not when the session was long.
 
 ## How
+
+**Before the first command, once per session:** the work list needs a helper program called
+Python. Check with `python3 --version`; on Windows also try `python --version` and
+`py --version`, and use whichever answers in the commands below.
+
+If none answers, do not show the error message. Say it plainly: "The work list needs a small
+helper program called Python, and it is not on this computer yet. I can install it for you, or we
+leave the work list off. Everything else in Context Loop works without it." Install only after a
+yes (macOS: `xcode-select --install`; Windows: `winget install Python.Python.3.12`), then carry
+on. On a no, stop here and do not raise it again in this session.
 
 **1. Place it, do not ask.** Work out cluster, priority and assignee from the conversation.
 The valid values are in the file:

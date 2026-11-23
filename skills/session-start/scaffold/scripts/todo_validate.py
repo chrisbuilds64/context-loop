@@ -101,6 +101,10 @@ def references(doc):
             out.append(f"{tid}: id appears more than once")
         seen.add(tid)
 
+    uids = [t["uid"] for t in todos if t.get("uid")]
+    for u in sorted({u for u in uids if uids.count(u) > 1}):
+        out.append(f"uid {u}: appears more than once")
+
     if doc.get("meta", {}).get("defaultAssignee") not in ids["people"]:
         out.append("meta.defaultAssignee: is not in lov.people")
 

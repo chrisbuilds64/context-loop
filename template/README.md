@@ -61,7 +61,9 @@ Claude Code reads skills at startup. If it was already running when you installe
 ## What you get
 
 ```
-CLAUDE.md                      how to work here — yours to extend
+CLAUDE.md                      one sentence: read context/rules.md and follow it
+context/README.md              the map: every file, what it holds, what to edit to change behaviour
+context/rules.md               how the loop behaves here — yours to change, never overwritten
 .claude/skills/session-start/  set up on first run, then load context and pick up the thread
 .claude/skills/observe/        keep what the work taught you, mid-session, one file at a time
 .claude/skills/session-end/    write the log, update state, release the topic

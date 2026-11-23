@@ -30,7 +30,9 @@ declares a topic, picks up the last session's handover and says what is due.
 ## What you get
 
 ```
-AGENTS.md                        how to work here — yours to extend
+AGENTS.md                        one sentence: read context/rules.md and follow it
+context/README.md                the map: every file, what it holds, what to edit to change behaviour
+context/rules.md                 how the loop behaves here — yours to change, never overwritten
 .opencode/skills/                the nine procedures, each one also a slash command
 .opencode/commands/session-start.md   the one command that hands the state over first
 .opencode/session-context.sh     reports claimed topics, uncommitted work, due audits

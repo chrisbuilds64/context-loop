@@ -26,7 +26,10 @@ a first run that talks for five minutes without a file appearing looks broken, a
 an earlier version of this step sent the agent hunting for a folder outside its reach.
 
 If `scaffold/` is genuinely not readable from where you are, do not search for it. Write the
-files yourself, short, each with a heading that says what it is for: `PROJECT-STATE.md` (a Focus
+files yourself, short, each with a heading that says what it is for: `rules.md` (how the loop
+behaves here: audit interval 14 days, what a session log and the project state contain, the
+working rules, and two empty lists for the project's own steps at start and end), `README.md`
+(the map: which file holds what), `PROJECT-STATE.md` (a Focus
 line and an empty list of open items), `session-active.md` (a three-column table: topic, started,
 slug), `decisions.md` (append-only, newest at the bottom), `key-inventory.md` (secrets by name,
 never by value), `agents/agent-registry.md` (one row per agent: name, topics, signature path),
@@ -36,6 +39,36 @@ never by value), `agents/agent-registry.md` (one row per agent: name, topics, si
 
 Then say in one line what was created and carry straight on with Step 0. Do not ask permission
 first — a project without state cannot start a session, and nothing here overwrites anything.
+
+## Step 0b: State exists, but no rules file — add it
+
+**Trigger:** `context/` exists and `context/rules.md` does not. If the file is there, skip this
+step entirely and never mention it.
+
+This project was set up before the rules had a file of their own. Copy `rules.md` and `README.md`
+from `scaffold/`, beside this file, into `context/`. Do not touch anything else. If the project's
+instruction file (`CLAUDE.md`, `AGENTS.md`) holds working rules of its own, leave them where they
+are and say so: the user decides whether to move them into `rules.md`.
+
+Say in one line that the two files were added and what they are for, then carry on.
+
+## Step 0c: Bring the work-list tools up to date
+
+Read the one line in `scaffold/scripts/VERSION`, beside this file, and the one line in
+`context/scripts/VERSION`. If they are the same, skip this step entirely and never mention it.
+
+If the project's number is lower, or its file is missing, the package brings newer tools for the
+work list than this project holds:
+
+1. Copy `scaffold/scripts/todo.py`, `scaffold/scripts/todo_validate.py` and
+   `scaffold/scripts/VERSION` over the ones in `context/scripts/`. Nobody edits these by hand.
+2. `context/todo.schema.json` may hold fields the user added. Ask once before replacing it:
+   "Context Loop brings a newer description of the work list. Replace yours? If you added fields
+   of your own, say no and I add only what is new." On no, add the new fields from
+   `scaffold/todo.schema.json` to theirs and leave the rest.
+3. Never touch `context/todo.json`. It is their list.
+
+Say in one line what was updated, then carry on.
 
 ## Step 0: First run — draft the signature
 
@@ -131,6 +164,8 @@ again.
 
 Read these files. All of them, before anything else.
 
+0. `context/rules.md` — how the loop behaves in this project. **Where it differs from this
+   procedure, the rules win.**
 1. `context/agents/agent-registry.md` — which agent handles which topic
 2. `context/agents/<agent>/<agent>-signature.md` — who you are in this session
 3. `context/agents/<agent>/working-notes.md` — what you have learned about working together
@@ -144,6 +179,9 @@ in the registry's Topics column and load that agent's signature. If the registry
 agent, that is the answer and you do not ask.
 
 The chain is: **topic → agent → signature → working notes → scope.**
+
+**Then run the project's own steps**, listed in the rules under "Your own steps at the start",
+in order. If the list is empty, skip this and do not mention it.
 
 Identity comes before state. An agent that knows its role reads the same project state
 differently from one that does not.
@@ -219,7 +257,8 @@ that is due is one line here, with the skill to run it.
 
 **Not every environment has the session-start hook** — it runs in Claude Code and may not
 elsewhere. Where nothing was reported, work it out from the files instead: the newest file in
-`context/audits/` says whether an audit is due, and `context/session-active.md` says which topics
+`context/audits/` is dated in its name, and an audit is due when it is older than
+`audit-interval-days` in the rules; and `context/session-active.md` says which topics
 are claimed. Do not attribute to the hook what you worked out yourself.
 
 One line each. Name the date, do not grade the delay. You see the repository; you do not see

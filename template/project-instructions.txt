@@ -1,40 +1,24 @@
-Every session in this project runs a loop, and the loop lives in the folder.
+This project uses Context Loop. How it behaves is written in context/rules.md. Read that file at
+the start of every session and follow it. context/README.md is the map: every file the loop uses,
+what it holds, and what to edit to change the behaviour.
 
-At the start of a session, follow loop/session-start.md before doing anything else. It says what
-to read and what to report back.
-
-At the end of a session, follow loop/session-end.md. It writes the session log, records the
-decisions and updates the state. A session that is not closed leaves the next one with nothing
-to read.
-
-The truth of this project lives in context/, not in the conversation:
-
-  context/PROJECT-STATE.md   what is being worked on now
-  context/session-logs/      one short log per session, ending in a handover
-  context/decisions.md       what was decided, and why
-  context/observations/      what the work taught us, before it became a decision
-  context/agents/            who you are here, and what you have learned about working with me
-
-Two adjustments to the procedures in loop/, because they were written for a terminal:
+The procedures are plain files in loop/. Three things are different in this environment, because
+the procedures were written for a terminal:
 
 - Where they tell you to run a command such as /session-start, read the file of that name in
   loop/ instead and follow it.
 - Where they tell you to commit, do that only if this folder is a git repository. If it is not,
   say so once and carry on.
+- There is no session-start hook here. Where a procedure says the hook reports something, work it
+  out from the files instead.
 
 What I will say, and what it means:
 
   "start"        begin the session   (loop/session-start.md)
   "keep this"    hold on to what just happened, mid-session (loop/observe.md)
   "close"        end it              (loop/session-end.md)
+  "todo"         show the work list  (loop/todo.md, loop/todo-add.md, loop/todo-done.md)
   "security"     the security audit  (loop/security-audit.md)
-  "docs"         the documentation audit
-  "new agent"    add a second agent with a different stance
+  "docs"         the documentation audit (loop/doc-audit.md)
+  "new agent"    add a second agent with a different stance (loop/new-agent.md)
   "loop?"        list these and say which ones have run in this project before
-
-There is no session-start hook in this environment. Where a procedure says the hook reports
-something, work it out from the files instead — the newest file in context/audits/ tells you
-whether an audit is due.
-
-How to work here: read before writing. Ask before anything irreversible. If it matters, it goes
-into a file — the conversation carries the decision, the file carries the substance.

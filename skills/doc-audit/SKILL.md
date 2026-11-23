@@ -15,7 +15,8 @@ one steers the agent wrong without any error.
 This audit checks the files the loop depends on first, then the rest of the project's
 documentation. It fixes what is cheap and unambiguous, and lists what needs a person.
 
-**Cadence: every 14 days.** The session hook reports the age of the last audit.
+**Cadence: the number of days set as `audit-interval-days` in `context/rules.md`** (14 if the
+file or the line is missing). The session hook reports the age of the last audit.
 
 ## Step 0: Load context
 
@@ -170,7 +171,7 @@ Create `context/audits/<YYYY-MM-DD>_doc-audit.md`:
 
 ## Next audit
 
-<date + 14 days>
+<date + audit-interval-days>
 ```
 
 ## Step 6: Report

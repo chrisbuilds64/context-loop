@@ -17,6 +17,7 @@ import argparse
 import datetime as dt
 import json
 import sys
+import uuid
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -54,6 +55,10 @@ def load():
 def save(doc):
     """Validate, then write. A file that would not pass never reaches the disk."""
     doc["meta"]["updated"] = TODAY
+    # Every item carries a permanent uid. Lists written before uids existed get theirs on the
+    # first save, so nobody has to migrate anything by hand.
+    for t in doc["todos"]:
+        t.setdefault("uid", str(uuid.uuid4()))
     schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
     errs, _ = V.shape(doc, schema)
     refs = V.references(doc)
@@ -141,7 +146,7 @@ def cmd_add(a):
     used = [int(t["id"].rsplit("-", 1)[1]) for t in doc["todos"] if t["id"].startswith(prefix + "-")]
     tid = f"{prefix}-{max(used, default=0) + 1:02d}"
     t = {
-        "id": tid, "title": a.title, "cluster": cluster,
+        "id": tid, "uid": str(uuid.uuid4()), "title": a.title, "cluster": cluster,
         "status": want(doc, "statuses", a.status, "status") or "backlog",
         "priority": want(doc, "priorities", a.prio, "priority") or "medium",
         "assignee": want(doc, "people", a.assignee, "assignee") or doc["meta"]["defaultAssignee"],

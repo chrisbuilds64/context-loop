@@ -7,6 +7,9 @@ argument-hint: "[optional: what the new agent is for]"
 
 # New Agent
 
+**The rules of this project are in `context/rules.md`.** If you have not read that file in this
+session, read it now. Where it says something different from this procedure, the rules win.
+
 You are helping define a new agent for this project: a written identity that `/session-start`
 loads when a session declares one of its topics.
 
