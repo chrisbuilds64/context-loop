@@ -9,8 +9,13 @@ procedure, this file wins. An update of Context Loop never overwrites it.
 
 A few values that a script reads as well as the agent. Keep the form `name: value`, one per line.
 
+language: en
 audit-interval-days: 14
 done-sessions-kept: 2
+
+`language` is the language everything is written in that you read: this file, the map, the
+signature, session logs, the project state, decisions, and what the agent says to you. File
+names, the names of these settings and the names of the commands stay as they are.
 
 ## The loop
 
@@ -20,6 +25,16 @@ next one with nothing to read.
 
 `observe` runs in between, when something surprises you or turns out to have been wrong. The
 audits run on the interval set above.
+
+## A session is not a chat
+
+A session here is a stretch of work: it begins with `session-start` and ends with `session-end`.
+A chat is the window you type into. One chat can hold several sessions, and one session is
+usually one chat. Both work, because the handover is in the files and not in the chat.
+
+The cleaner way is a new chat for each session. Then the agent starts with a clear head and
+knows only what the files say, which is exactly what the next person or the next tool will know.
+The chat keeps the full conversation; the session log keeps what is worth carrying forward.
 
 ## At the start of a session
 

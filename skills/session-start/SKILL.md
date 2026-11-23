@@ -50,6 +50,10 @@ from `scaffold/`, beside this file, into `context/`. Do not touch anything else.
 instruction file (`CLAUDE.md`, `AGENTS.md`) holds working rules of its own, leave them where they
 are and say so: the user decides whether to move them into `rules.md`.
 
+The language is the one the existing signature and session logs are written in. If that is not
+English, set `language:` and translate the two files as the first run does (Step 0, "Then bring
+the rest into that language").
+
 Say in one line that the two files were added and what they are for, then carry on.
 
 ## Step 0c: Bring the work-list tools up to date
@@ -137,6 +141,20 @@ written out properly. Replace the placeholders. Delete the instructions to thems
 **Write it in the language the person answered in.** The file is theirs; the template is only
 a template.
 
+**Then bring the rest into that language.** The language of the first answer is the language of
+this project. If it is not English:
+
+1. In `context/rules.md`, set the `language:` line under Settings to its code (`de`, `fr`, `ja` …).
+2. Translate `context/rules.md` and `context/README.md` into that language, in place. Translate
+   the text, the headings and the placeholders inside the templates. Do **not** translate: the
+   names of the settings (`language`, `audit-interval-days`, `done-sessions-kept`), file and folder
+   names, command names, and anything inside backticks. Keep every section; change no rule while
+   translating it.
+3. Fill `context/PROJECT-STATE.md` in that language from now on.
+
+Do this quietly, as part of the same step. One line afterwards is enough: the rules and the map
+are now in their language, and where to find them.
+
 **Rename, and do it before you show the result.** Lowercase, one word, no spaces:
 
 1. `context/agents/main/` → `context/agents/<name>/`
@@ -165,7 +183,9 @@ again.
 Read these files. All of them, before anything else.
 
 0. `context/rules.md` — how the loop behaves in this project. **Where it differs from this
-   procedure, the rules win.**
+   procedure, the rules win.** Its `language:` setting is the language you speak and write in for
+   the whole session. The procedures name sections and fields in English ("Continuation Thread",
+   `Topic:`); in this project they may stand in that language. Match them by meaning.
 1. `context/agents/agent-registry.md` — which agent handles which topic
 2. `context/agents/<agent>/<agent>-signature.md` — who you are in this session
 3. `context/agents/<agent>/working-notes.md` — what you have learned about working together

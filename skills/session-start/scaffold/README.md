@@ -33,6 +33,7 @@ There are three parts.
 
 | You want to change | Edit in `rules.md` |
 |--------------------|--------------------|
+| the language everything is written in | `language` under Settings |
 | how often an audit is due | `audit-interval-days` under Settings |
 | what a session log contains | "What goes into a session log" |
 | what the project state contains | "What goes into the project state" |
@@ -42,6 +43,14 @@ There are three parts.
 
 Who the agent is, how it thinks and what it should not do is not a rule. That is the signature,
 in `agents/`.
+
+## Session and chat
+
+A session is a stretch of work, from `session-start` to `session-end`. A chat is the window you
+type into. They can be the same thing and do not have to be: several sessions fit into one chat,
+and a new chat for each session is the cleaner way, because the agent then knows only what the
+files say. The chat keeps everything that was said. The session log keeps what the next session
+needs.
 
 ## The procedures
 

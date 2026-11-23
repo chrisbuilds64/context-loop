@@ -16,7 +16,9 @@ next one with nothing to read.
 
 Read `context/rules.md` if you have not read it in this session. It says what a session log
 contains, what goes into the project state, how decisions are kept, and which steps of your own
-this project runs at the close. **Where it differs from this procedure, the rules win.**
+this project runs at the close. **Where it differs from this procedure, the rules win.** Its
+`language:` setting is the language everything in this procedure is written in; section and field
+names given here in English may stand in that language in the project. Match them by meaning.
 
 If the file does not exist, this project was set up before the rules had a file of their own.
 Say so in one line, close the session in the default shape (a log with What happened, Decisions,

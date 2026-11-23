@@ -64,9 +64,17 @@ way the first session start creates the `context/` folder in whichever project y
 
 ### In the Claude apps (Cowork)
 
-1. **Customize → Plugins → Add marketplace** → `chrisbuilds64/context-loop`
-2. Select **Context Loop** and **Install**
+1. **Plugins → Add → Add marketplace**, enter `chrisbuilds64/context-loop`, **Sync**
+2. On the Plugins page, search for **Context Loop**, open it and select **Add**. Confirm the
+   notice about components that run code
 3. Open a project on the folder you want to work in, and run `/session-start`
+
+The marketplace and the plugin carry the same name in the app. The first is the shelf, the second
+is what you take from it.
+
+The app asks for access to the folder before the first run. A session in the app runs on
+Anthropic's servers, so the files the agent reads leave your computer for that purpose, as with
+any work you give the app. Context Loop itself sends nothing anywhere.
 
 ### In Claude Code
 
