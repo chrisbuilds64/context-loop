@@ -126,7 +126,8 @@ empty, skip this step and do not mention it.
 
 ## Step 6: Commit
 
-Follow the rules, section "At the end of a session". By default:
+Follow the rules, section "At the end of a session", and any principle there about commits. By
+default:
 
 ```bash
 git add context/
@@ -134,6 +135,10 @@ git commit -m "session <YYYY-MM-DD>: <topic>"
 ```
 
 Check `git status` first and do not commit if nothing changed.
+
+**This commit holds `context/` and nothing else.** If the project has changes outside it that
+are not committed, say how many files and ask once whether to commit them as well. Do not commit
+the user's work unasked, and do not leave it unmentioned.
 
 **Only if the project is a git repository.** Many are not, and that is a legitimate way to use
 this. If there is no repository, say so once and do not raise it again in later sessions.
@@ -149,8 +154,8 @@ Short:
 - the name of the session log;
 - the state, as a count: "State: 2 lines added, 1 removed, the rest untouched";
 - what was committed, and whether it was pushed;
-- anything still open that carries a date. If the project keeps a work list and such an item is
-  not on it, name it and say that `/todo-add` puts it there. Do not add it unasked.
+- anything still open that carries a date. If the project has a work list and such an item is
+  not on it yet, offer once to put it there; add it after a yes, with the `todo-add` procedure.
 
 Then whatever the rules ask to be said after closing, in one sentence.
 

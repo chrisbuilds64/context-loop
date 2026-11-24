@@ -3,6 +3,10 @@
 # Scratch space for the agent. Never committed.
 tmp/
 
+# Python bytecode, should a run leave any.
+__pycache__/
+*.pyc
+
 # Never commit these. /security-audit checks that this list is still here.
 .env
 .env.*

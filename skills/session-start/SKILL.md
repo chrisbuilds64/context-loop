@@ -205,10 +205,14 @@ are now in their language, and where to find them.
 
 1. `context/agents/main/` → `context/agents/<name>/`
 2. `<name>/main-signature.md` → `<name>/<name>-signature.md`
-3. In `context/agents/agent-registry.md`, replace `Main` and `main/main-signature.md` in the
-   table row with the new name and path.
+3. In `context/agents/agent-registry.md`, in the first table (the one with a single row),
+   replace `Main` and `main/main-signature.md` with the new name, capitalised, and the new path.
+   The second table further down is an example; leave it.
+4. In `<name>/working-notes.md`, put the new name into the heading and remove the placeholder
+   note under "Notes", so the file starts empty.
 
-Then set the **Focus** line in `context/PROJECT-STATE.md` from the first answer.
+Then set the **Focus** line in `context/PROJECT-STATE.md` from the first answer, and today's
+date at its top.
 
 ### Then show it and hand it over
 
@@ -265,7 +269,8 @@ closed by hand, a line was lost, the project is older than the index. This step 
 that harmless.
 
 List the files in `context/session-logs/` (not its `README.md`) and compare the names with the
-log files named in `context/session-index.md`.
+log files named in `context/session-index.md`. The line in the code block at the top of the index
+shows the format; it is not a session.
 
 - **Every log has a line:** carry on and do not mention this step.
 - **A log has no line:** read the head of that log, the first lines down to the first `---`, and
@@ -290,7 +295,8 @@ Otherwise ask once, **with the AskUserQuestion tool** — the small dialog, not 
 Header `Topic`. First option: the most likely topic, which is the topic of the last line of the
 index unless PROJECT-STATE says the focus moved. Then two or three more from `context/topics.md`,
 the ones used most recently. "Other" is always there for a topic that is none of them.
-If the tool is not available, ask the same question in plain text.
+If the tool is not available, ask the same question in plain text. If there are no topics yet,
+there is nothing to offer: ask in plain words what this session is about.
 
 Do not ask anything else. Not the time, not the mood, not the location. A field that has to be
 invented each session is worse than no field.
@@ -393,13 +399,14 @@ that is due is one line here, with the skill to run it.
 
 **The work list is where dated items live.** If `context/todo.json` exists, run
 `python3 context/scripts/todo.py list --due 0` (on Windows `python` or `py`) and list the items
-it prints; if it prints none, say nothing about it. If Python does not answer, skip this without
+it prints; if it lists no item, say nothing about it. If Python does not answer, skip this without
 a word: the `todo` procedures explain that when the user asks for the list.
 
 **Not every environment has the session-start hook** — it runs in Claude Code and may not
-elsewhere. Where nothing was reported, work it out from the files instead: the newest file in
-`context/audits/` is dated in its name, and an audit is due when it is older than
-`audit-interval-days` in the rules; and `context/session-active.md` says which topics
+elsewhere. Where nothing was reported, work it out from the files instead: the newest file of
+each kind in `context/audits/` (`_security-audit.md`, `_doc-audit.md`) is dated in its name, and
+an audit is due when it is older than `audit-interval-days` in the rules. If there is no file of
+a kind yet, that audit has never run: say so in one line, with the skill that starts it; and `context/session-active.md` says which topics
 are claimed. Do not attribute to the hook what you worked out yourself.
 
 One line each. Name the date, do not grade the delay. You see the repository; you do not see

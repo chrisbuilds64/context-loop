@@ -25,7 +25,7 @@ There are three parts.
 | `observations/` | what the work taught you, before it became a decision |
 | `audits/` | what the two audits found, dated in the filename |
 | `key-inventory.md` | which keys exist and how old they are, never their values |
-| `agents/<name>/<name>-signature.md` | who the agent is. Yours; the agent reads it and does not edit it |
+| `agents/<name>/<name>-signature.md` | who the agent is. Drafted from your answers on the first run, yours from then on; the agent reads it and does not edit it |
 | `agents/<name>/working-notes.md` | what the agent has learned about working here |
 | `agents/agent-registry.md` | which agent handles which topic |
 
@@ -63,7 +63,7 @@ and it is why the head of a log and the topic of a decision have to be filled in
 
 | File | Written by |
 |------|------------|
-| the signature | you. The agent reads it and never edits it |
+| the signature | you. The first run drafts it from your answers; after that the agent reads it and never edits it |
 | `rules.md` | you. The agent adds a line under "Principles" or "About this project" only after your yes |
 | working notes | the agent, dated, about how you work together |
 | logs, index, decisions, state | the agent, at the close. You may correct any of them |

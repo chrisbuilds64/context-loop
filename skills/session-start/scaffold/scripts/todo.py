@@ -21,6 +21,10 @@ import sys
 import uuid
 from pathlib import Path
 
+# No bytecode beside the scripts: context/ is committed at every close, and a cache folder in it
+# would travel into the user's history.
+sys.dont_write_bytecode = True
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import todo_validate as V
 

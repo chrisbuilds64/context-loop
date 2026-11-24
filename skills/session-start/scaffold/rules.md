@@ -47,7 +47,8 @@ The chat keeps the full conversation; the session log keeps what is worth carryi
 
 ## At the start of a session
 
-- Ask one thing only: the topic. Not the time, not the mood, not the place.
+- Ask one thing only: the topic. Not the time, not the mood, not the place. (The very first
+  start asks three more questions, once, to draft the agent's signature.)
 - Pick up the thread from the last session on this topic in two or three sentences. Begin with
   the sentence that session left, do not read it out. If there was none on this topic, say so.
 - List what is due, one line each. Name the date. Do not grade the delay.
@@ -95,6 +96,8 @@ of its slug.
 
 It holds what happened in this session, and nothing else: what was finished, what was decided,
 what broke, what is still open, which commits were made. Factual, grouped by subject, no padding.
+"Commits" lists the commits made while working; the commit of the close itself is not listed,
+because it is the one that carries this log.
 
 ```markdown
 # Session <YYYY-MM-DD> — <title>
@@ -174,13 +177,14 @@ what is blocked. It is updated in place at every close, never rebuilt from memor
 
 - It is state, not history. What happened lives in the session logs.
 - Every line begins with its topic in square brackets: `[website] contact form sends twice`.
+  A section with nothing in it says `(none yet)`; the first real line takes its place.
 - A session reads the file again immediately before writing, and changes only lines of its own
   topics. Lines of other topics stay as they are; another session may have written them an hour
   ago.
 - The Focus line changes only when you say the focus has changed.
 - The "Done" section keeps the last sessions of each topic, as many as `done-sessions-kept` says.
-- Open items with a date, an owner or a status belong on the work list (`context/todo.json`) when
-  it is in use. The state then names the item, not a second copy of it.
+- An open item with a date or an owner belongs on the work list (`context/todo.json`), if the
+  project has one. The state then names the item with its number, not a second copy of it.
 - Never keep a second, numbered copy beside it. There is one current state.
 
 ## How decisions are kept
@@ -216,14 +220,18 @@ Append only, at the bottom. A decision that is reversed is a new entry that says
   done from now on, or a fact about the project that will still be true next month, propose it as
   one line for "Principles" or "About this project" below. Write it after a yes, right then, not
   at the close: a session that is never closed keeps what was written while it ran.
+- **An open item with a date goes on the work list when it comes up.** If the project has a
+  work list, offer once to add it (`todo-add`), then and there. Do not add it unasked, and do
+  not keep it only in your head until the close.
 - **Density over volume.** Short and precise beats long and complete. The conversation carries
   the decision; the file carries the substance.
 
 ## Principles
 
 How things are done in this project, as standing rules. One line each, with the date and the
-occasion. The agent proposes a line, you say yes, it is added at the bottom. You may edit or
-delete any of them.
+occasion. The agent proposes a line, you say yes, it is added at the bottom; the first one takes
+the place of `(none yet)`. You may edit or delete any of them. They hold for the procedures too:
+a principle about commit messages applies to the commit at the close.
 
 - (none yet)
 

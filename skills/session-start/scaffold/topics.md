@@ -12,4 +12,4 @@ moving one into "Also called" of the other; no log is edited.
 
 ---
 
-*Empty table = no session closed yet. The first topic appears with the first session.*
+*Empty table = no session started yet. The first topic appears with the first session.*
