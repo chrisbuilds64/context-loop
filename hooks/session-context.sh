@@ -24,10 +24,15 @@ PLAIN=0
 [ "${1:-}" = "--plain" ] && PLAIN=1
 OUT=""
 
+# A project without context/ does not use the loop, or has not started yet. Either way there is
+# nothing to report: installed as a plugin, this hook runs in every project the user opens.
+[ -d "$ROOT/context" ] || exit 0
+
 # --- Topics currently claimed ----------------------------------------------
 ACTIVE="$ROOT/context/session-active.md"
 if [ -f "$ACTIVE" ]; then
-  ROWS=$(grep '^|' "$ACTIVE" 2>/dev/null | grep -v '^| Topic' | grep -v '^|--' || true)
+  # The first two table lines are the header and its rule, in whatever language the project uses.
+  ROWS=$(grep '^|' "$ACTIVE" 2>/dev/null | tail -n +3 || true)
   if [ -n "$ROWS" ]; then
     OUT+="TOPICS CLAIMED (another session may be running, or one ended without /session-end):"$'\n'
     OUT+="$ROWS"$'\n\n'

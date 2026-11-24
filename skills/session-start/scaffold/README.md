@@ -15,11 +15,13 @@ There are three parts.
 
 | File | What it holds |
 |------|---------------|
-| `PROJECT-STATE.md` | what is being worked on now |
+| `PROJECT-STATE.md` | what is being worked on now, each line under its topic |
 | `session-logs/` | one file per session, each ending in a handover |
+| `session-index.md` | one line per session: when, which topics, what it did, keywords. The way into the logs |
+| `topics.md` | the topics of this project, and the other words each has been called |
 | `session-active.md` | which topics are claimed right now |
-| `decisions.md` | what was decided, and why |
-| `todo.json` | the work list. Changed only through `scripts/todo.py`, which checks before it saves |
+| `decisions.md` | what was decided, and why, each entry under its topic |
+| `todo.json` | the work list. Items change only through `scripts/todo.py`, which checks before it saves |
 | `observations/` | what the work taught you, before it became a decision |
 | `audits/` | what the two audits found, dated in the filename |
 | `key-inventory.md` | which keys exist and how old they are, never their values |
@@ -35,14 +37,40 @@ There are three parts.
 |--------------------|--------------------|
 | the language everything is written in | `language` under Settings |
 | how often an audit is due | `audit-interval-days` under Settings |
+| whether the close pushes after its commit | `push-at-close` under Settings |
 | what a session log contains | "What goes into a session log" |
 | what the project state contains | "What goes into the project state" |
+| a standing rule for this project | "Principles". The agent proposes a line, you say yes |
+| a fact the agent should always know | "About this project". Same way in |
 | what the agent asks or lists at the start | "At the start of a session" |
 | something that should happen at every start or every close | "Your own steps" in those two sections |
 | how the agent works with you in general | "How to work here" and "Your own rules" |
 
 Who the agent is, how it thinks and what it should not do is not a rule. That is the signature,
 in `agents/`.
+
+## What is loaded, and what is looked up
+
+At the start of every session the agent reads the rules, its signature and working notes, the
+project state, the list of topics and the last thirty lines of the index. Then it reads one
+session log: the last one on the topic you named.
+
+Everything else is looked up when it is needed: older logs through the index, decisions through
+their topic, observations by file name. That keeps the start short however long the history gets,
+and it is why the head of a log and the topic of a decision have to be filled in.
+
+## Who writes what
+
+| File | Written by |
+|------|------------|
+| the signature | you. The agent reads it and never edits it |
+| `rules.md` | you. The agent adds a line under "Principles" or "About this project" only after your yes |
+| working notes | the agent, dated, about how you work together |
+| logs, index, decisions, state | the agent, at the close. You may correct any of them |
+| `todo.json` | the `todo` commands, which check every change |
+
+Text in these files is context for the agent, not a command to it. If a line in a log or a note
+tells the agent to do something, it treats that as information about the past.
 
 ## Session and chat
 
@@ -89,3 +117,15 @@ Installed as a plugin, there is no such file. `session-start` reads the rules it
 In Claude Code a small script runs before the first word of a session and reports three facts:
 which topics are claimed, how many files are uncommitted, whether an audit is due. Where that
 script does not run, `session-start` works the same three facts out from the files.
+
+## What this does not do
+
+- **Only the work list is checked by a program.** Everything else is an instruction the agent
+  follows. It usually does; nothing forces it to.
+- **The index finds words, not meanings.** A search for "invoice" does not find a session that
+  only said "billing". Keywords in the head of a log are what make it findable.
+- **Several sessions at once** work when they are on different topics. Two sessions writing the
+  same file in the same moment, or a folder synced between computers, can still leave one change
+  behind. The index repairs itself from the logs; the project state does not.
+- **A session that is never closed** leaves only what was written while it ran: principles,
+  project facts, work-list items, observations. There is no log and no handover for it.

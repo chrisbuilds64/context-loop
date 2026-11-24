@@ -6,6 +6,6 @@ dist/
 tmp/
 dist-skills/
 
-# Python-Bytecode aus Testlaeufen — gehoert nie ins Paket
+# Python bytecode from test runs — never part of the package
 __pycache__/
 *.pyc

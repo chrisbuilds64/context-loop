@@ -21,7 +21,8 @@ file or the line is missing). The session hook reports the age of the last audit
 ## Step 0: Load context
 
 1. The newest `context/audits/*_doc-audit.md` — the previous audit. Open findings carry forward.
-2. `context/PROJECT-STATE.md`, the newest session log, `context/session-active.md`.
+2. `context/PROJECT-STATE.md`, `context/session-index.md`, `context/topics.md`,
+   `context/session-active.md`, and the session log named in the last line of the index.
 
 ## Step 1: The loop's own files
 
@@ -29,11 +30,13 @@ These come first because they are read every session.
 
 ### 1.1 State against history
 
-`PROJECT-STATE.md` carries an **Updated** date. The newest session log carries a date in its
-filename. If the state is older than the last log, the last session did not update it — finding,
-and fix it now from that log.
+`PROJECT-STATE.md` carries an **Updated** date. The last line of the index carries the time the
+newest session closed. If the state is older than that, the last session did not update it —
+finding, and fix it now from that log.
 
-"Done — last two sessions" must name the two newest logs. Older entries move out.
+The "Done" section keeps the last sessions of each topic, as many as `done-sessions-kept` in the
+rules says. Older entries move out. Every line of the state begins with a topic in square
+brackets; a line without one is a finding, and the topic is usually plain from the line.
 
 ### 1.2 Claimed topics
 
@@ -43,19 +46,50 @@ do not delete them yourself.
 
 ### 1.3 Session logs
 
-For every file in `context/session-logs/`:
+For every file in `context/session-logs/`, the head must name its topics. The field names of
+the head are the same in every language, so this can be checked mechanically:
 
 ```bash
 ls context/session-logs/2*.md 2>/dev/null | while read -r f; do
-  grep -q '^## Continuation Thread' "$f" || echo "no continuation thread: $f"
-  grep -q '^\*\*Topic:\*\*' "$f" || echo "no topic: $f"
+  grep -qE '^\*\*Topics?:\*\*' "$f" || echo "no topic: $f"
+  grep -q '^\*\*Closed:\*\*' "$f" || echo "no closing time: $f"
 done
 ```
 
-A log without a Continuation Thread has no handover in it. It cannot be written after the fact
-— note it, and check that the *next* session's log did not start from nothing.
+A log with `Topic` instead of `Topics` and without `Closed` was written before the index existed.
+That is not a finding by itself; count them and name the number once.
+
+The last section of every log must be the handover: "Continuation Thread" in English, under its
+own name in the language the rules set. Open the logs of the last interval and check by reading,
+not by searching for the English words. A log without a handover cannot get one after the fact,
+because the session is over: note it, and check that the *next* session on that topic did not
+start from nothing. A log marked as reconstructed is the exception; it says so itself.
 
 Filenames must be `YYYY-MM-DD_slug.md`. One that is not sorts in the wrong place.
+
+### 1.3b The index and the topics
+
+The index is the way into the history, so it has to be complete:
+
+```bash
+ls context/session-logs/2*.md 2>/dev/null | while read -r f; do
+  grep -qF "$(basename "$f")" context/session-index.md || echo "not in the index: $f"
+done
+grep -oE '\| [^|]*\.md \|' context/session-index.md | tr -d '| ' | while read -r n; do
+  [ -e "context/session-logs/$n" ] || echo "index names a log that is not there: $n"
+done
+```
+
+- A log that is not in the index: add its line now, from the head of the log, as
+  `/session-start` does. This is a fix, not a question.
+- A line that names a missing log: finding. Ask before removing the line.
+- A line whose topics or summary differ from the head of its log: the log is right. Rewrite the
+  line.
+- A topic in the index that is not in `context/topics.md`: add the row.
+
+Then look at `context/topics.md` for names that are probably one topic: two names that are close
+in wording or meaning, and topics with a single session. List them as candidates and ask. Joining
+two means moving one name into "Also called" of the other; no log and no index line is edited.
 
 ### 1.4 Signatures and registry
 
@@ -71,8 +105,9 @@ Filenames must be `YYYY-MM-DD_slug.md`. One that is not sorts in the wrong place
 grep -rnoE '20[0-9]{2}-[0-9]{2}-[0-9]{2}' context/PROJECT-STATE.md
 ```
 
-Any date in the past next to an open item (`- [ ]`) is listed. Not graded — named. The person
-decides whether it was missed or moved.
+Any date in the past on a line under "Working on now", "Next" or "Blocked" is listed. Not graded
+— named. The person decides whether it was missed or moved. If the project keeps a work list,
+`python3 context/scripts/todo.py list --due 0` names the dated items there.
 
 ## Step 2: The project's documentation
 
@@ -130,7 +165,7 @@ the one that matches the repository wins.
 | Level | Means |
 |---|---|
 | HIGH | steers the next session wrong: wrong path in CLAUDE.md, state older than the last log, unfilled signature |
-| MEDIUM | a broken link, a log without a thread, a registry row with no file |
+| MEDIUM | a broken link, a log without a handover, a log missing from the index, a registry row with no file |
 | LOW | stale but correct, cosmetic |
 
 Findings are numbered per audit (1, 2, 3 …), not across audits.
@@ -138,8 +173,9 @@ Findings are numbered per audit (1, 2, 3 …), not across audits.
 ## Step 4: Fix what is cheap
 
 Fix in this session, without asking: a stale Updated date on `PROJECT-STATE.md` when the log
-says what happened, a broken relative link whose target obviously moved, a missing registry row
-for a directory that exists.
+says what happened, a line missing from the index, a topic missing from `context/topics.md`, a
+broken relative link whose target obviously moved, a missing registry row for a directory that
+exists.
 
 Ask before: deleting anything, rewriting a signature, removing a claimed topic, changing a
 status the person set.

@@ -54,5 +54,6 @@ and only the record is late.
 ## When the command refuses
 
 It does not save if the change would damage the file, and it says why. **Read the reason and
-report it; do not work around it.** There is no second way into the file, and that is the
-point.
+report it; do not work around it.** Items change through this command and no other way, and
+that is the point. An item that is closed already is refused too: the closing date does not move
+by accident.

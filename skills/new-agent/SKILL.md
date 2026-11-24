@@ -81,11 +81,13 @@ empty, with the rule that the signature outranks the notes.
 
 ## Step 5: Fix the routing
 
-Add a row to the registry: agent, role, signature path, topics.
+Add a row to the registry: agent, role, signature path, topics. Write the topics by their names
+in `context/topics.md`, and add a topic there if the new agent brings one.
 
 **Then fix the incumbent's row.** While there was one agent, its Topics column said `all`, which
 was true and did nothing. With two agents `all` makes routing ambiguous, so the first agent needs
-a real scope or an explicit `default`. Do not leave this — an ambiguous registry means
+a real scope or an explicit `default`: `/session-start` sends every topic that no row names to
+the agent marked `default`. Do not leave this — an ambiguous registry means
 `/session-start` has to ask every time, and the whole point is that it does not.
 
 ## Step 6: Show it and hand it over

@@ -1,0 +1,3 @@
+# Two sessions that each add a line at the end of these files do not conflict: keep both lines.
+context/session-index.md merge=union
+context/decisions.md merge=union

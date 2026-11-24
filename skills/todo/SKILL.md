@@ -24,9 +24,9 @@ leave the work list off. Everything else in Context Loop works without it." Inst
 yes (macOS: `xcode-select --install`; Windows: `winget install Python.Python.3.12`), then carry
 on. On a no, stop here and do not raise it again in this session.
 
-Everything goes through `context/scripts/todo.py`. Do not read the JSON file directly and
-never edit it by hand — the command is the only way in, and it knows the file's own value
-lists.
+Everything goes through `context/scripts/todo.py`. Do not read the JSON file directly and do
+not edit items by hand — the command is the way in, and it knows the file's own value lists
+(`todo.py values`).
 
 **Without an argument** — the standard view, three calls:
 

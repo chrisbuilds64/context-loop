@@ -47,10 +47,13 @@ case "$MODE" in
     NAME="$(basename "$SKILL")"
     strip_frontmatter "$SKILL/SKILL.md" > "$OUT/loop/$NAME.md"
   done
+  # The starting files travel beside the procedures here as well: session-start reads them from
+  # "scaffold/ beside this file" to bring an older project up to date, in every layout.
+  cp -R "$ROOT/skills/session-start/scaffold" "$OUT/loop/scaffold"
   cp "$ROOT/template/project-instructions.txt" "$OUT/"
   cp "$ROOT/template/README-app.md" "$OUT/README.md"
 
-  COUNT=$(ls -1 "$OUT/loop" | wc -l | tr -d ' ')
+  COUNT=$(find "$OUT/loop" -maxdepth 1 -name '*.md' | wc -l | tr -d ' ')
   [ "$COUNT" = "9" ] || { echo "assemble: expected 9 procedures, found $COUNT" >&2; exit 1; }
   ;;
 
@@ -64,10 +67,11 @@ case "$MODE" in
     NAME="$(basename "$SKILL")"
     strip_frontmatter "$SKILL/SKILL.md" > "$OUT/loop/$NAME.md"
   done
+  cp -R "$ROOT/skills/session-start/scaffold" "$OUT/loop/scaffold"
   cp "$ROOT/template/project-instructions.txt" "$OUT/AGENTS.md"
   cp "$ROOT/template/README-agents.md" "$OUT/README.md"
 
-  COUNT=$(ls -1 "$OUT/loop" | wc -l | tr -d ' ')
+  COUNT=$(find "$OUT/loop" -maxdepth 1 -name '*.md' | wc -l | tr -d ' ')
   [ "$COUNT" = "9" ] || { echo "assemble: expected 9 procedures, found $COUNT" >&2; exit 1; }
   ;;
 
@@ -82,6 +86,7 @@ case "$MODE" in
   cp "$ROOT/adapters/opencode/opencode.json" "$OUT/opencode.json"
   cp "$ROOT/template/CLAUDE.md" "$OUT/AGENTS.md"
   cp "$ROOT/template/.gitignore" "$OUT/.gitignore"
+  cp "$ROOT/template/.gitattributes" "$OUT/.gitattributes"
   cp "$ROOT/template/README-opencode.md" "$OUT/README.md"
   chmod +x "$OUT/.opencode/session-context.sh"
 
@@ -99,6 +104,7 @@ case "$MODE" in
   cp "$ROOT/install/settings.json" "$OUT/.claude/settings.json"
   cp "$ROOT/template/CLAUDE.md" "$OUT/CLAUDE.md"
   cp "$ROOT/template/.gitignore" "$OUT/.gitignore"
+  cp "$ROOT/template/.gitattributes" "$OUT/.gitattributes"
   cp "$ROOT/template/README.md" "$OUT/README.md"
   chmod +x "$OUT/.claude/hooks/session-context.sh"
 

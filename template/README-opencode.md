@@ -23,7 +23,7 @@ Then, in OpenCode:
 ```
 
 The first run asks three questions and writes the agent's signature. Every run after that
-declares a topic, picks up the last session's handover and says what is due.
+declares a topic, picks up the last handover on that topic and says what is due.
 
 **If the commands do not show up:** OpenCode reads skills and config at startup. Restart it.
 
@@ -34,12 +34,15 @@ AGENTS.md                        one sentence: read context/rules.md and follow 
 context/README.md                the map: every file, what it holds, what to edit to change behaviour
 context/rules.md                 how the loop behaves here — yours to change, never overwritten
 .opencode/skills/                the nine procedures, each one also a slash command
-.opencode/commands/session-start.md   the one command that hands the state over first
+.opencode/commands/              one command per procedure; session-start hands the state over first
 .opencode/session-context.sh     reports claimed topics, uncommitted work, due audits
 opencode.json                    points at AGENTS.md
 context/PROJECT-STATE.md         what is being worked on now
 context/session-active.md        which topics are claimed
 context/session-logs/            one file per session, each ending in a Continuation Thread
+context/session-index.md         one line per session — the way into the logs
+context/topics.md                the topics of the project and what else they have been called
+context/todo.json                the work list, changed through context/scripts/todo.py
 context/agents/                  who the agent is, and which agent handles what
 context/decisions.md             what was decided and why — append-only
 context/key-inventory.md         every key by name and age, never by value
@@ -52,11 +55,11 @@ example-session-log.md           what a good log looks like — an example, not 
 ## The loop
 
 ```
-/session-start   loads the state, the signature, and the last session's handover
+/session-start   loads the state, the signature, and the last handover on your topic
    ... work ...
 /observe         keeps the thing you noticed at 14:20 and cannot reconstruct at 19:00
    ... work ...
-/session-end     writes the log, records decisions, updates the state, releases the topic
+/session-end     writes the log and its index line, records decisions, updates the state
 ```
 
 Every 14 days: `/security-audit` and `/doc-audit`. The state block at the top of

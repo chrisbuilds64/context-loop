@@ -9,8 +9,11 @@ stopped — and the part most people leave out.*
 # Session 2026-01-15 — Retry logic, and the timeout that was never the problem
 
 **Date:** 2026-01-15
+**Closed:** 2026-01-15 17:40
 **Agent:** Main
-**Topic:** api-client
+**Topics:** api-client
+**Summary:** Nightly import fixed: an empty body on a 200 now fails instead of importing nothing.
+**Keywords:** nightly import, rate limit, empty 200, retry, backoff
 
 ---
 
@@ -37,8 +40,8 @@ weeks. A job that breaks gets fixed the same day; a job that silently does nothi
 
 ## Open
 
-- [ ] Same empty-body pattern probably exists in the export path — not checked
-- [ ] Ask the vendor whether the empty 200 is documented anywhere (2026-01-22)
+- Same empty-body pattern probably exists in the export path — not checked
+- Ask the vendor whether the empty 200 is documented anywhere (2026-01-22)
 
 ---
 
@@ -50,12 +53,10 @@ weeks. A job that breaks gets fixed the same day; a job that silently does nothi
 
 ## Continuation Thread
 
-**Still open:** We fixed the one place that hurt. The real question is how many other calls in
-this codebase treat a 200 as proof that something arrived — and I did not look, because the
-nightly job was on fire.
+**Still open:** We fixed the one place that hurt. Nobody has looked at how many other calls in
+this codebase treat a 200 as proof that something arrived.
 
 **Next natural sentence:** "How many other places do we assume a 200 means we got data?"
 
-**Energy:** Good. Two hours, and most of it went on the wrong theory — the timeout felt obvious
-and was never involved. Worth remembering next time: check what came back before checking how
-long it took.
+**Energy:** Good. Most of the two hours went on the wrong theory, the timeout. Next time: check
+what came back before checking how long it took.

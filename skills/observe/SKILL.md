@@ -61,7 +61,7 @@ naming the phenomenon rather than the fix — `agent-rebuilt-after-new-informati
 ```markdown
 # Observation — YYYY-MM-DD
 
-**Topic:** [the session topic this came out of]
+**Topic:** [the session topic this came out of, by its name in `context/topics.md`]
 **Signal:** [strong / worth keeping — if the second, one line on why you kept it anyway]
 
 ## Context
@@ -116,6 +116,10 @@ Four lines, no more:
 
 **On that last one: say it, do not act on it.** A cluster is a suggestion. What becomes of it is
 theirs to decide, and the file has already done its job by existing when that decision comes.
+
+**Carry forward is carried out at the close.** `/session-end` takes the observations of the
+session whose "Carry forward" names `decisions.md` or the working notes and proposes the entry.
+Nothing has to be remembered until then; the file says where it goes.
 
 ## Do not
 

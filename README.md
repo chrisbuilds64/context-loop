@@ -10,14 +10,16 @@ into plain files in your own folder.
 Nine procedures, a handful of files, MIT licensed. No account, no service, no telemetry.
 
 ```
-/session-start   loads the state, the agent's signature, and the last session's handover
+/session-start   loads the state, the agent's signature, and the last handover on your topic
    ... work ...
 /observe         keeps the thing you noticed at 14:20 and can't reconstruct at 19:00
    ... work ...
-/session-end     writes the session log, records decisions, updates the state
+/session-end     writes the session log, adds it to the index, records decisions, updates the state
 ```
 
-Everything it writes is text you can read, correct, diff and take somewhere else.
+Everything it writes is text you can read, correct, diff and take somewhere else. There is no
+database and no vector search in it: the truth is in the files, and one small index file is the
+way into them.
 
 ---
 
@@ -27,25 +29,27 @@ Everything it writes is text you can read, correct, diff and take somewhere else
 |------|---------------|
 | `context/README.md` | the map: every file, what it holds, and what to edit to change the behaviour |
 | `context/rules.md` | how the loop behaves here, in plain text. Yours to change; an update never overwrites it |
-| `context/PROJECT-STATE.md` | what is being worked on right now |
+| `context/PROJECT-STATE.md` | what is being worked on right now, each line under its topic |
 | `context/session-logs/` | one short log per session, ending in a handover paragraph |
-| `context/session-active.md` | which topics are claimed, so parallel sessions don't collide |
+| `context/session-index.md` | one line per session: when, which topics, what it did, keywords. The way into the history |
+| `context/topics.md` | the topics of the project, and the other words each has been called |
+| `context/session-active.md` | which topics are claimed, so a second session on the same topic is noticed |
 | `context/agents/<name>/` | the agent's signature and what it has learned about working with you |
 | `context/decisions.md` | what was decided and why, so it isn't re-argued next month |
 | `context/key-inventory.md` | every secret by name — never by value — and how old it is |
 | `context/audits/` | what the two audits found, dated |
 | `context/observations/` | what the work taught you, one file at a time |
-| `context/todo.json` | the one place open items live — with a schema beside it, and a command that guards the way in |
+| `context/todo.json` | the work list: open items with a date, an owner and a status — with a schema beside it, and a command that checks every change |
 
 And nine procedures. They carry the steps; the settings are in `context/rules.md`:
 
-- **`/session-start`** — loads the state, declares a topic, picks up the thread, lists what is due.
-  On the very first run it walks you through drafting the agent's signature.
+- **`/session-start`** — loads the state, declares a topic, picks up the thread of that topic,
+  lists what is due. On the very first run it walks you through drafting the agent's signature.
 - **`/observe`** — mid-session, when you notice something: friction that points at something
   structural, a decision whose reasoning will be invisible in three months, a moment where somebody
   overruled the agent and was right. One file, two minutes. It says no to the rest.
-- **`/session-end`** — writes the log with its handover paragraph, records decisions, updates the
-  state, releases the topic, commits.
+- **`/session-end`** — writes the log with its handover paragraph, adds its line to the index,
+  records decisions, updates the state in place, releases the topic, commits.
 - **`/security-audit`** — every 14 days unless you set another interval: secrets in tracked files, `.gitignore` coverage, history,
   dependencies, what the agent is allowed to do and reach, how old the keys are. It never prints a
   secret.
@@ -54,6 +58,63 @@ And nine procedures. They carry the steps; the settings are in `context/rules.md
 - **`/todo-add`** — put an item on the list mid-session, when it comes up rather than at the close.
 - **`/todo-done`** — close an item, and see what that unblocks.
 - **`/new-agent`** — for the day a piece of work needs a different stance than the agent you have.
+
+---
+
+## How it holds together
+
+**Layers by how long they last, not by subject.** What is loaded at every start is small and
+changes slowly; what grows is looked up.
+
+| Layer | File | At the start |
+|---|---|---|
+| How things are done here, and what this project is | `rules.md` | read |
+| Who the agent is · what it has learned about working with you | signature · working notes | read |
+| What is true right now | `PROJECT-STATE.md` | read |
+| Which sessions there were | `session-index.md` | last thirty lines read |
+| Where the last session on this topic stopped | one session log | read |
+| What was decided, and why | `decisions.md` | looked up by topic |
+| What the work taught you | `observations/` | looked up |
+| What is open | `todo.json` | what is due is listed |
+
+**Two movements.** A start reads. A close sorts: what happened goes into the log, what was
+decided into the decisions, what is true now into the state, a standing rule into the rules. The
+index line is a copy of the head of the log, so it can always be rebuilt from the logs.
+
+**Topics are names, not guesses.** You can call a topic whatever comes to mind. The agent brings
+it to one name from `topics.md`, says so, and remembers the word. The thread of a topic is then
+an exact match, also when several sessions run side by side and close in any order.
+
+In the vocabulary the field uses: session logs are episodic memory, the last section of each is
+a handoff, the project state is the active context, `decisions.md` is a decision log, `rules.md`
+is an instruction file, and the index is progressive disclosure, the same pattern as an agent's
+built-in memory index or a list of skills. What is different here is that all of it sits in
+files no tool owns.
+
+## What it does not do
+
+Better read here than found out later.
+
+| | |
+|---|---|
+| **Checked by a program** | the work list (`todo.py` refuses a change that would break it) and the hook's three facts |
+| **Instructed, not enforced** | everything else. The procedures and `rules.md` are text the agent follows. It usually does; nothing forces it to, and a weaker model follows less of it |
+
+- **No search by meaning.** The index finds words. A session about "billing" is not found by
+  "invoice" unless one of them is in its keywords. That is the price of having no database, and
+  at a few hundred sessions it is a fair one.
+- **Several sessions at once** are meant to work on different topics: each one reads a shared
+  file again before changing it and touches only its own lines. Two sessions writing in the same
+  moment, or a folder synced between computers, can still lose a change. The index repairs itself
+  from the logs; the project state does not.
+- **A session that is never closed** leaves no log and no handover, only what was written while
+  it ran. `/session-start` notices the open session and asks; it can rebuild a thin log from the
+  traces, and says that it is a reconstruction.
+- **What is written into these files is read as context.** A line in a log or a note is
+  information about the past, not an instruction. The signature is yours alone; the agent adds
+  to `rules.md` only a line you said yes to.
+- **Not in this stage:** syncing between devices, a team working on one loop, automatic
+  shortening of old logs.
 
 ---
 
@@ -125,7 +186,8 @@ in this layout is specific to one vendor.
 ### Without installing anything
 
 Four packages in [Releases](https://github.com/chrisbuilds64/context-loop/releases), for when a
-plugin is not wanted or not possible:
+plugin is not wanted or not possible. They are built from this repository by
+`install/build-zip.sh`; if the release is older than what you read here, build them yourself:
 
 - **`ContextLoop-App.zip`** — for the apps. Unzip it, point a project at the folder, paste
   `project-instructions.txt` into the project instructions. The procedures sit in `loop/` as plain
@@ -165,7 +227,7 @@ rely on one:
 |---|---|---|---|
 | **How you call it** | `/context-loop:session-start` — plugin procedures are prefixed with the plugin name | `/session-start` — listed under its own name | `/session-start` — the nine procedures ship with a command each |
 | **State before the first word** | The session-start hook reports claimed topics, uncommitted work and a due audit | No hook output. `/session-start` works it out from the files instead | The `/session-start` command embeds the same report — in the terminal interface, not in `opencode run` |
-| **git** | Assumed. `/session-end` commits, and pushes if there is a remote | Often no repository at all. The close says so once and carries on | Assumed, same as Claude Code |
+| **git** | Assumed. `/session-end` commits; it pushes only if `push-at-close` in the rules says yes | Often no repository at all. The close says so once and carries on | Assumed, same as Claude Code |
 | **Where it lives** | Files in your project, or the plugin in your Claude Code config | The plugin on your account; the state files in the project's folder | Files in your project under `.opencode/`, or one global `skills.paths` entry |
 | **Model** | Claude | Claude | whatever you point it at — needs a 32k context and reliable tool calling |
 
@@ -180,8 +242,10 @@ without asking"*, and that warning is correct — so here is what it does. It re
 and prints them as text for the agent: the rows in `context/session-active.md`, the number of
 uncommitted files from `git status`, and the date in the name of the newest file in
 `context/audits/`. It sends nothing anywhere, writes nothing, and never opens a file that could
-hold a secret. Thirty lines, in `hooks/session-context.sh`, and worth reading before you install
-anything that can run code.
+hold a secret. It also reads one number, the audit interval, from `context/rules.md`, and in a
+project without a `context/` folder it does nothing at all. About fifty lines of shell and as
+many of comment, in `hooks/session-context.sh`, and worth reading before you install anything
+that can run code.
 
 ---
 
@@ -195,7 +259,8 @@ A session log is the opposite. It is short, it is curated, it says what happened
 session should start with — and it is a file in your folder, under your version control, in a
 format that outlives whichever agent wrote it.
 
-The loop is four files and the discipline of closing a session. None of that belongs to a vendor.
+The loop is a handful of files and the discipline of closing a session. None of that belongs to
+a vendor.
 
 ---
 
@@ -205,7 +270,7 @@ The loop is four files and the discipline of closing a session. None of that bel
 skills/           the nine procedures — the source of truth for them
   session-start/scaffold/   the state files a new project starts with
 hooks/            the session-start hook (Claude Code; OpenCode calls the same script with --plain)
-adapters/         the per-environment wiring — currently opencode/ (one command, one config)
+adapters/         the per-environment wiring — currently opencode/ (nine commands, one config)
 template/         the pointer files (CLAUDE.md, the instruction block that also becomes AGENTS.md),
                   .gitignore, the example log, the README of each package
 install/          assemble.sh, install.sh, build-zip.sh, the macOS installer

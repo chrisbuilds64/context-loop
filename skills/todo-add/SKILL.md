@@ -29,11 +29,13 @@ on. On a no, stop here and do not raise it again in this session.
 The valid values are in the file:
 
 ```bash
-python3 -c "import json;d=json.load(open('context/todo.json'));print({k:[e['id'] for e in v] for k,v in d['lov'].items()})"
+python3 context/scripts/todo.py values
 ```
 
-If nothing fits, say so — a new cluster is one entry in `lov.clusters`, and adding one is a
-decision for the person, not a workaround.
+If nothing fits, say so — a new cluster is one entry under `lov.clusters` in
+`context/todo.json`, and adding one is a decision for the person, not a workaround. That entry is
+the one thing in the file that is added by hand; run `python3 context/scripts/todo.py check`
+afterwards.
 
 **2. Add it.** The command assigns the number and the creation date:
 

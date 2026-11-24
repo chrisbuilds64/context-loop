@@ -1,17 +1,20 @@
 # Context Loop
 
-Four files and two skills that carry context from one agent session to the next — in your own
-repository, not in a vendor's memory. Plus two audits that keep the repository and the files
-honest.
+Nine procedures and a handful of files that carry context from one agent session to the next —
+in your own folder, not in a vendor's memory.
 
-Built and tested for **Claude Code**.
+This is the package for **Claude Code**, installed as files.
 
 ---
 
 ## Install
 
+From the download: double-click `Install Context Loop.command`, one level above this folder.
+
+From a checkout of the repository:
+
 ```bash
-./install.sh /path/to/your/project
+install/install.sh /path/to/your/project
 ```
 
 Then:
@@ -39,8 +42,8 @@ invisible in Finder and in most file managers.** Select-all and drag will copy t
 and silently leave the skills and the hook behind. You get a folder that looks complete, and
 `/session-start` does not exist.
 
-Use `install.sh`, which checks afterwards that both skills arrived. If you would rather do it
-yourself, the trailing dot is what matters:
+Use the installer, which checks afterwards that all nine procedures arrived. If you would rather
+do it yourself, the trailing dot is what matters:
 
 ```bash
 cp -R /path/to/pack/. /path/to/your/project/
@@ -52,7 +55,8 @@ Then check:
 ls /path/to/your/project/.claude/skills
 ```
 
-You should see `session-start` and `session-end`.
+You should see nine: `session-start`, `session-end`, `observe`, `todo`, `todo-add`, `todo-done`,
+`security-audit`, `doc-audit` and `new-agent`.
 
 ### If the skills do not show up
 
@@ -66,7 +70,10 @@ context/README.md              the map: every file, what it holds, what to edit 
 context/rules.md               how the loop behaves here — yours to change, never overwritten
 .claude/skills/session-start/  set up on first run, then load context and pick up the thread
 .claude/skills/observe/        keep what the work taught you, mid-session, one file at a time
-.claude/skills/session-end/    write the log, update state, release the topic
+.claude/skills/session-end/    write the log and its index line, update state, release the topic
+.claude/skills/todo/           the work list: what is due, what is next, what is blocked
+.claude/skills/todo-add/       put an item on the list, mid-session
+.claude/skills/todo-done/      close an item
 .claude/skills/new-agent/      define a second agent, when one stance is not enough
 .claude/skills/security-audit/ every 14 days: secrets, .gitignore, history, dependencies, agent reach
 .claude/skills/doc-audit/      every 14 days: do the files above still tell the truth
@@ -75,6 +82,9 @@ context/rules.md               how the loop behaves here — yours to change, ne
 context/PROJECT-STATE.md       what is being worked on now
 context/session-active.md      which topics are claimed
 context/session-logs/          one file per session, each ending in a Continuation Thread
+context/session-index.md       one line per session — the way into the logs
+context/topics.md              the topics of the project and what else they have been called
+context/todo.json              the work list, changed through context/scripts/todo.py
 context/agents/                who the agent is, and which agent handles what
 context/decisions.md           what was decided and why — append-only, never reopened by accident
 context/key-inventory.md       every key by name and age, never by value — the audit reads it
@@ -94,7 +104,8 @@ how it should think, and what you do not want from it. It shows a summary, asks 
 draft, and only then writes the agent's signature and carries straight on.
 
 Every session after that begins with one dialog: which topic this session is about. The topic
-is what picks the agent and what the log is filed under.
+is what picks the agent, what the log is filed under, and what decides which handover the
+session starts from: the last one on that topic, whatever else happened in between.
 
 That signature is the part that matters and the part a blank template never gets filled in. It is
 loaded at the start of every session, and the agent does not edit it. When the way you work

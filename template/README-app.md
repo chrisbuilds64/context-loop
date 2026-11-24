@@ -23,15 +23,16 @@ That is the setup.
 Say **"start"** to begin and **"close"** to end. Say **"loop?"** to see every procedure and which
 ones have run here before.
 
-The first reads `context/` and tells you where the last session stopped. The last writes the log,
-the decisions and the state. If you skip the close, the next session has nothing to read — that is
-the only way to break this.
+The first reads `context/` and tells you where the last session on your topic stopped. The last
+writes the log, its line in the index, the decisions and the state. If you skip the close, the
+next session has no handover to read — that is the surest way to break this.
 
 ### Prefer real commands?
 
-Then take the plugin instead of this package: in the app, **Customize → Plugins → Add
-marketplace** → `chrisbuilds64/context-loop`, then **Install**. You get `/session-start` and the
-other eight as commands, in every project, and the first run creates the `context/` folder for you.
+Then take the plugin instead of this package: in the app, **Plugins → Add → Add marketplace**,
+enter `chrisbuilds64/context-loop` and **Sync**; then search for **Context Loop** on the Plugins
+page and select **Add**. You get `/session-start` and the other eight as commands, in every
+project, and the first run creates the `context/` folder for you.
 This package exists for the case where you would rather not install anything at all.
 
 ## What is here
@@ -41,6 +42,7 @@ context/             the state: what is being worked on, what happened, what was
 context/README.md    the map: every file, what it holds, what to edit to change behaviour
 context/rules.md     how the loop behaves here — yours to change
 loop/                the procedures the agent follows — read them, they are plain text
+loop/scaffold/       the starting files, kept so an older project can be brought up to date
 project-instructions.txt   the paragraph you paste into the project
 example-session-log.md     what a good session log looks like
 ```

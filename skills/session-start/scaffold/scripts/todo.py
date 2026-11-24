@@ -7,10 +7,11 @@ so a broken list cannot come into being in the first place.
 
   todo.py list   [--status s] [--assignee p] [--cluster c] [--open] [--due N] [--blocked] [--json]
   todo.py show   ID
-  todo.py add    "Titel" --cluster c [--status s] [--prio p] [--assignee a]
+  todo.py add    "Title" --cluster c [--status s] [--prio p] [--assignee a]
                  [--due YYYY-MM-DD] [--blocked-by ID,ID] [--source-kind k] [--source-ref r]
   todo.py set    ID [--status s] [--assignee a] [--prio p] [--due YYYY-MM-DD|-] [--title t]
   todo.py done   ID [--date YYYY-MM-DD]
+  todo.py values
   todo.py check
 """
 import argparse
@@ -71,6 +72,16 @@ def save(doc):
     tmp.replace(DOC)
 
 
+def real_date(value, flag):
+    """A date has to be a day that exists. The schema only checks the shape of the string."""
+    if value in (None, "-"):
+        return value
+    try:
+        return dt.date.fromisoformat(value).isoformat()
+    except ValueError:
+        sys.exit(f"'{value}' is not a date. {flag} takes YYYY-MM-DD.")
+
+
 def lov(doc, name):
     return {e["id"]: e for e in doc["lov"][name]}
 
@@ -120,7 +131,9 @@ def cmd_list(a):
     if a.open:
         items = [t for t in items if t["status"] not in terminal]
     if a.blocked:
-        items = [t for t in items if t.get("blockedBy")]
+        # Blocked means: waiting on something that is still open. A blocker that is done blocks nothing.
+        open_ids = {t["id"] for t in doc["todos"] if t["status"] not in terminal}
+        items = [t for t in items if any(b in open_ids for b in t.get("blockedBy", []))]
     if a.due is not None:
         limit = (dt.date.today() + dt.timedelta(days=a.due)).isoformat()
         items = [t for t in items if t.get("due") and t["due"] <= limit and t["status"] not in terminal]
@@ -150,7 +163,7 @@ def cmd_add(a):
         "status": want(doc, "statuses", a.status, "status") or "backlog",
         "priority": want(doc, "priorities", a.prio, "priority") or "medium",
         "assignee": want(doc, "people", a.assignee, "assignee") or doc["meta"]["defaultAssignee"],
-        "due": a.due, "created": TODAY, "updated": TODAY,
+        "due": real_date(a.due, "--due"), "created": TODAY, "updated": TODAY,
     }
     if a.blocked_by:
         t["blockedBy"] = [x.strip().upper() for x in a.blocked_by.split(",") if x.strip()]
@@ -174,7 +187,7 @@ def cmd_set(a):
     if a.title:
         t["title"] = a.title
     if a.due:
-        t["due"] = None if a.due == "-" else a.due
+        t["due"] = None if a.due == "-" else real_date(a.due, "--due")
     terminal = {e["id"] for e in doc["lov"]["statuses"] if e.get("terminal")}
     if t["status"] in terminal and not t.get("closed"):
         t["closed"] = TODAY
@@ -193,14 +206,25 @@ def cmd_set(a):
 def cmd_done(a):
     doc = load()
     t = find(doc, a.id)
+    terminal = {e["id"] for e in doc["lov"]["statuses"] if e.get("terminal")}
+    if t["status"] in terminal:
+        # Closing twice would silently move the closing date. Changing it is a deliberate act.
+        sys.exit(f"{t['id']} was closed on {t.get('closed', '?')}. Nothing changed.")
     t["status"] = "done"
-    t["closed"] = a.date or TODAY
+    t["closed"] = real_date(a.date, "--date") or TODAY
     t["updated"] = TODAY
     save(doc)
     print(f"  {t['id']} done on {t['closed']}: {t['title']}")
     waiting = [x["id"] for x in doc["todos"] if t["id"] in x.get("blockedBy", [])]
     if waiting:
         print("  now unblocked: " + ", ".join(waiting))
+
+
+def cmd_values(a):
+    """The value lists the file itself carries, so nobody has to open the JSON to see them."""
+    doc = load()
+    for name, entries in doc["lov"].items():
+        print(f"{name}: " + ", ".join(e["id"] for e in entries))
 
 
 def cmd_check(a):
@@ -232,6 +256,7 @@ s.add_argument("--due"); s.add_argument("--title")
 s = sub.add_parser("done"); s.set_defaults(fn=cmd_done)
 s.add_argument("id"); s.add_argument("--date")
 
+sub.add_parser("values").set_defaults(fn=cmd_values)
 sub.add_parser("check").set_defaults(fn=cmd_check)
 
 if __name__ == "__main__":

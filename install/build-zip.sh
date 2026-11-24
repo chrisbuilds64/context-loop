@@ -1,10 +1,13 @@
 #!/bin/bash
-# Build the four distributable ZIPs.
+# Build the four distributable ZIPs into dist/.
 #
-#   ContextLoop-<version>.zip           Claude Code: skills, hook, CLAUDE.md, the installer
-#   ContextLoop-App-<version>.zip       Claude apps: context/, loop/, the instruction block
-#   ContextLoop-OpenCode-<version>.zip  OpenCode: .opencode/, AGENTS.md, opencode.json
-#   ContextLoop-Codex-<version>.zip     Codex and other AGENTS.md readers: context/, loop/, AGENTS.md
+#   ContextLoop.zip           Claude Code: skills, hook, CLAUDE.md, the installer
+#   ContextLoop-App.zip       Claude apps: context/, loop/, the instruction block
+#   ContextLoop-OpenCode.zip  OpenCode: .opencode/, AGENTS.md, opencode.json
+#   ContextLoop-Codex.zip     Codex and other AGENTS.md readers: context/, loop/, AGENTS.md
+#
+# The names carry no version: the release they are attached to does, and the README can then
+# name the files once.
 #
 # All are for people who do not want the plugin, which is the recommended route and needs no
 # build step at all — the marketplace serves this repository as it stands.
@@ -17,13 +20,14 @@ set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$HERE/.." && pwd)"
-VERSION="${1:-$(date +%Y-%m-%d)}"
+DIST="$ROOT/dist"
+mkdir -p "$DIST"
 
 STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
 
 # --- Claude Code -------------------------------------------------------------
-CC="$ROOT/ContextLoop-$VERSION.zip"
+CC="$DIST/ContextLoop.zip"
 mkdir -p "$STAGE/cc/pack"
 "$HERE/assemble.sh" "$STAGE/cc/pack"
 cp "$HERE/Install Context Loop.command" "$STAGE/cc/"
@@ -33,21 +37,21 @@ rm -f "$CC"
 ( cd "$STAGE/cc" && zip -q -r -X "$CC" . -x '.DS_Store' -x '__MACOSX/*' )
 
 # --- Claude apps -------------------------------------------------------------
-APP="$ROOT/ContextLoop-App-$VERSION.zip"
+APP="$DIST/ContextLoop-App.zip"
 mkdir -p "$STAGE/app/ContextLoop"
 "$HERE/assemble.sh" "$STAGE/app/ContextLoop" --app
 rm -f "$APP"
 ( cd "$STAGE/app" && zip -q -r -X "$APP" . -x '.DS_Store' -x '__MACOSX/*' )
 
 # --- OpenCode ----------------------------------------------------------------
-OC="$ROOT/ContextLoop-OpenCode-$VERSION.zip"
+OC="$DIST/ContextLoop-OpenCode.zip"
 mkdir -p "$STAGE/oc/ContextLoop"
 "$HERE/assemble.sh" "$STAGE/oc/ContextLoop" --opencode
 rm -f "$OC"
 ( cd "$STAGE/oc" && zip -q -r -X "$OC" . -x '.DS_Store' -x '__MACOSX/*' )
 
 # --- Codex and other AGENTS.md readers ----------------------------------------
-CX="$ROOT/ContextLoop-Codex-$VERSION.zip"
+CX="$DIST/ContextLoop-Codex.zip"
 mkdir -p "$STAGE/cx/ContextLoop"
 "$HERE/assemble.sh" "$STAGE/cx/ContextLoop" --agents
 rm -f "$CX"
@@ -64,6 +68,6 @@ echo "  - unzip the Claude Code one and confirm pack/.claude/skills holds all ni
 echo "  - confirm 'Install Context Loop.command' is still executable after unzipping"
 echo "  - unzip the app one and confirm loop/ holds nine procedures and no .claude/ came along"
 echo "  - unzip the Codex one and confirm loop/ holds nine procedures and AGENTS.md is at the top"
-echo "  - unzip the OpenCode one and confirm .opencode/skills holds nine and .opencode/commands one"
+echo "  - unzip the OpenCode one and confirm .opencode/skills and .opencode/commands hold nine each"
 echo "  - Gatekeeper blocks the downloaded .command on first run: System Settings >"
 echo "    Privacy & Security > Open Anyway (macOS 15+); older systems: right-click > Open"

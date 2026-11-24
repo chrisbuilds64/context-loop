@@ -21,8 +21,8 @@ Say **"start"** to begin and **"close"** to end. Say **"loop?"** to see every pr
 ones have run here before.
 
 The first run asks three questions and writes the agent's signature. Every run after that
-declares a topic, picks up the last session's handover and says what is due. If you skip the
-close, the next session has nothing to read. That is the only way to break this.
+declares a topic, picks up the last handover on that topic and says what is due. If you skip the
+close, the next session has no handover to read. That is the surest way to break this.
 
 ## What is here
 
@@ -32,6 +32,7 @@ context/README.md    the map: every file, what it holds, what to edit to change 
 context/rules.md     how the loop behaves here — yours to change
 context/             the state: what is being worked on, what happened, what was decided
 loop/                the nine procedures the agent follows — read them, they are plain text
+loop/scaffold/       the starting files, kept so an older project can be brought up to date
 example-session-log.md     what a good session log looks like
 ```
 
