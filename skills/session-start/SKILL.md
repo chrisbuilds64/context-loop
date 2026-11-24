@@ -192,11 +192,17 @@ this project. If it is not English:
 
 1. In `context/rules.md`, set the `language:` line under Settings to its code (`de`, `fr`, `ja` …).
 2. Translate `context/rules.md` and `context/README.md` into that language, in place. Translate
-   the text, the headings and the placeholders inside the templates. Do **not** translate: the
-   names of the settings (`rules-version`, `language`, `audit-interval-days`,
-   `done-sessions-kept`, `push-at-close`), the six field names in the head of a session log
-   (`Date`, `Closed`, `Agent`, `Topics`, `Summary`, `Keywords`), file and folder names, command
-   names, and anything inside backticks. Keep every section; change no rule while translating it.
+   the text and the headings, and inside the template blocks the section names, the labels and
+   the placeholders. Keep every section; change no rule while translating it. These stay exactly
+   as they are:
+   - the names of the settings (`rules-version`, `language`, `audit-interval-days`,
+     `done-sessions-kept`, `push-at-close`);
+   - the six field names in the head of a session log (`Date`, `Closed`, `Agent`, `Topics`,
+     `Summary`, `Keywords`);
+   - the marker `(none yet)`, wherever it stands;
+   - file and folder names, command names, and code in single backticks;
+   - the names of parts of files that are not translated: "Working on now", "Next", "Done",
+     "Blocked", "Debt" and "Focus" in the project state, "Also called" in the list of topics.
 3. Fill `context/PROJECT-STATE.md` in that language from now on.
 
 Do this quietly, as part of the same step. One line afterwards is enough: the rules and the map
@@ -429,7 +435,8 @@ State what is due, then wait.
 
 ## Step 8: Ready
 
-One line: `Ready. Agent: <name>. Topic: <topic>.` plus any warning from step 3.
+One line, in the project's language: `Ready. Agent: <name>. Topic: <topic>.` plus any warning
+from step 3.
 
 **Always name the agent**, even when there is only one. An identity that is implicit is the
 thing that breaks first when a second one appears.

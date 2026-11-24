@@ -26,6 +26,8 @@ yes (macOS: `xcode-select --install`; Windows: `winget install Python.Python.3.1
 on. On a no, stop here and do not raise it again in this session.
 
 **1. Place it, do not ask.** Work out cluster, priority and assignee from the conversation.
+Where the conversation says nothing, the defaults stand: medium priority, the default assignee.
+Give `--status next` when it was named as what comes next; otherwise leave the status out.
 The valid values are in the file:
 
 ```bash
