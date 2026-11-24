@@ -26,7 +26,7 @@ this file would claim an alternative that does not exist.*
 
 - (none yet)
 
-## Done — last two sessions of each topic
+## Done — the last sessions of each topic
 
 - (none yet)
 

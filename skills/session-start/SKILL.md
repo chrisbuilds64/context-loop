@@ -121,9 +121,10 @@ them.
 
 ## Step 0: First run — draft the signature
 
-**Trigger:** `context/agents/main/main-signature.md` still contains the placeholder line
-`**Rename this.**`. If it does, nobody has set this project up yet, and you do that now, before
-anything else. If it does not, skip this step entirely and never mention it.
+**Trigger:** the file `context/agents/main/main-signature.md` exists and still contains the
+placeholder line `**Rename this.**`. If it does, nobody has set this project up yet, and you do
+that now, before anything else. If the file is not there or the line is gone, the project is set
+up: skip this step entirely and never mention it.
 
 This runs **once**. It is a short guided conversation, not a form, and it does not come back.
 
@@ -364,6 +365,10 @@ it — another session may have added its own row since Step 1:
 ```
 | <topic> | <YYYY-MM-DD HH:MM> | <short slug> |
 ```
+
+The slug is a word or two for what this session is about, as far as it is known; the topic name
+again is fine. It only helps a person tell two rows apart, and the log gets its own name at the
+close.
 
 This row is the session anchor. It stays until `/session-end` removes it.
 

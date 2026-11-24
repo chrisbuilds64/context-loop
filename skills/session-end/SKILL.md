@@ -91,6 +91,15 @@ project", propose now: at most three lines, in one question, each with its date 
 Write the ones the user says yes to, at the bottom of the section. If there are none, skip this
 without a word.
 
+One statement goes to one place. A choice about one thing, with a reason and an alternative, is a
+decision and is already in `decisions.md` from Step 3b; do not propose it again as a principle. A
+principle is a rule for everything that follows, whatever the subject.
+
+**An open item with a date or an owner.** If the project has a work list and the item is not on
+it yet, offer once to put it there, and add it after a yes with the `todo-add` procedure. Do it
+here, before the state is updated and before the commit, so the state can name the item by its
+number and the commit carries the list.
+
 **Something learned about working together.** If the user corrected the way you work in this
 session, add one dated note at the bottom of your `working-notes.md`, in the form that file
 gives: what was said, and what you do differently from now on. This is your own file; do not ask,
@@ -107,7 +116,8 @@ Read `context/PROJECT-STATE.md` again now. Then change it in place, as the rules
 
 - the date at the top;
 - lines of **this session's topics** only: finished items out of the working section, anything
-  new that came up, each line beginning with its topic in square brackets;
+  new that came up, each line beginning with its topic in square brackets. An item that is on the
+  work list is named with its number: `[website] WRK-03 server side of the contact form`;
 - the "Done" section: add this session, and keep as many entries of each topic as the rules name;
 - the Focus line only if the user said the focus has changed.
 
@@ -136,9 +146,11 @@ git commit -m "session <YYYY-MM-DD>: <topic>"
 
 Check `git status` first and do not commit if nothing changed.
 
-**This commit holds `context/` and nothing else.** If the project has changes outside it that
-are not committed, say how many files and ask once whether to commit them as well. Do not commit
-the user's work unasked, and do not leave it unmentioned.
+**This commit holds `context/` and nothing else.** If files outside it that **this session**
+created or changed are not committed, name them and ask once whether to commit them as well. Do
+not commit the user's work unasked, and do not leave it unmentioned. Uncommitted files this
+session did not touch belong to someone else's work: leave them, and say in one line that they
+are there.
 
 **Only if the project is a git repository.** Many are not, and that is a legitimate way to use
 this. If there is no repository, say so once and do not raise it again in later sessions.
@@ -154,8 +166,7 @@ Short:
 - the name of the session log;
 - the state, as a count: "State: 2 lines added, 1 removed, the rest untouched";
 - what was committed, and whether it was pushed;
-- anything still open that carries a date. If the project has a work list and such an item is
-  not on it yet, offer once to put it there; add it after a yes, with the `todo-add` procedure.
+- anything still open that carries a date, with its number on the work list if it has one.
 
 Then whatever the rules ask to be said after closing, in one sentence.
 
