@@ -411,8 +411,9 @@ a word: the `todo` procedures explain that when the user asks for the list.
 elsewhere. Where nothing was reported, work it out from the files instead: the newest file of
 each kind in `context/audits/` (`_security-audit.md`, `_doc-audit.md`) is dated in its name, and
 an audit is due when it is older than `audit-interval-days` in the rules. If there is no file of
-a kind yet, that audit has never run: say so in one line, with the skill that starts it; and `context/session-active.md` says which topics
-are claimed. Do not attribute to the hook what you worked out yourself.
+a kind yet, that audit has never run: say so in one line, with the skill that starts it. Which
+topics are claimed you know from `context/session-active.md`, read in Step 1. Do not attribute to
+the hook what you worked out yourself.
 
 One line each. Name the date, do not grade the delay. You see the repository; you do not see
 the rest of the user's life, and a finding that arrives as a reproach gets read as noise.
@@ -439,8 +440,10 @@ thing that breaks first when a second one appears.
 
 The topic declared in step 2 is the anchor for this session, not just for its first minutes.
 
-**Trigger:** three or more consecutive exchanges clearly outside the topic that are building a
-new thread of their own. A single lookup, a quick question, a short aside does not count.
+**Trigger:** the user asks for work on another topic, or three or more consecutive exchanges
+clearly outside the topic are building a new thread of their own. A single lookup, a quick
+question, a short aside does not count: answering "why did we decide that?" about another topic
+is a lookup, building something for it is a change.
 
 **Immediate trigger:** a request that clearly belongs to a topic another session still holds
 open in `session-active.md`. Name it before working, not after.

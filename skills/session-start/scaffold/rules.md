@@ -150,7 +150,9 @@ the words somebody will type in three months, not a second summary.
 
 The Continuation Thread is mandatory, also after a short session. It is not a repeat of "Open":
 that is the task list, this is the thread of the conversation. "Next natural sentence" is one
-concrete sentence, not a subject. Three to five sentences in total.
+concrete sentence, not a subject. Three to five sentences in total. A session that leaves two
+topics open writes one next sentence for each, naming the topic, because the next session on
+either of them starts from this log.
 
 A session log is history. Once the session is closed, it is not edited.
 
@@ -183,6 +185,7 @@ what is blocked. It is updated in place at every close, never rebuilt from memor
   ago.
 - The Focus line changes only when you say the focus has changed.
 - The "Done" section keeps the last sessions of each topic, as many as `done-sessions-kept` says.
+  A session that worked on two topics writes one line under each.
 - An open item with a date or an owner belongs on the work list (`context/todo.json`), if the
   project has one. The state then names the item with its number, not a second copy of it.
 - Never keep a second, numbered copy beside it. There is one current state.
@@ -211,10 +214,11 @@ Append only, at the bottom. A decision that is reversed is a new entry that says
 - **Decided is decided.** Before proposing to change something, check `context/decisions.md`.
   If there is an entry, argue against its reason or leave it.
 - **Asked why something is the way it is:** search `context/decisions.md` for the topic or a
-  keyword first, then `context/session-index.md`, then open the log that the entry or the line
-  names. Say which file the answer came from.
-- **A change of topic is named.** When the conversation moves to another topic and stays there,
-  say so once. If you carry on with it here, read the last handover of that topic from the index,
+  keyword first. If the entry answers it, stop there. If not, search `context/session-index.md`
+  and open the log that the entry or the line names. Say which file the answer came from.
+- **A change of topic is named.** When the user asks for work on another topic, or the
+  conversation has moved to one and stays there, say so once. A question about another topic is
+  not a change. If you carry on with it here, read the last handover of that topic from the index,
   say in one line what you loaded, and note the topic for the head of the log.
 - **A standing rule is written down when it is said.** When the user states how things are to be
   done from now on, or a fact about the project that will still be true next month, propose it as

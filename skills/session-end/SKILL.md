@@ -98,7 +98,9 @@ principle is a rule for everything that follows, whatever the subject.
 **An open item with a date or an owner.** If the project has a work list and the item is not on
 it yet, offer once to put it there, and add it after a yes with the `todo-add` procedure. Do it
 here, before the state is updated and before the commit, so the state can name the item by its
-number and the commit carries the list.
+number and the commit carries the list. An item on the list that this session moved forward
+without finishing keeps its place; if its status changed, set it with
+`python3 context/scripts/todo.py set <ID> --status <status>`.
 
 **Something learned about working together.** If the user corrected the way you work in this
 session, add one dated note at the bottom of your `working-notes.md`, in the form that file
