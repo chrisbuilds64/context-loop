@@ -86,6 +86,8 @@ done
 - A line whose topics or summary differ from the head of its log: the log is right. Rewrite the
   line.
 - A topic in the index that is not in `context/topics.md`: add the row.
+- Lines that are not in order of their time: sort them, oldest first. This happens after a merge
+  and changes no content.
 
 Then look at `context/topics.md` for names that are probably one topic: two names that are close
 in wording or meaning, and topics with a single session. List them as candidates and ask. Joining

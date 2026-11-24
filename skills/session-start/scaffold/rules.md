@@ -168,7 +168,8 @@ A session log is history. Once the session is closed, it is not edited.
   A line that is missing or wrong is rebuilt from the log; the log is never changed to fit.
 - `session-end` adds the line. `session-start` checks that every log has one and adds what is
   missing.
-- The thread of a topic is the newest line that names it.
+- The thread of a topic is the line with the latest time among those that name it. Lines can
+  stand out of order after two computers were merged; the time decides, not the position.
 - The start reads the last thirty lines. Further back, search the file for a topic or a keyword
   and open only the logs that the lines point to. Never read through all the logs.
 
