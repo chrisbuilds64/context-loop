@@ -38,8 +38,9 @@ you are, what that means, and what the other case is. Name the folder by its nam
 is only an id, say "a temporary workspace" instead. Use the wording that fits:
 
 > *Empty folder:* "I am working in the folder <name>, and it is empty. Context Loop keeps its
-> files in the folder you work in, so the next session finds them there. Is this the folder of
-> your project? If you already use Context Loop in another folder, this is not it."
+> files in the folder you work in, so the next session finds them there. Shall I set it up
+> here? If your project lives in another folder, or you already use Context Loop somewhere
+> else, say no."
 
 > *Temporary workspace, or no folder connected:* "No folder of yours is connected to this chat.
 > I am working in a temporary workspace, and what I write here will not be there in your next
@@ -56,8 +57,6 @@ Two options, with the text that fits the case:
 - **No, I will open my project folder first** — "Nothing is created. I add or open the right
   folder and start again."
 
-**On yes:** carry on below.
-
 **On no: the whole procedure ends here.** Create nothing, run none of the steps that follow, and
 do not start a session. Tell the person three things, briefly: that nothing was created; that
 the folder of their project has to be the one this chat works in (in the Claude apps, connecting
@@ -68,6 +67,8 @@ again.
 **On anything else** (they ask what this means, or name a folder): explain in one or two plain
 sentences and ask again. You cannot move to another folder yourself; if they name one, that is a
 no.
+
+**On yes,** or when you did not have to ask: create the state, as follows.
 
 **The starting files are in `scaffold/`, in this skill's own directory, beside this file.** Copy
 that folder into the project as `context/`, and set the date at the top of
@@ -233,8 +234,9 @@ signature template is the part everyone skips and then misses.
 
 One short message, on its own, before anything is asked:
 
-> This project has no agent signature yet. I will ask three questions, one at a time. Then I
-> draft the signature and you correct it. The signature is not written until you have seen a
+> This project has no agent signature yet. I will ask about three things, one at a time: the
+> work, the agent's name and how it thinks, and what it should not do. Then I draft the
+> signature and you correct it. The signature is not written until you have seen a
 > summary of your answers and said yes.
 
 Three questions in one message read as a form. The person answers one of them, and the drafting
@@ -251,8 +253,8 @@ environment, ask the same question in plain text, one per message.
 Options: building software · writing · reviewing or auditing · operating a system. "Other" takes
 the answer that fits none of them, and two sentences is plenty.
 
-**2 of 3 — name and direction.** Two parts. First ask for the **name** in plain text and wait —
-the name decides the directory. Then the dialog, header `Thinks`: *Which end does it work from?*
+**2 of 3 — name and direction.** Two parts. First ask for the **name** in plain text, "What
+should the agent be called?", and wait — the name decides the directory. Then the dialog, header `Thinks`: *Which end does it work from?*
 Options: **bottom-up** from the concrete requirements · **top-down** from the goal ·
 **outside-in** from whoever receives the result. This matters more than it sounds: a different
 direction is the whole reason to have a second agent later — same model, different blind spot.
@@ -404,17 +406,20 @@ If the topic is already clear from the argument or the opening message, do not a
 
 **Right after the first run** (Step 0 has just drafted the signature in this conversation) the
 person has just said what the work is. Do not ask again. Take the topic from that answer, give
-it a short name, and say one line: "This session runs under the topic <name>. Say so if it
-should be called something else."
+it a short name, add it to `context/topics.md`, and say one line: "This session runs under the
+topic <name>. Say so if it should be called something else." That line is the one that names
+the new topic; do not say the name a second time below. If they do name another, use theirs:
+nothing carries the first name yet.
+
+**With exactly one topic in the list,** do not ask either. Say one line, "Carrying on with
+<topic>. Say so if this is something new.", and take it.
 
 Otherwise ask once, **with the AskUserQuestion tool** — the small dialog, not a line of chat.
 Header `Topic`. First option: the most likely topic, which is the topic of the last line of the
 index unless PROJECT-STATE says the focus moved. Then two or three more from `context/topics.md`,
 the ones used most recently. "Other" is always there for a topic that is none of them.
-If the tool is not available, ask the same question in plain text. **With exactly one topic in
-the list** there is nothing to choose between: ask in plain words, "Carry on with <topic>, or is
-this something new?" If there are no topics yet, there is nothing to offer: ask in plain words
-what this session is about.
+If the tool is not available, ask the same question in plain text. If there are no topics yet,
+there is nothing to offer: ask in plain words what this session is about.
 
 Do not ask anything else. Not the time, not the mood, not the location. A field that has to be
 invented each session is worse than no field.
@@ -451,11 +456,12 @@ start. Starting again means the last stretch is finished.
 
 **For every other open session, look for traces before you ask.** The row gives the start time.
 Three things say whether work followed it: `git log --since`; the modification times in the
-project and under `context/`; and entries in `context/decisions.md` that still say
-`(open session …)` for that topic and start time. The row in `context/session-active.md` is not
-a trace: the start wrote it itself. Traces cannot always be told apart: with two open sessions, or one that started
+project and under `context/`, other than `context/session-active.md`, which the start wrote
+itself; and entries in `context/decisions.md` that still say `(open session …)` for that topic
+and start time. Note the times before you change any of these files yourself. Traces cannot always be told apart: with two open sessions, or one that started
 before another closed, the same commits may belong to either. Say so when you ask, rather than
-assigning them. Then ask, once per open session, with the AskUserQuestion tool where it exists.
+assigning them. Then ask, once per open session, with the AskUserQuestion tool where it exists, header
+`Open session`: say which session is open and what it left, and ask "What shall I do with it?"
 Always ask; never close a session silently. First option, the usual case:
 
 - **It is finished, close it.**
@@ -468,8 +474,9 @@ Always ask; never close a session silently. First option, the usual case:
       and that it was written afterwards. Its `Summary` begins with "Reconstructed:".
     - **`Closed` is the time of the last trace,** not the time now. If no trace carries a time,
       it is the start time from the row.
-    - **Its handover says only what is known.** "Still open" reads "not known, this log was
-      reconstructed", and there is no next sentence. Do not invent one.
+    - **Its handover says only what is known.** The Continuation Thread is one line: "Still
+      open" reads "not known, this log was reconstructed". No next sentence, no energy line; the
+      "Open" section reads "not known". Do not invent any of it.
 
     Add its line to the index where its time belongs. Entries in `context/decisions.md` that
     still say `(open session …)` for that topic and start time were written while it ran: list
@@ -508,9 +515,12 @@ names the topic declared in Step 2, under its name or a word from its "Also call
 not among the thirty lines you read, search the file for the name. Open the log that line points
 to. That is the only session log this step reads, with one exception.
 
-**If that log is a reconstruction** (its `Summary` begins with "Reconstructed:"), it has no
-handover to begin from. Say in one line what it lists. Then take the newest line on this topic
-that is not a reconstruction, open that log as well, and pick up the thread from there.
+**If that log has no handover to begin from** — it is a reconstruction (its `Summary` begins
+with "Reconstructed:"), or its next natural sentence says "none" — say in one line what it
+lists. Then go back, line by line, to the newest log on this topic that does have a next
+sentence, open that one as well, and pick up the thread from there.
+
+**Right after the first run** there is nothing to pick up. Skip this step without a word.
 
 Two or three sentences on where that session stopped.
 
@@ -586,9 +596,11 @@ says that should last is written the moment it is said, not at the close.
 | a **standing rule** | how every case of a kind is handled from now on: "every database change gets a migration file", "we never publish on a Friday". The words "from now on", "always", "every time" usually mark it | `context/rules.md`, "Principles" |
 | a **fact about the project** | true without anyone choosing it now: where something is, who is responsible, what a term means | `context/rules.md`, "About this project" |
 
+| **something to do later** | "next I want to …", "we still need to …", with or without a date | the work list, after a yes (`todo-add`); in a project without one, a line under "Next" in `context/PROJECT-STATE.md`, beginning with the topic in square brackets |
+
 A sentence that holds two of them is split: "single page, because most visitors come by phone"
 is a decision, and its reason stays its reason. Do not also propose the reason as a fact. If
-you cannot tell a decision from a rule, it is a decision.
+you cannot tell which of the first three it is, it is a decision.
 
 **A decision** is added at the bottom of `context/decisions.md` right then, in the form the
 rules give. Read the end of the file first and add only. Three things about an entry written

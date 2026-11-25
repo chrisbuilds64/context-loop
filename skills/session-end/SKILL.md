@@ -46,6 +46,13 @@ to the user saying the name.
 
 Go through the whole conversation and pull out what the rules ask a session log to hold.
 
+**If nothing happened in this session** — no work, no decision, nothing said that should last —
+there is nothing to hand over, and a log of it would only stand between the next session and the
+last real handover. Do not write one, and add no line to the index or the project state. Read
+`context/session-active.md` again, remove this session's row (Step 5), say one line, "Nothing to
+record; the session is closed.", and stop. What `/session-start` cleared up at the beginning,
+such as an earlier session it closed, is not work of this session.
+
 ## Step 3: Write the session log
 
 Create the file in the place, under the name and in the shape given in the rules, section
@@ -64,7 +71,7 @@ lines, and a log with an empty head cannot be found.
 session on this topic begins with. **It holds only what is true.** If the session left nothing
 open, say so in one sentence; the next natural sentence is then the next step the person named,
 or none. Do not invent an open question to fill the form, and do not carry an invented one into
-the project state.
+the project state. A line of the handover that would only be filler is left out.
 
 ## Step 3a: Add the line to the index
 
@@ -109,7 +116,8 @@ without a word.
 One statement goes to one place. A choice about one thing, with a reason and an alternative, is a
 decision and is already in `decisions.md` from Step 3b; do not propose it again as a principle. A
 principle is a rule for everything that follows, whatever the subject. Whatever already stands
-in `decisions.md` or in the rules is not proposed a second time for another place.
+in `decisions.md`, in the rules or on the Focus line of the project state is not proposed a
+second time for another place.
 
 **An open item with a date or an owner.** If the project has a work list and the item is not on
 it yet, offer once to put it there, and add it after a yes with the `todo-add` procedure. Do it

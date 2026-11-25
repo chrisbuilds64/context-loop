@@ -34,6 +34,11 @@ From the first test runs by people outside the team.
 - **A session log written afterwards no longer takes over the thread.** It is named
   `…-reconstructed`, says only what is known, and the next start picks up from the last log you
   closed yourself.
+- **A session in which nothing happened leaves no log.** It is closed with one line, so it
+  cannot stand between you and your last real handover.
+- **Something you want to do later is kept when you say it:** offered for the work list, or
+  noted under "Next".
+- **A project with one topic is not asked for the topic.**
 - **A handover holds only what is true.** After a short session with nothing left open it says
   so, instead of inventing an open question.
 
