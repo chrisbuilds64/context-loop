@@ -58,6 +58,8 @@ the declared topic first, then the others. `Summary` is one sentence. `Keywords`
 systems, ids and terms somebody would search for in three months. The index is built from these
 lines, and a log with an empty head cannot be found.
 
+**If the session made no commits, leave the "Commits" section out.**
+
 **The handover at the end of the log is written last and is never skipped.** It is what the next
 session on this topic begins with. **It holds only what is true.** If the session left nothing
 open, say so in one sentence; the next natural sentence is then the next step the person named,
@@ -78,15 +80,17 @@ and this line; the next `/session-start` completes it from the logs.
 
 ## Step 3b: Record the decisions
 
-Read the end of `context/decisions.md` now. Decisions are written there the moment they are made,
-so most of this session's may be in the file already.
+Read the end of `context/decisions.md` now. Unless the project's setting is
+`decisions-written: at-close`, decisions are written there the moment they are made, so most of
+this session's may be in the file already.
 
 - **An entry this session wrote while it ran** ends in the line
   `**Log:** (open session, <topic>, started …)`, with this session's topic and start time. Put the file name of this log in place of that note.
   This is the one change to an existing entry that is allowed: completing your own.
 - **A decision in the log that has no entry yet** gets one at the bottom, in the form given in
   the rules, section "How decisions are kept": with the topic in square brackets and the file
-  name of this log. The reason is written only if one was given; never invent one.
+  name of this log. The reason is written only if one was given: no reason, no `Why` line.
+  Never invent one.
 
 Otherwise add only. Never edit an earlier entry, and never write the file back from an earlier
 reading.

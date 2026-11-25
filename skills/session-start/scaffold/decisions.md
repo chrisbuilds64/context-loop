@@ -1,9 +1,9 @@
 # Decisions
 
-*One entry per decision, newest at the bottom, never edited afterwards. The agent adds an entry
-the moment a decision is made; `/session-end` adds what is missing and fills in the name of the
-log. Before proposing to change something that is decided, the agent reads the entry — and
-argues against the reason, not against the decision.*
+*One entry per decision, newest at the bottom. The agent adds an entry the moment a decision is
+made; `/session-end` adds what is missing and fills in the name of the log. Apart from that one
+line, an entry is never edited afterwards. Before proposing to change something that is
+decided, the agent reads the entry — and argues against the reason, not against the decision.*
 
 Why this file exists: a decision that lives only in a session log disappears by date, and one
 that lives only in `PROJECT-STATE.md` is dropped once it is done. Three weeks later the agent

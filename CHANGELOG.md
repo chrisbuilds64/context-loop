@@ -37,9 +37,10 @@ From the first test runs by people outside the team.
 - **A handover holds only what is true.** After a short session with nothing left open it says
   so, instead of inventing an open question.
 
-**For an existing project:** the next `/session-start` asks once whether to bring the passage
-about decisions in your rules file up to date. With yes, decisions are written the moment they
-are made. With no, everything stays as it was: they are recorded at the close.
+**For an existing project:** the next `/session-start` asks once which way you want decisions
+kept: written the moment they are made, or at the end of the session as before. Your answer is
+noted as `decisions-written` in the settings of your rules file, and you are not asked again.
+You can change that line at any time.
 
 ## 1.4.0 — 2026-11-24
 

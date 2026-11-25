@@ -8,7 +8,7 @@ argument-hint: "[optional: topic for this session]"
 # Session Start
 
 You are beginning a working session. Work through the steps in order. Do no other work until
-step 6 is done.
+the last step is done.
 
 ## Step 0a: No state yet — create it
 
@@ -141,48 +141,67 @@ beside this file, skip this step entirely and never mention it.
 
 The rules file belongs to the user and an update never overwrites it. So ask, once, in plain
 words, with the AskUserQuestion tool where it exists. What you ask depends on the number their
-file carries:
+file carries.
 
-- **No number, or 1:**
+### Their file carries 2
 
-  > "Context Loop now keeps an index of all sessions, a list of topics, and a place for standing
-  > rules and project facts, and it writes a decision down the moment it is made. Your rules file
-  > was written before that. Shall I bring it up to date? Your settings, your own steps and your
-  > own rules stay as they are."
+One thing is new, and it is a choice, not a repair:
 
-- **2:**
+> "Context Loop can now write a decision down the moment it is made, instead of at the end of
+> the session. Then a session that is never closed does not lose it. Which way do you want it?"
 
-  > "Context Loop now writes a decision down the moment it is made, not at the end of the
-  > session, so a session that is never closed does not lose it. Your rules file still describes
-  > the old way. Shall I bring that passage up to date? Everything else in the file stays as it
-  > is."
+Options: **The moment it is made** — "I update the passage on decisions in your rules file, add
+one working rule, and renew the note at the top of your decisions file. No entry is touched." ·
+**At the end, as before** — "Your rules file keeps its text. I note your choice in its settings,
+so you are not asked again."
 
-On yes, work from `scaffold/rules.md` and change only this. The points marked *(from 1)* are
-skipped when their file carried 2:
+Either way, under Settings in `context/rules.md`, set `rules-version` to the new number and add
+the line `decisions-written:` with `when-made` or `at-close`. That line is what every later
+session goes by; nobody has to remember the answer.
+
+**The moment it is made** — then also, working from `scaffold/rules.md`:
+
+1. Replace the section "How decisions are kept" with the new text. If their section holds lines
+   of their own that the new text does not have, show those lines and ask whether to keep them
+   below the new text.
+2. In "How to work here", add the point "A decision is written down when it is made", in the
+   place it has in the scaffold. Change none that are there.
+3. In `context/decisions.md`, replace the explanation above the first `---` with the one from
+   `scaffold/decisions.md`. Touch no entry.
+4. Translate what you added into the project's language.
+
+**At the end, as before** — change nothing else.
+
+### Their file carries no number, or 1
+
+> "Context Loop now keeps an index of all sessions, a list of topics, and a place for standing
+> rules and project facts, and it writes a decision down the moment it is made. Your rules file
+> was written before that. Shall I bring it up to date? Your settings, your own steps and your
+> own rules stay as they are."
+
+On yes, work from `scaffold/rules.md` and change only this in `context/rules.md`:
 
 1. Under Settings, add the lines that are missing and set `rules-version` to the new number.
    Leave the values they set.
-2. *(from 1)* Add the sections that are missing: "Topics", "The index of sessions", "Principles",
-   "About this project".
-3. *(from 1)* Replace the head of the session-log template and the section "What goes into the
-   project state" with the new text.
-4. Replace the section "How decisions are kept" with the new text.
-5. If they changed one of the passages in 3 or 4 themselves, show both versions and ask which
-   stays. If theirs stays in 4, add only the paragraph that begins "The entry is written the
-   moment", and leave the rest of their section alone.
-6. In "How to work here", add the points that are missing. Change none that are there.
-7. In `context/decisions.md`, if the note at the top still says that `/session-end` appends the
-   decisions of the session, replace that sentence with the one in `scaffold/decisions.md`.
-   Touch no entry.
-8. Translate what you added into the project's language.
+2. Add the sections that are missing: "Topics", "The index of sessions", "Principles", "About
+   this project".
+3. Replace the head of the session-log template, the section "What goes into the project state"
+   and the section "How decisions are kept" with the new text. If one of them holds lines of
+   their own that the new text does not have, show those lines and ask whether to keep them.
+4. In "How to work here", add the points that are missing, each in the place it has in the
+   scaffold. Change none that are there.
+5. In `context/decisions.md`, replace the explanation above the first `---` with the one from
+   `scaffold/decisions.md`. Touch no entry.
+6. Translate what you added into the project's language.
 
 On no, carry on and do not ask again in this session. The procedures then work as far as the old
-rules allow, and the user should know what that means. Coming from 2: decisions are recorded at
-the close, as their rules say, and the part about decisions in "Written when it is said" below
-does not apply in this project. Coming from no number or 1, also: the index is kept, the thread
-is picked by topic, the rest stays as their rules say.
+rules allow. Tell the user what that means, in these words or their translation: "Then the index
+is kept and the thread is picked by topic; everything else stays as your rules say, and
+decisions are recorded at the end of a session."
 
-Say in one line what was changed.
+### In both cases
+
+If something was changed, say in one line what.
 
 ## Step 0e: No index or no topic list yet — create them
 
@@ -271,7 +290,8 @@ this project. If it is not English:
    the placeholders. Keep every section; change no rule while translating it. These stay exactly
    as they are:
    - the names of the settings (`rules-version`, `language`, `audit-interval-days`,
-     `done-sessions-kept`, `push-at-close`);
+     `done-sessions-kept`, `push-at-close`, `decisions-written`) and the values `when-made` and
+     `at-close`;
    - the six field names in the head of a session log (`Date`, `Closed`, `Agent`, `Topics`,
      `Summary`, `Keywords`);
    - the marker `(none yet)`, wherever it stands;
@@ -562,8 +582,8 @@ says that should last is written the moment it is said, not at the close.
 
 | It is | Tell it by | It goes to |
 |---|---|---|
-| a **decision** | a choice about one thing: this supplier, this layout, this price, this way and not that way | `context/decisions.md` |
-| a **standing rule** | how everything is done from now on, whatever the subject: "from now on", "always", "never", "every time" | `context/rules.md`, "Principles" |
+| a **decision** | a choice made once, about one thing: this supplier, this layout, this price, this way and not that way | `context/decisions.md` |
+| a **standing rule** | how every case of a kind is handled from now on: "every database change gets a migration file", "we never publish on a Friday". The words "from now on", "always", "every time" usually mark it | `context/rules.md`, "Principles" |
 | a **fact about the project** | true without anyone choosing it now: where something is, who is responsible, what a term means | `context/rules.md`, "About this project" |
 
 A sentence that holds two of them is split: "single page, because most visitors come by phone"
@@ -583,17 +603,20 @@ while the session runs:
 - Say one line, no more: "Noted in decisions.md: <the decision>." This is the loop's own file; do
   not ask first.
 
-**Where the project's rules say otherwise, the rules win.** A rules file from before this
-behaviour that was not brought up to date (Step 0d, answered with no) says that decisions are
-recorded at the close and never changed afterwards. In that project, record them at the close.
+**The project's setting decides.** If the Settings in `context/rules.md` say
+`decisions-written: at-close`, or the rules file carries a `rules-version` below 3, this project
+records decisions at the close: write nothing now, and say one line, "I will record that in
+decisions.md when we close." Without that line, or with `when-made`, write it now.
 
 **A standing rule or a fact** is proposed then and there as the one line it would become, and
 written after a yes, at the bottom of its section in `context/rules.md`:
 
 ```
-- <YYYY-MM-DD> — <the rule> (<the occasion, a few words>)
+- <YYYY-MM-DD> — <the rule> (<the occasion, if one was said>)
 - <YYYY-MM-DD> — <the fact>
 ```
+
+The occasion is what led to the rule, in a few words. None said, no brackets. Never invent one.
 
 Ask in plain words, one line: "Shall I keep this under <section>: '<the line>'?" Do not save it
 up for the close, where the question arrives when the person has already stopped thinking about
