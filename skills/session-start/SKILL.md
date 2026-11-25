@@ -151,20 +151,21 @@ One thing is new, and it is a choice, not a repair:
 > "Context Loop can now write a decision down the moment it is made, instead of at the end of
 > the session. Then a session that is never closed does not lose it. Which way do you want it?"
 
-Options: **The moment it is made** — "I update the passage on decisions in your rules file, add
+Header `Decisions`. Options: **The moment it is made** — "I update the passage on decisions in your rules file, add
 one working rule, and renew the note at the top of your decisions file. No entry is touched." ·
 **At the end, as before** — "Your rules file keeps its text. I note your choice in its settings,
 so you are not asked again."
 
 Either way, under Settings in `context/rules.md`, set `rules-version` to the new number and add
-the line `decisions-written:` with `when-made` or `at-close`. That line is what every later
-session goes by; nobody has to remember the answer.
+the line `decisions-written:` with `when-made` or `at-close` below the other settings, together
+with the short paragraph that explains it in the scaffold. That line is what every later session
+goes by; nobody has to remember the answer.
 
 **The moment it is made** — then also, working from `scaffold/rules.md`:
 
-1. Replace the section "How decisions are kept" with the new text. If their section holds lines
-   of their own that the new text does not have, show those lines and ask whether to keep them
-   below the new text.
+1. Replace the section "How decisions are kept" with the new text. If their section holds
+   sentences that are plainly their own (names, their own conventions, not the wording Context
+   Loop shipped), show those and ask whether to keep them below the new text.
 2. In "How to work here", add the point "A decision is written down when it is made", in the
    place it has in the scaffold. Change none that are there.
 3. In `context/decisions.md`, replace the explanation above the first `---` with the one from
@@ -455,10 +456,18 @@ decisions, state, release, commit. Say in one line that you did, and carry on wi
 start. Starting again means the last stretch is finished.
 
 **For every other open session, look for traces before you ask.** The row gives the start time.
-Three things say whether work followed it: `git log --since`; the modification times in the
-project and under `context/`, other than `context/session-active.md`, which the start wrote
-itself; and entries in `context/decisions.md` that still say `(open session …)` for that topic
-and start time. Note the times before you change any of these files yourself. Traces cannot always be told apart: with two open sessions, or one that started
+What counts as a trace, strongest first:
+
+- commits since the start (`git log --since`);
+- what the session itself wrote: entries in `context/decisions.md` that still say
+  `(open session …)` for that topic and start time, items on the work list created since, files
+  in `context/observations/` dated since;
+- files of the project **outside `context/`** that were changed after the start.
+
+Modification times under `context/` are not a trace: a start writes there itself (the open
+row, the rules after an update, the index, the topics). And times that are all the same are not
+a trace anywhere: a folder that was copied, synced or checked out carries one time on every
+file. If changed files outside `context/` are the only thing you found, say that when you ask. Traces cannot always be told apart: with two open sessions, or one that started
 before another closed, the same commits may belong to either. Say so when you ask, rather than
 assigning them. Then ask, once per open session, with the AskUserQuestion tool where it exists, header
 `Open session`: say which session is open and what it left, and ask "What shall I do with it?"
@@ -476,7 +485,8 @@ Always ask; never close a session silently. First option, the usual case:
       it is the start time from the row.
     - **Its handover says only what is known.** The Continuation Thread is one line: "Still
       open" reads "not known, this log was reconstructed". No next sentence, no energy line; the
-      "Open" section reads "not known". Do not invent any of it.
+      "Open" section lists what the traces show (an item the session put on the work list, with
+      its number) and otherwise reads "not known". Do not invent any of it.
 
     Add its line to the index where its time belongs. Entries in `context/decisions.md` that
     still say `(open session …)` for that topic and start time were written while it ran: list
@@ -516,8 +526,8 @@ not among the thirty lines you read, search the file for the name. Open the log 
 to. That is the only session log this step reads, with one exception.
 
 **If that log has no handover to begin from** — it is a reconstruction (its `Summary` begins
-with "Reconstructed:"), or its next natural sentence says "none" — say in one line what it
-lists. Then go back, line by line, to the newest log on this topic that does have a next
+with "Reconstructed:"), or it has no next natural sentence, or that sentence says "none" — say
+in one line what it lists. Then go back, line by line, to the newest log on this topic that does have a next
 sentence, open that one as well, and pick up the thread from there.
 
 **Right after the first run** there is nothing to pick up. Skip this step without a word.
@@ -595,12 +605,17 @@ says that should last is written the moment it is said, not at the close.
 | a **decision** | a choice made once, about one thing: this supplier, this layout, this price, this way and not that way | `context/decisions.md` |
 | a **standing rule** | how every case of a kind is handled from now on: "every database change gets a migration file", "we never publish on a Friday". The words "from now on", "always", "every time" usually mark it | `context/rules.md`, "Principles" |
 | a **fact about the project** | true without anyone choosing it now: where something is, who is responsible, what a term means | `context/rules.md`, "About this project" |
-
 | **something to do later** | "next I want to …", "we still need to …", with or without a date | the work list, after a yes (`todo-add`); in a project without one, a line under "Next" in `context/PROJECT-STATE.md`, beginning with the topic in square brackets |
 
 A sentence that holds two of them is split: "single page, because most visitors come by phone"
 is a decision, and its reason stays its reason. Do not also propose the reason as a fact. If
 you cannot tell which of the first three it is, it is a decision.
+
+**The project's setting decides.** If the Settings in `context/rules.md` say
+`decisions-written: at-close`, or the rules file carries a `rules-version` below 3, this project
+records decisions at the close: write nothing now, and say one line, "I will record that in
+decisions.md when we close." The setting goes before any other
+sentence about decisions, here or in the rules. Without that line, or with `when-made`:
 
 **A decision** is added at the bottom of `context/decisions.md` right then, in the form the
 rules give. Read the end of the file first and add only. Three things about an entry written
@@ -615,11 +630,6 @@ while the session runs:
 - Say one line, no more: "Noted in decisions.md: <the decision>." This is the loop's own file; do
   not ask first.
 
-**The project's setting decides.** If the Settings in `context/rules.md` say
-`decisions-written: at-close`, or the rules file carries a `rules-version` below 3, this project
-records decisions at the close: write nothing now, and say one line, "I will record that in
-decisions.md when we close." Without that line, or with `when-made`, write it now.
-
 **A standing rule or a fact** is proposed then and there as the one line it would become, and
 written after a yes, at the bottom of its section in `context/rules.md`:
 
@@ -630,7 +640,11 @@ written after a yes, at the bottom of its section in `context/rules.md`:
 
 The occasion is what led to the rule, in a few words. None said, no brackets. Never invent one.
 
-Ask in plain words, one line: "Shall I keep this under <section>: '<the line>'?" Do not save it
+**Something to do later** is offered for the work list in one line, "Shall I put that on the work
+list: '<the item>'?", and added after a yes.
+
+For a rule or a fact, ask in plain words, one line: "Shall I keep this under <section>: '<the
+line>'?" Do not save it
 up for the close, where the question arrives when the person has already stopped thinking about
 it.
 

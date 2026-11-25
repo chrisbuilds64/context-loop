@@ -50,7 +50,9 @@ Go through the whole conversation and pull out what the rules ask a session log 
 there is nothing to hand over, and a log of it would only stand between the next session and the
 last real handover. Do not write one, and add no line to the index or the project state. Read
 `context/session-active.md` again, remove this session's row (Step 5), say one line, "Nothing to
-record; the session is closed.", and stop. What `/session-start` cleared up at the beginning,
+record; the session is closed.", add what the rules ask to be said after closing, and stop.
+This holds even where the rules ask for a log at every close: a log records what happened, and
+nothing did. What `/session-start` cleared up at the beginning,
 such as an earlier session it closed, is not work of this session.
 
 ## Step 3: Write the session log
