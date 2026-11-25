@@ -29,9 +29,17 @@ From the first test runs by people outside the team.
 - **The starter files carry no old date.** The project state is dated on the day it is created.
 - The README says that the folder has to be added to the chat, and that you start the procedures
   and the agent does not.
+- **The first run asks one question less.** The topic of the first session is taken from what
+  you just said about the work.
+- **A session log written afterwards no longer takes over the thread.** It is named
+  `…-reconstructed`, says only what is known, and the next start picks up from the last log you
+  closed yourself.
+- **A handover holds only what is true.** After a short session with nothing left open it says
+  so, instead of inventing an open question.
 
-**For an existing project:** nothing to do. Your rules file keeps its text; the new behaviour
-comes with the procedures.
+**For an existing project:** the next `/session-start` asks once whether to bring the passage
+about decisions in your rules file up to date. With yes, decisions are written the moment they
+are made. With no, everything stays as it was: they are recorded at the close.
 
 ## 1.4.0 — 2026-11-24
 

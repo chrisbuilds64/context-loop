@@ -4,7 +4,7 @@
 
 *This file holds the **state**, not the history: what is being worked on right now, so nothing
 gets lost between sessions. The history is in `session-logs/`, one file per session, and
-`session-index.md` is the way into it. The full record is in git.*
+`session-index.md` is the way into it.*
 
 *Every line begins with its topic in square brackets, like this: `[website] contact form sends
 twice — <date>`, and under "Done" with the date first: `**<date>** [website] first page

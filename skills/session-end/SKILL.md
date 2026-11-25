@@ -59,7 +59,10 @@ systems, ids and terms somebody would search for in three months. The index is b
 lines, and a log with an empty head cannot be found.
 
 **The handover at the end of the log is written last and is never skipped.** It is what the next
-session on this topic begins with.
+session on this topic begins with. **It holds only what is true.** If the session left nothing
+open, say so in one sentence; the next natural sentence is then the next step the person named,
+or none. Do not invent an open question to fill the form, and do not carry an invented one into
+the project state.
 
 ## Step 3a: Add the line to the index
 
@@ -78,8 +81,8 @@ and this line; the next `/session-start` completes it from the logs.
 Read the end of `context/decisions.md` now. Decisions are written there the moment they are made,
 so most of this session's may be in the file already.
 
-- **An entry this session wrote while it ran** ends in `Log: (open session, <topic>, started …)`
-  with this session's topic and start time. Put the file name of this log in place of that note.
+- **An entry this session wrote while it ran** ends in the line
+  `**Log:** (open session, <topic>, started …)`, with this session's topic and start time. Put the file name of this log in place of that note.
   This is the one change to an existing entry that is allowed: completing your own.
 - **A decision in the log that has no entry yet** gets one at the bottom, in the form given in
   the rules, section "How decisions are kept": with the topic in square brackets and the file
@@ -101,7 +104,8 @@ without a word.
 
 One statement goes to one place. A choice about one thing, with a reason and an alternative, is a
 decision and is already in `decisions.md` from Step 3b; do not propose it again as a principle. A
-principle is a rule for everything that follows, whatever the subject.
+principle is a rule for everything that follows, whatever the subject. Whatever already stands
+in `decisions.md` or in the rules is not proposed a second time for another place.
 
 **An open item with a date or an owner.** If the project has a work list and the item is not on
 it yet, offer once to put it there, and add it after a yes with the `todo-add` procedure. Do it

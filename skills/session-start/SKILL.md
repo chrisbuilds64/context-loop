@@ -19,29 +19,55 @@ This is the case when the loop arrives as a plugin: the procedures are installed
 not. Do not improvise a structure — this skill ships one.
 
 **First look at where you are.** Everything Context Loop keeps lives in this folder, so it has to
-be a folder the person chose and that is still there tomorrow. List what is in the working
-folder and look at its path. Two cases:
+be a folder the person chose and that is still there tomorrow. Look at the path of the working
+folder and list what is in it. Then decide, **in this order**:
 
-- **It holds the person's files** (documents, code, anything of theirs): this is their project.
-  Carry on and create the state without asking.
-- **It is empty, or it is not a folder they chose:** a workspace the environment made for this
-  one chat, a temporary or session directory, a path that is only an id, the home directory
-  itself, or the system told you that no folder is connected. Then nothing written here may be
-  there next time, and a second start somewhere else would find nothing. **Ask before creating
-  anything**, once, with the AskUserQuestion tool where it exists, header `Folder`, and name the
-  folder in the question in plain words:
+1. **The place itself is wrong, whatever is in it:** the system told you that no folder is
+   connected; the path is a temporary or session directory that the environment made for this
+   one chat (its name is an id, or it sits under a temp or sessions directory you were given, not
+   one the person opened); or it is the home directory itself. → Ask.
+2. **The place is ordinary, and it holds nothing of the person's:** it is empty, or all it holds
+   are hidden files and files the environment or a tool left there (`.DS_Store`, caches, an
+   empty `outputs/`). A `.git` folder alone counts as nothing. → Ask.
+3. **Otherwise it holds the person's files** (documents, code, anything they put there): this is
+   their project. → Create the state without asking.
 
-  > "I am working in <folder>, and it is <empty / a temporary workspace of this chat>. Context
-  > Loop keeps everything in the folder you work in. Is this the right place?"
+**When you have to ask, ask before creating anything**, once, with the AskUserQuestion tool where
+it exists, header `Folder`; without the tool, ask the same in plain text. The question says where
+you are, what that means, and what the other case is. Name the folder by its name; if the name
+is only an id, say "a temporary workspace" instead. Use the wording that fits:
 
-  Options: **Yes, set it up here** (a new project starts in an empty folder, and that is fine) ·
-  **No, I will connect my folder first** (stop here; nothing is created). Say in the option text
-  what each one does. If they already use Context Loop in another folder, this is not that
-  folder, and the second option is the answer.
+> *Empty folder:* "I am working in the folder <name>, and it is empty. Context Loop keeps its
+> files in the folder you work in, so the next session finds them there. Is this the folder of
+> your project? If you already use Context Loop in another folder, this is not it."
 
-  On no: create nothing and do not start a session. Say in two sentences what to do: add the
-  project folder to this chat or project (in the Claude apps, connecting the computer is not
-  enough, the folder itself has to be added), then run the start again. Stop there.
+> *Temporary workspace, or no folder connected:* "No folder of yours is connected to this chat.
+> I am working in a temporary workspace, and what I write here will not be there in your next
+> chat. Context Loop needs a folder of yours to keep its files in. Shall I set it up here
+> anyway?"
+
+> *Home directory:* "I am working in your home folder, not in a project folder. Context Loop
+> would put its `context` folder directly there. Is that what you want?"
+
+Two options, with the text that fits the case:
+
+- **Yes, set it up here** — empty folder: "This is my project folder; it is new." Temporary
+  workspace: "Set it up here, knowing it will not carry over." Home: "Put it in my home folder."
+- **No, I will open my project folder first** — "Nothing is created. I add or open the right
+  folder and start again."
+
+**On yes:** carry on below.
+
+**On no: the whole procedure ends here.** Create nothing, run none of the steps that follow, and
+do not start a session. Tell the person three things, briefly: that nothing was created; that
+the folder of their project has to be the one this chat works in (in the Claude apps, connecting
+the computer is not enough, the folder itself has to be added to the chat or the project; in a
+terminal tool, start it inside the project folder); and that they then run `/session-start`
+again.
+
+**On anything else** (they ask what this means, or name a folder): explain in one or two plain
+sentences and ask again. You cannot move to another folder yourself; if they name one, that is a
+no.
 
 **The starting files are in `scaffold/`, in this skill's own directory, beside this file.** Copy
 that folder into the project as `context/`, and set the date at the top of
@@ -67,9 +93,10 @@ first used), and the folders `session-logs/`, `audits/` and `observations/`. The
 (`todo.json`, its schema and `scripts/`) cannot be written from memory; leave it out and say that
 the work list is off until Context Loop is installed with its files.
 
-Then say in one line what was created **and in which folder**, by its name, and carry straight on
-with Step 0. In the person's own project folder do not ask permission first — a project without
-state cannot start a session, and nothing here overwrites anything.
+Then say one line: "Context Loop is set up in the folder <name>: a `context` folder with the
+starting files." Then carry on with the steps that follow; in a project just created, 0b to 0e
+find nothing to do. In the person's own project folder do not ask permission first — a project
+without state cannot start a session, and nothing here overwrites anything.
 
 ## Step 0b: State exists, but no rules file — add it
 
@@ -113,27 +140,47 @@ one in `scaffold/rules.md`, beside this file. If they are the same, or there is 
 beside this file, skip this step entirely and never mention it.
 
 The rules file belongs to the user and an update never overwrites it. So ask, once, in plain
-words, with the AskUserQuestion tool where it exists:
+words, with the AskUserQuestion tool where it exists. What you ask depends on the number their
+file carries:
 
-> "Context Loop now keeps an index of all sessions, a list of topics, and a place for standing
-> rules and project facts. Your rules file was written before that. Shall I bring it up to date?
-> Your settings, your own steps and your own rules stay as they are."
+- **No number, or 1:**
 
-On yes, work from `scaffold/rules.md` and change only this in `context/rules.md`:
+  > "Context Loop now keeps an index of all sessions, a list of topics, and a place for standing
+  > rules and project facts, and it writes a decision down the moment it is made. Your rules file
+  > was written before that. Shall I bring it up to date? Your settings, your own steps and your
+  > own rules stay as they are."
 
-1. Under Settings, add the lines that are missing (`rules-version`, `push-at-close`) and set
-   `rules-version` to the new number. Leave the values they set.
-2. Add the sections that are missing: "Topics", "The index of sessions", "Principles", "About
-   this project".
-3. Replace the head of the session-log template, the section "What goes into the project state"
-   and the entry form under "How decisions are kept" with the new text. If they changed one of
-   these themselves, show both versions and ask which stays.
-4. In "How to work here", add the points that are missing. Change none that are there.
-5. Translate what you added into the project's language.
+- **2:**
+
+  > "Context Loop now writes a decision down the moment it is made, not at the end of the
+  > session, so a session that is never closed does not lose it. Your rules file still describes
+  > the old way. Shall I bring that passage up to date? Everything else in the file stays as it
+  > is."
+
+On yes, work from `scaffold/rules.md` and change only this. The points marked *(from 1)* are
+skipped when their file carried 2:
+
+1. Under Settings, add the lines that are missing and set `rules-version` to the new number.
+   Leave the values they set.
+2. *(from 1)* Add the sections that are missing: "Topics", "The index of sessions", "Principles",
+   "About this project".
+3. *(from 1)* Replace the head of the session-log template and the section "What goes into the
+   project state" with the new text.
+4. Replace the section "How decisions are kept" with the new text.
+5. If they changed one of the passages in 3 or 4 themselves, show both versions and ask which
+   stays. If theirs stays in 4, add only the paragraph that begins "The entry is written the
+   moment", and leave the rest of their section alone.
+6. In "How to work here", add the points that are missing. Change none that are there.
+7. In `context/decisions.md`, if the note at the top still says that `/session-end` appends the
+   decisions of the session, replace that sentence with the one in `scaffold/decisions.md`.
+   Touch no entry.
+8. Translate what you added into the project's language.
 
 On no, carry on and do not ask again in this session. The procedures then work as far as the old
-rules allow, and the user should know what that means: the index is kept, the thread is picked
-by topic, the rest stays as their rules say.
+rules allow, and the user should know what that means. Coming from 2: decisions are recorded at
+the close, as their rules say, and the part about decisions in "Written when it is said" below
+does not apply in this project. Coming from no number or 1, also: the index is kept, the thread
+is picked by topic, the rest stays as their rules say.
 
 Say in one line what was changed.
 
@@ -168,8 +215,8 @@ signature template is the part everyone skips and then misses.
 One short message, on its own, before anything is asked:
 
 > This project has no agent signature yet. I will ask three questions, one at a time. Then I
-> draft the signature and you correct it. Nothing is written until you have seen a summary and
-> said yes.
+> draft the signature and you correct it. The signature is not written until you have seen a
+> summary of your answers and said yes.
 
 Three questions in one message read as a form. The person answers one of them, and the drafting
 starts before they expected it. Announcing the shape first is what stops that.
@@ -335,12 +382,19 @@ Say nothing else about this step unless something was added.
 
 If the topic is already clear from the argument or the opening message, do not ask.
 
+**Right after the first run** (Step 0 has just drafted the signature in this conversation) the
+person has just said what the work is. Do not ask again. Take the topic from that answer, give
+it a short name, and say one line: "This session runs under the topic <name>. Say so if it
+should be called something else."
+
 Otherwise ask once, **with the AskUserQuestion tool** — the small dialog, not a line of chat.
 Header `Topic`. First option: the most likely topic, which is the topic of the last line of the
 index unless PROJECT-STATE says the focus moved. Then two or three more from `context/topics.md`,
 the ones used most recently. "Other" is always there for a topic that is none of them.
-If the tool is not available, ask the same question in plain text. If there are no topics yet,
-there is nothing to offer: ask in plain words what this session is about.
+If the tool is not available, ask the same question in plain text. **With exactly one topic in
+the list** there is nothing to choose between: ask in plain words, "Carry on with <topic>, or is
+this something new?" If there are no topics yet, there is nothing to offer: ask in plain words
+what this session is about.
 
 Do not ask anything else. Not the time, not the mood, not the location. A field that has to be
 invented each session is worse than no field.
@@ -375,23 +429,33 @@ every step of the session-end procedure for it except its last one, the label: l
 decisions, state, release, commit. Say in one line that you did, and carry on with the new
 start. Starting again means the last stretch is finished.
 
-**For every other open session, look for traces before you ask.** The row gives the start time;
-`git log --since` and the modification times under `context/` and in the project say whether work
-followed it. Traces cannot always be told apart: with two open sessions, or one that started
+**For every other open session, look for traces before you ask.** The row gives the start time.
+Three things say whether work followed it: `git log --since`; the modification times in the
+project and under `context/`; and entries in `context/decisions.md` that still say
+`(open session …)` for that topic and start time. The row in `context/session-active.md` is not
+a trace: the start wrote it itself. Traces cannot always be told apart: with two open sessions, or one that started
 before another closed, the same commits may belong to either. Say so when you ask, rather than
 assigning them. Then ask, once per open session, with the AskUserQuestion tool where it exists.
 Always ask; never close a session silently. First option, the usual case:
 
 - **It is finished, close it.**
-  - *Traces:* write the missing log to `context/session-logs/<date>_<slug>.md`, dated with the
-    day the session started, in the normal shape with its head, from the commits and the changed
-    files. **Mark it as reconstructed** in one line at the top: what it is based on, and that it
-    was written afterwards. A reconstructed log is thinner than a written one and must not
-    pretend otherwise. Begin its `Summary` with "Reconstructed:" and add its line to the index.
-    Entries in `context/decisions.md` that still say `(open session …)` for that topic and start
-    time were written while it ran: list them in the log, and put the log's file name in place
-    of that note. Further decisions and the project state are not reconstructed: say that in
-    one line, so the user can add what you could not see. Then remove the row.
+  - *Traces:* write the missing log to `context/session-logs/<date>_<slug>-reconstructed.md`,
+    dated with the day the session started; the slug is the main subject of the traces, or the
+    topic if they name none. It has the normal shape with its head, filled from the commits, the
+    changed files and the entries the session left. Three things are different, because a
+    reconstructed log is thinner than a written one and must not pretend otherwise:
+    - **One line directly under the title** says that it is reconstructed, what it is based on,
+      and that it was written afterwards. Its `Summary` begins with "Reconstructed:".
+    - **`Closed` is the time of the last trace,** not the time now. If no trace carries a time,
+      it is the start time from the row.
+    - **Its handover says only what is known.** "Still open" reads "not known, this log was
+      reconstructed", and there is no next sentence. Do not invent one.
+
+    Add its line to the index where its time belongs. Entries in `context/decisions.md` that
+    still say `(open session …)` for that topic and start time were written while it ran: list
+    them in the log, and put the log's file name in place of that note. Further decisions and
+    the project state are not reconstructed: say that in one line, so the user can add what you
+    could not see. Then remove the row.
   - *No traces:* remove the row and say in one line that nothing followed that start. Do not
     write a log. A log built from a start alone describes work that never happened.
 - **It is still running somewhere else.** Leave the row alone and carry on. If it is the same
@@ -422,7 +486,11 @@ This row is the session anchor. It stays until `/session-end` removes it.
 **Find the thread of this topic.** In `context/session-index.md`, take the newest line that
 names the topic declared in Step 2, under its name or a word from its "Also called". If it is
 not among the thirty lines you read, search the file for the name. Open the log that line points
-to. That is the only session log this step reads.
+to. That is the only session log this step reads, with one exception.
+
+**If that log is a reconstruction** (its `Summary` begins with "Reconstructed:"), it has no
+handover to begin from. Say in one line what it lists. Then take the newest line on this topic
+that is not a reconstruction, open that log as well, and pick up the thread from there.
 
 Two or three sentences on where that session stopped.
 
@@ -487,28 +555,49 @@ thing that breaks first when a second one appears.
 
 ## Written when it is said — runs for the whole session
 
-A session that is never closed keeps only what was written while it ran. Two things are
-therefore written the moment they happen, not at the close.
+A session that is never closed keeps only what was written while it ran. So what the person
+says that should last is written the moment it is said, not at the close.
 
-**A decision.** When the person decides something, or confirms a choice you proposed — this way
-and not that way, with or without a reason — add the entry at the bottom of
-`context/decisions.md` right then, in the form the rules give. Read the end of the file first
-and add only. Two lines differ from an entry written at the close:
+**One statement goes to one place.** Decide which it is:
 
-- `Log:` cannot name a log yet. Write `(open session, <topic>, started <YYYY-MM-DD HH:MM>)`,
-  with the start time from this session's row in `context/session-active.md`. `/session-end`
-  puts the log's file name in its place.
-- The reason is written only if one was given. No reason said, no `Why:` line. Never invent one.
+| It is | Tell it by | It goes to |
+|---|---|---|
+| a **decision** | a choice about one thing: this supplier, this layout, this price, this way and not that way | `context/decisions.md` |
+| a **standing rule** | how everything is done from now on, whatever the subject: "from now on", "always", "never", "every time" | `context/rules.md`, "Principles" |
+| a **fact about the project** | true without anyone choosing it now: where something is, who is responsible, what a term means | `context/rules.md`, "About this project" |
 
-Say one line, no more: "Noted in decisions.md: <the decision>." This is the loop's own file; do
-not ask first. Not every choice is a decision: which word to use in a sentence is not, which
-supplier, which structure, which price is. If you are not sure, it is one.
+A sentence that holds two of them is split: "single page, because most visitors come by phone"
+is a decision, and its reason stays its reason. Do not also propose the reason as a fact. If
+you cannot tell a decision from a rule, it is a decision.
 
-**A standing rule or a fact about the project.** "From now on, always …", "we never …", "the
-bakery is in Germany". The rules ask for these when they are said: propose the one line for
-"Principles" or "About this project" in `context/rules.md` then and there, and write it after a
-yes. Do not save it up for the close, where the question arrives when the person has already
-stopped thinking about it.
+**A decision** is added at the bottom of `context/decisions.md` right then, in the form the
+rules give. Read the end of the file first and add only. Three things about an entry written
+while the session runs:
+
+- `**Log:**` cannot name a log yet. Write
+  `**Log:** (open session, <topic>, started <YYYY-MM-DD HH:MM>)`, with the start time from this
+  session's row in `context/session-active.md`. `/session-end` puts the log's file name in its
+  place.
+- `**Why:**` is written only if a reason was said, `**Instead of:**` only if an alternative was
+  said. Nothing said, no line. Never invent either.
+- Say one line, no more: "Noted in decisions.md: <the decision>." This is the loop's own file; do
+  not ask first.
+
+**Where the project's rules say otherwise, the rules win.** A rules file from before this
+behaviour that was not brought up to date (Step 0d, answered with no) says that decisions are
+recorded at the close and never changed afterwards. In that project, record them at the close.
+
+**A standing rule or a fact** is proposed then and there as the one line it would become, and
+written after a yes, at the bottom of its section in `context/rules.md`:
+
+```
+- <YYYY-MM-DD> — <the rule> (<the occasion, a few words>)
+- <YYYY-MM-DD> — <the fact>
+```
+
+Ask in plain words, one line: "Shall I keep this under <section>: '<the line>'?" Do not save it
+up for the close, where the question arrives when the person has already stopped thinking about
+it.
 
 ## Drift monitor — runs for the whole session
 

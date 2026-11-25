@@ -12,7 +12,7 @@ line at a time, and only after you said yes to that line.
 
 A few values that a script reads as well as the agent. Keep the form `name: value`, one per line.
 
-rules-version: 2
+rules-version: 3
 language: en
 audit-interval-days: 14
 done-sessions-kept: 2
@@ -97,7 +97,7 @@ of its slug.
 It holds what happened in this session, and nothing else: what was finished, what was decided,
 what broke, what is still open, which commits were made. Factual, grouped by subject, no padding.
 "Commits" lists the commits made while working; the commit of the close itself is not listed,
-because it is the one that carries this log.
+because it is the one that carries this log. If there were none, leave the section out.
 
 ```markdown
 # Session <YYYY-MM-DD> — <title>
@@ -149,7 +149,8 @@ in every time, with the topic names from `context/topics.md`. `Keywords` are for
 the words somebody will type in three months, not a second summary.
 
 The Continuation Thread is mandatory, also after a short session. It is not a repeat of "Open":
-that is the task list, this is the thread of the conversation. "Next natural sentence" is one
+that is the task list, this is the thread of the conversation. It holds only what is true: if
+nothing was left open, it says so, and no question is invented to fill it. "Next natural sentence" is one
 concrete sentence, not a subject. Three to five sentences in total. A session that leaves two
 topics open writes one next sentence for each, naming the topic, because the next session on
 either of them starts from this log.
