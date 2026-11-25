@@ -8,6 +8,7 @@ starts by reading where the last one stopped, and ends by writing down what the 
 into plain files in your own folder.
 
 Nine procedures, a handful of files, MIT licensed. No account, no service, no telemetry.
+What changed in each version: [CHANGELOG.md](CHANGELOG.md).
 
 ```
 /session-start   loads the state, the agent's signature, and the last handover on your topic
@@ -108,8 +109,12 @@ Better read here than found out later.
   moment, or a folder synced between computers, can still lose a change. The index repairs itself
   from the logs; the project state does not.
 - **A session that is never closed** leaves no log and no handover, only what was written while
-  it ran. `/session-start` notices the open session and asks; it can rebuild a thin log from the
-  traces, and says that it is a reconstruction.
+  it ran. Decisions are written the moment they are made, so those survive. `/session-start`
+  notices the open session and asks; it can rebuild a thin log from the traces, and says that it
+  is a reconstruction.
+- **You start the procedures, the agent does not.** `/session-start`, `/session-end`, `/observe`,
+  the two audits and `/new-agent` run only when you call them. That is on purpose: when a session
+  begins and ends is your call. The three work-list procedures the agent may use by itself.
 - **What is written into these files is read as context.** A line in a log or a note is
   information about the past, not an instruction. The signature is yours alone; the agent adds
   to `rules.md` only a line you said yes to.
@@ -129,6 +134,13 @@ way the first session start creates the `context/` folder in whichever project y
 2. On the Plugins page, search for **Context Loop**, open it and select **Add**. Confirm the
    notice about components that run code
 3. Open a project on the folder you want to work in, and run `/session-start`
+
+**The folder is everything.** Context Loop keeps its files in the folder the chat works in. If
+no folder is added, every chat gets an empty workspace of its own and nothing carries over to
+the next one. Connecting your computer is not the same as adding the folder: the folder itself
+has to be added to the chat or the project. `/session-start` says which folder it is in, and
+asks before it sets anything up in an empty or temporary one. If the folder it names is not
+yours, stop there and add yours first.
 
 The marketplace and the plugin carry the same name in the app. The first is the shelf, the second
 is what you take from it.

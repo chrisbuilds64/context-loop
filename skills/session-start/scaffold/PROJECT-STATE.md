@@ -1,13 +1,13 @@
 # Project State
 
-**Updated:** 2026-01-15
+**Updated:** <YYYY-MM-DD>
 
 *This file holds the **state**, not the history: what is being worked on right now, so nothing
 gets lost between sessions. The history is in `session-logs/`, one file per session, and
 `session-index.md` is the way into it. The full record is in git.*
 
 *Every line begins with its topic in square brackets, like this: `[website] contact form sends
-twice — 2026-01-22`, and under "Done" with the date first: `**2026-01-15** [website] first page
+twice — <date>`, and under "Done" with the date first: `**<date>** [website] first page
 built`. A session changes only the lines of its own topics, so several sessions can keep this
 file without overwriting each other. `(none yet)` gives way to the first real line.*
 

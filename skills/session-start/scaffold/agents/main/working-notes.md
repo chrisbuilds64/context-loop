@@ -6,7 +6,7 @@
 the signature is a request to change the signature — otherwise an agent quietly rewrites its own
 limits, and having you maintain the signature was the entire point.
 
-**Every note needs a dated occasion.** Not "prefers short answers" but "2026-01-15, said twice:
+**Every note needs a dated occasion.** Not "prefers short answers" but "<date>, said twice:
 this is too long, give me the result first". Evidence, checkable, and possible to be wrong about.
 A note without an occasion is an opinion.
 

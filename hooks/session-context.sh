@@ -51,7 +51,8 @@ fi
 # --- Audit age --------------------------------------------------------------
 # The date is in the filename, so no file has to be opened. How many days may pass is the
 # project's own rule: audit-interval-days in context/rules.md, 14 when the file or the line is
-# missing. No audit yet is reported once per start, as a fact — the first run starts the clock.
+# missing. No audit yet is reported once per start, as a fact, once the project is older than the
+# interval — the first run starts the clock.
 #
 # The age is worked out with date(1) alone, GNU form first, BSD form second. Where neither
 # works, the line is left out: /session-start works the same thing out from the files.
@@ -81,7 +82,19 @@ for KIND in security-audit doc-audit; do
     OUT+="AUDIT DUE: last $KIND was $DAYS days ago ($DATE). Run /$KIND."$'\n'
   fi
 done
-[ -n "$MISSING" ] && OUT+="AUDITS: none run yet. Start the $INTERVAL-day cadence with:$MISSING"$'\n'
+# A project younger than the interval has nothing to audit yet, and "none run" on day one reads
+# like a warning. Its age is the date of its oldest session log; no log yet means it is new.
+if [ -n "$MISSING" ]; then
+  FIRST=$(ls -1 "$ROOT/context/session-logs" 2>/dev/null | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}_' | sort | head -1)
+  AGE=""
+  if [ -n "$FIRST" ] && [ -n "$NOW" ]; then
+    BORN=$(epoch "${FIRST%%_*}")
+    [ -n "$BORN" ] && AGE=$(( (NOW - BORN + 43200) / 86400 ))
+  fi
+  if [ -n "$AGE" ] && [ "$AGE" -ge "$INTERVAL" ]; then
+    OUT+="AUDITS: none run yet. Start the $INTERVAL-day cadence with:$MISSING"$'\n'
+  fi
+fi
 
 [ -z "$OUT" ] && OUT="State clean: nothing claimed, nothing uncommitted, audits current."
 

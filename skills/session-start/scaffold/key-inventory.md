@@ -11,7 +11,7 @@ its age live here.
 
 | Key | Used by | Where it lives | Last rotated | Rotate by |
 |---|---|---|---|---|
-| ANTHROPIC_API_KEY | the agent | environment variable | 2026-01-15 | 2026-04-15 |
+| ANTHROPIC_API_KEY | the agent | environment variable | <date> | <date + 90 days> |
 | <name> | <service or script> | <env / secrets file / manager> | <date> | <date + 90 days> |
 
 Delete the example rows when you fill in your own.

@@ -197,10 +197,15 @@ Every decision of a session gets one entry in `context/decisions.md`:
 
 ```
 ## <YYYY-MM-DD> — [<topic>] <what was decided, one line>
-**Why:** <the reason>
+**Why:** <the reason, if one was given>
 **Instead of:** <the rejected alternative, if there was one>
 **Log:** <file name of the session log>
 ```
+
+The entry is written the moment the decision is made, not at the close: a session that is never
+closed keeps what was written while it ran. Until the session has a log, the last line reads
+`**Log:** (open session, <topic>, started <YYYY-MM-DD HH:MM>)`; `session-end` puts the file name
+in its place. A line with nothing to say is left out. A reason is never invented.
 
 Append only, at the bottom. A decision that is reversed is a new entry that says so.
 
@@ -221,6 +226,9 @@ Append only, at the bottom. A decision that is reversed is a new entry that says
   conversation has moved to one and stays there, say so once. A question about another topic is
   not a change. If you carry on with it here, read the last handover of that topic from the index,
   say in one line what you loaded, and note the topic for the head of the log.
+- **A decision is written down when it is made.** When the user decides something or confirms a
+  choice, add the entry to `context/decisions.md` then and there, in the form above, and say so
+  in one line. This is the loop's own file; do not ask first.
 - **A standing rule is written down when it is said.** When the user states how things are to be
   done from now on, or a fact about the project that will still be true next month, propose it as
   one line for "Principles" or "About this project" below. Write it after a yes, right then, not

@@ -18,12 +18,39 @@ entirely and never mention it.
 This is the case when the loop arrives as a plugin: the procedures are installed, the files are
 not. Do not improvise a structure — this skill ships one.
 
-**The starting files are in `scaffold/`, in this skill's own directory, beside this file.** Copy
-that folder into the project as `context/`. That is the whole step.
+**First look at where you are.** Everything Context Loop keeps lives in this folder, so it has to
+be a folder the person chose and that is still there tomorrow. List what is in the working
+folder and look at its path. Two cases:
 
-**Write first, explain after.** Do not announce the copy and do not go looking elsewhere for it:
-a first run that talks for five minutes without a file appearing looks broken, and it was —
-an earlier version of this step sent the agent hunting for a folder outside its reach.
+- **It holds the person's files** (documents, code, anything of theirs): this is their project.
+  Carry on and create the state without asking.
+- **It is empty, or it is not a folder they chose:** a workspace the environment made for this
+  one chat, a temporary or session directory, a path that is only an id, the home directory
+  itself, or the system told you that no folder is connected. Then nothing written here may be
+  there next time, and a second start somewhere else would find nothing. **Ask before creating
+  anything**, once, with the AskUserQuestion tool where it exists, header `Folder`, and name the
+  folder in the question in plain words:
+
+  > "I am working in <folder>, and it is <empty / a temporary workspace of this chat>. Context
+  > Loop keeps everything in the folder you work in. Is this the right place?"
+
+  Options: **Yes, set it up here** (a new project starts in an empty folder, and that is fine) ·
+  **No, I will connect my folder first** (stop here; nothing is created). Say in the option text
+  what each one does. If they already use Context Loop in another folder, this is not that
+  folder, and the second option is the answer.
+
+  On no: create nothing and do not start a session. Say in two sentences what to do: add the
+  project folder to this chat or project (in the Claude apps, connecting the computer is not
+  enough, the folder itself has to be added), then run the start again. Stop there.
+
+**The starting files are in `scaffold/`, in this skill's own directory, beside this file.** Copy
+that folder into the project as `context/`, and set the date at the top of
+`context/PROJECT-STATE.md` to today. That is the whole step.
+
+**Write first, explain after.** Once the place is right, do not announce the copy and do not go
+looking elsewhere for it: a first run that talks for five minutes without a file appearing looks
+broken, and it was — an earlier version of this step sent the agent hunting for a folder outside
+its reach.
 
 If `scaffold/` is genuinely not readable from where you are, do not search for it. Write the
 files yourself, short, each with a heading that says what it is for: `rules.md` (how the loop
@@ -40,8 +67,9 @@ first used), and the folders `session-logs/`, `audits/` and `observations/`. The
 (`todo.json`, its schema and `scripts/`) cannot be written from memory; leave it out and say that
 the work list is off until Context Loop is installed with its files.
 
-Then say in one line what was created and carry straight on with Step 0. Do not ask permission
-first — a project without state cannot start a session, and nothing here overwrites anything.
+Then say in one line what was created **and in which folder**, by its name, and carry straight on
+with Step 0. In the person's own project folder do not ask permission first — a project without
+state cannot start a session, and nothing here overwrites anything.
 
 ## Step 0b: State exists, but no rules file — add it
 
@@ -221,14 +249,23 @@ are now in their language, and where to find them.
 Then set the **Focus** line in `context/PROJECT-STATE.md` from the first answer, and today's
 date at its top.
 
-### Then show it and hand it over
+### Then show it, let them correct it, and hand it over
 
-Show what you wrote — the actual sections, not a summary of them. Then say, in your own words,
-the thing that makes this work:
+Show what you wrote — the actual sections, not a summary of them.
 
-**This file is theirs, not yours.** You read it at the start of every session and you do not
-edit it. When the collaboration changes, they change it. An agent that can rewrite its own
-limits does not have any.
+**Then stop and ask.** This is the correction round that was announced before the first
+question, and it is the only moment at which you change this file. One question in the dialog,
+header `Signature`: **"Is this right, or shall I change something?"** Options: it is right, keep
+it · change something. Do not carry on into the session before the answer.
+
+On a change: take what they say, rewrite the part it concerns, show that part again and ask
+again. As often as they want. A thin answer to one of the three questions is filled in here.
+
+When they say it is right, say, in your own words, the thing that makes this work:
+
+**This file is theirs, not yours.** From now on you read it at the start of every session and
+you do not edit it. When the collaboration changes, they change it. An agent that can rewrite
+its own limits does not have any.
 
 Then carry straight on with Step 1 as a normal session start. Do not make them run the skill
 again.
@@ -351,8 +388,10 @@ Always ask; never close a session silently. First option, the usual case:
     files. **Mark it as reconstructed** in one line at the top: what it is based on, and that it
     was written afterwards. A reconstructed log is thinner than a written one and must not
     pretend otherwise. Begin its `Summary` with "Reconstructed:" and add its line to the index.
-    Decisions and the project state are not reconstructed: say that in one line, so the user
-    can add what you could not see. Then remove the row.
+    Entries in `context/decisions.md` that still say `(open session …)` for that topic and start
+    time were written while it ran: list them in the log, and put the log's file name in place
+    of that note. Further decisions and the project state are not reconstructed: say that in
+    one line, so the user can add what you could not see. Then remove the row.
   - *No traces:* remove the row and say in one line that nothing followed that start. Do not
     write a log. A log built from a start alone describes work that never happened.
 - **It is still running somewhere else.** Leave the row alone and carry on. If it is the same
@@ -417,7 +456,10 @@ a word: the `todo` procedures explain that when the user asks for the list.
 elsewhere. Where nothing was reported, work it out from the files instead: the newest file of
 each kind in `context/audits/` (`_security-audit.md`, `_doc-audit.md`) is dated in its name, and
 an audit is due when it is older than `audit-interval-days` in the rules. If there is no file of
-a kind yet, that audit has never run: say so in one line, with the skill that starts it. Which
+a kind yet, that audit has never run. In a project younger than the interval (its oldest session
+log is newer than that, or there is no log yet) say nothing about it: there is nothing to audit
+on day one, and it reads like a warning. Once the project is older, say so in one line, with the
+skill that starts it. If the hook reported it for a younger project, leave it out all the same. Which
 topics are claimed you know from `context/session-active.md`, read in Step 1. Do not attribute to
 the hook what you worked out yourself.
 
@@ -442,6 +484,31 @@ from step 3.
 thing that breaks first when a second one appears.
 
 ---
+
+## Written when it is said — runs for the whole session
+
+A session that is never closed keeps only what was written while it ran. Two things are
+therefore written the moment they happen, not at the close.
+
+**A decision.** When the person decides something, or confirms a choice you proposed — this way
+and not that way, with or without a reason — add the entry at the bottom of
+`context/decisions.md` right then, in the form the rules give. Read the end of the file first
+and add only. Two lines differ from an entry written at the close:
+
+- `Log:` cannot name a log yet. Write `(open session, <topic>, started <YYYY-MM-DD HH:MM>)`,
+  with the start time from this session's row in `context/session-active.md`. `/session-end`
+  puts the log's file name in its place.
+- The reason is written only if one was given. No reason said, no `Why:` line. Never invent one.
+
+Say one line, no more: "Noted in decisions.md: <the decision>." This is the loop's own file; do
+not ask first. Not every choice is a decision: which word to use in a sentence is not, which
+supplier, which structure, which price is. If you are not sure, it is one.
+
+**A standing rule or a fact about the project.** "From now on, always …", "we never …", "the
+bakery is in Germany". The rules ask for these when they are said: propose the one line for
+"Principles" or "About this project" in `context/rules.md` then and there, and write it after a
+yes. Do not save it up for the close, where the question arrives when the person has already
+stopped thinking about it.
 
 ## Drift monitor — runs for the whole session
 

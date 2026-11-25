@@ -75,10 +75,18 @@ and this line; the next `/session-start` completes it from the logs.
 
 ## Step 3b: Record the decisions
 
-For every decision in the log, add one entry at the bottom of `context/decisions.md`, in the form
-given in the rules, section "How decisions are kept": with the topic in square brackets and the
-file name of this log. Add only. Never edit an earlier entry, and never write the file back from
-an earlier reading.
+Read the end of `context/decisions.md` now. Decisions are written there the moment they are made,
+so most of this session's may be in the file already.
+
+- **An entry this session wrote while it ran** ends in `Log: (open session, <topic>, started …)`
+  with this session's topic and start time. Put the file name of this log in place of that note.
+  This is the one change to an existing entry that is allowed: completing your own.
+- **A decision in the log that has no entry yet** gets one at the bottom, in the form given in
+  the rules, section "How decisions are kept": with the topic in square brackets and the file
+  name of this log. The reason is written only if one was given; never invent one.
+
+Otherwise add only. Never edit an earlier entry, and never write the file back from an earlier
+reading.
 
 ## Step 3c: What should outlive this session
 

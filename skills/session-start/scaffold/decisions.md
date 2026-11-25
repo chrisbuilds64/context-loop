@@ -1,8 +1,9 @@
 # Decisions
 
-*One entry per decision, newest at the bottom, never edited afterwards. `/session-end` appends
-the decisions of the session here. Before proposing to change something that is decided, the
-agent reads the entry — and argues against the reason, not against the decision.*
+*One entry per decision, newest at the bottom, never edited afterwards. The agent adds an entry
+the moment a decision is made; `/session-end` adds what is missing and fills in the name of the
+log. Before proposing to change something that is decided, the agent reads the entry — and
+argues against the reason, not against the decision.*
 
 Why this file exists: a decision that lives only in a session log disappears by date, and one
 that lives only in `PROJECT-STATE.md` is dropped once it is done. Three weeks later the agent
@@ -15,8 +16,8 @@ than three sentences.
 Format:
 
 ```
-## 2026-01-15 — [<topic>] <what was decided, one line>
-**Why:** <the reason, one to three sentences>
+## <YYYY-MM-DD> — [<topic>] <what was decided, one line>
+**Why:** <the reason, one to three sentences, if one was given>
 **Instead of:** <the alternative that was rejected, if there was one>
 **Log:** <file name of the session log>
 ```
