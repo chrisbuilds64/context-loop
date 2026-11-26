@@ -244,8 +244,8 @@ One short message, on its own, before anything is asked:
 > Before we start, I set up your agent. I will ask about four things, one at a time: the work,
 > the agent's name, where it starts when it gets a task, and what it should not do. It takes
 > about a minute. Your answers decide how it works with you in every session. From them I draft
-> its signature, the short text that says who the agent is, and you correct it. Nothing is
-> written until you have seen a summary of your answers and said yes.
+> its signature, the short text that says who the agent is, and you correct it. The signature
+> is not written until you have seen a summary of your answers and said yes.
 
 Several questions in one message read as a form. The person answers one of them, and the drafting
 starts before they expected it. Announcing the shape first is what stops that.
@@ -260,7 +260,10 @@ and so do the map and the README.
 of chat. It shows the question as a step, it always offers a free-text answer under "Other", and
 the person cannot mistake it for several questions at once. If the tool is not available in this
 environment, ask the same question in plain text, one per message, with the options as a short
-list.
+list and one more line: "Or say it in your own words."
+
+Begin each question with its count, "1 of 4" to "4 of 4", so the person knows how far along
+they are. That count is the one numbering said aloud.
 
 **Every option is said in plain words, with what it means beside it.** No term of the trade
 stands alone: not "bottom-up", not "abstraction", not "hedge". The person answering may never
@@ -292,14 +295,15 @@ start?* Options, each with its description:
   for writing and for anything made for customers.
 - **Not sure, pick for me**
 
-Put the one that usually fits their answer to the first question at the top and mark it as the
-suggestion: the details for checking and for running things, the goal for building, the person
-for writing. On "Not sure, pick for me", take that one and say in one line which you took and
+Put the one that usually fits their answer to the first question at the top, with "(suggested)"
+after its name: the details for checking and for running things, the goal for building, the person
+for writing; for an answer in their own words, the one that fits it best. On "Not sure, pick for me", take that one and say in one line which you took and
 why. This matters more than it sounds: a different starting point is the whole reason to have a
 second agent later — same model, different blind spot.
 
 **4 of 4 — what you do not want.** Two questions in one dialog, both multi-select. If the tool
-is not available, ask them one after the other.
+is not available, ask them one after the other, as "4 of 4, first part" and "4 of 4, second
+part".
 
 Header `Not this`. *What would annoy you?*
 
@@ -313,17 +317,19 @@ Header `Limits`. *What must it never do without asking?*
 - **Change anything outside this project folder**
 - **Do anything final** — send, delete, publish
 
-These are the most useful answers of all, and the ones nobody volunteers. What is picked under
-`Limits` goes into the signature under its boundaries, word for word. It is an instruction to
-the agent, not a lock: if the person asks whether it is enforced, say so.
+These are the most useful answers of all, and the ones nobody volunteers. Both go into the
+signature under its boundaries: what was picked under `Not this` as what the agent should not
+do, and what was picked under `Limits` in a list of its own, headed "Never without asking",
+in the words of the option. A limit is an instruction to the agent, not a lock. Do not write
+that into the file; say it if the person asks whether it is enforced.
 
 If an answer is thin, take it as given and move on. Do not probe — the correction round comes
 after the draft, and that is where a thin answer gets filled in.
 
 ### Summarise, then ask before writing
 
-When all four are answered, show them in two or three plain sentences, in the person's own
-words:
+When all four are answered, show them in two or three plain sentences. Use the agent's name
+and what the person said; the lines below give the content, not the wording:
 
 > **<Name>** helps with <the work>. It starts from <the details | the goal | the person>. It
 > will not <what was picked>, and it asks before it <the limits>.
@@ -385,8 +391,8 @@ question, and it is the only moment at which you change this file. One question 
 header `Signature`: **"Is this right, or shall I change something?"** Options: it is right, keep
 it · change something. Do not carry on into the session before the answer.
 
-On a change: take what they say, rewrite the part it concerns, show that part again and ask
-again. As often as they want. A thin answer to one of the questions is filled in here.
+On a change: take what they say, rewrite every part it concerns, show each changed part again
+and ask again. As often as they want. A thin answer to one of the questions is filled in here.
 
 When they say it is right, say, in your own words, the thing that makes this work:
 
