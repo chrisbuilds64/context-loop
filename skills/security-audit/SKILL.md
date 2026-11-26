@@ -21,6 +21,21 @@ the filename, so the age is visible without opening anything.
 
 ## Step 0: Load context
 
+**Where the context is.** Every path here that begins with `context/` lies in the context of
+this session, and that folder is not always in the working folder. If `/session-start` ran in
+this conversation, it is the place found there, until `/session-end`. If `/where` switched to a
+context in this conversation, it is that one. Otherwise look, in this order: a `context` folder
+in the working folder; the place on the line marked `default` in the file
+`.context-loop/contexts.md` in the person's home folder; another folder connected to this
+session whose `context/rules.md` says `default-context: yes`. Read `context/…` as a path inside
+that place, in commands as well. If there is none, say in one line that there is no context yet
+and that `/session-start` sets one up, and stop.
+
+**What is audited is the working folder,** the repository or project this session works in. If
+the context lies somewhere else, its folder is audited as well: it holds the logs and the key
+inventory. The report goes into `context/audits/` and names the folders it covered under Scope.
+
+
 1. The newest file in `context/audits/` whose name ends in `_security-audit.md` — the previous
    audit. Its open findings carry forward and get re-checked.
 2. `context/PROJECT-STATE.md` — anything under Debt or Blocked that is security-shaped.
@@ -173,7 +188,7 @@ Create `context/audits/<YYYY-MM-DD>_security-audit.md`:
 # Security Audit — <YYYY-MM-DD>
 
 **Previous audit:** <date, or "none">
-**Scope:** this repository
+**Scope:** <the folder audited; and the folder of the context, if it lies elsewhere>
 
 ## Result
 

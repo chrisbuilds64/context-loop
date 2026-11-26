@@ -35,8 +35,9 @@ mkdir -p "$OUT"
 # its own directory. So the number stands twice, and this is where a mismatch is caught.
 PLUGIN_VERSION="$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' "$ROOT/.claude-plugin/plugin.json")"
 SKILL_VERSION="$(tr -d '[:space:]' < "$ROOT/skills/session-start/VERSION")"
-if [ "$PLUGIN_VERSION" != "$SKILL_VERSION" ]; then
-  echo "version mismatch: plugin.json $PLUGIN_VERSION, skills/session-start/VERSION $SKILL_VERSION" >&2
+MANUAL_VERSION="$(tr -d '[:space:]' < "$ROOT/skills/manual/VERSION")"
+if [ "$PLUGIN_VERSION" != "$SKILL_VERSION" ] || [ "$PLUGIN_VERSION" != "$MANUAL_VERSION" ]; then
+  echo "version mismatch: plugin.json $PLUGIN_VERSION, skills/session-start/VERSION $SKILL_VERSION, skills/manual/VERSION $MANUAL_VERSION" >&2
   exit 1
 fi
 
@@ -64,7 +65,7 @@ case "$MODE" in
   cp "$ROOT/template/README-app.md" "$OUT/README.md"
 
   COUNT=$(find "$OUT/loop" -maxdepth 1 -name '*.md' | wc -l | tr -d ' ')
-  [ "$COUNT" = "9" ] || { echo "assemble: expected 9 procedures, found $COUNT" >&2; exit 1; }
+  [ "$COUNT" = "11" ] || { echo "assemble: expected 11 procedures, found $COUNT" >&2; exit 1; }
   ;;
 
 --agents)
@@ -83,7 +84,7 @@ case "$MODE" in
   cp "$ROOT/template/README-agents.md" "$OUT/README.md"
 
   COUNT=$(find "$OUT/loop" -maxdepth 1 -name '*.md' | wc -l | tr -d ' ')
-  [ "$COUNT" = "9" ] || { echo "assemble: expected 9 procedures, found $COUNT" >&2; exit 1; }
+  [ "$COUNT" = "11" ] || { echo "assemble: expected 11 procedures, found $COUNT" >&2; exit 1; }
   ;;
 
 --opencode)
@@ -102,9 +103,9 @@ case "$MODE" in
   chmod +x "$OUT/.opencode/session-context.sh"
 
   COUNT=$(ls -1 "$OUT/.opencode/skills" | wc -l | tr -d ' ')
-  [ "$COUNT" = "9" ] || { echo "assemble: expected 9 skills, found $COUNT" >&2; exit 1; }
+  [ "$COUNT" = "11" ] || { echo "assemble: expected 11 skills, found $COUNT" >&2; exit 1; }
   CMDS=$(ls -1 "$OUT/.opencode/commands" | wc -l | tr -d ' ')
-  [ "$CMDS" = "9" ] || { echo "assemble: expected 9 commands, found $CMDS" >&2; exit 1; }
+  [ "$CMDS" = "11" ] || { echo "assemble: expected 11 commands, found $CMDS" >&2; exit 1; }
   ;;
 
 *)
@@ -120,7 +121,7 @@ case "$MODE" in
   chmod +x "$OUT/.claude/hooks/session-context.sh"
 
   COUNT=$(ls -1 "$OUT/.claude/skills" | wc -l | tr -d ' ')
-  [ "$COUNT" = "9" ] || { echo "assemble: expected 9 skills, found $COUNT" >&2; exit 1; }
+  [ "$COUNT" = "11" ] || { echo "assemble: expected 11 skills, found $COUNT" >&2; exit 1; }
   ;;
 esac
 

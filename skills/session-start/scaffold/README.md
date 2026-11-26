@@ -28,6 +28,19 @@ There are three parts.
 | `agents/<name>/<name>-signature.md` | who the agent is. Drafted from your answers on the first run, yours from then on; the agent reads it and does not edit it |
 | `agents/<name>/working-notes.md` | what the agent has learned about working here |
 | `agents/agent-registry.md` | which agent handles which topic |
+| `folders.md` | only in a standard context: which folder you work in belongs to which topic. Created when it is first needed |
+
+## Where this folder applies
+
+A context is either **your standard context** or **the context of one project**.
+
+- Your standard context lies in one fixed place and applies in every folder you work in that has
+  no context of its own. It carries the line `default-context: yes` in the settings of
+  `rules.md`, and its place is noted in `.context-loop/contexts.md` in your home folder.
+- The context of one project lies in that project's folder and applies only there. Nothing
+  passes between it and your standard context.
+
+`/where` shows which one a session uses, switches, and sets up a context of its own for a folder.
 
 ## The rules
 
@@ -82,8 +95,9 @@ needs.
 
 ## The procedures
 
-Nine routines: `session-start`, `session-end`, `observe`, `todo`, `todo-add`, `todo-done`,
-`security-audit`, `doc-audit`, `new-agent`. Each is one text file. They carry the sequence of
+Eleven routines: `session-start`, `session-end`, `observe`, `todo`, `todo-add`, `todo-done`,
+`where`, `manual`, `security-audit`, `doc-audit`, `new-agent`. `manual` lists them with a line
+each. Each is one text file. They carry the sequence of
 steps; the settings are in `rules.md`.
 
 Where they sit depends on how Context Loop was installed:

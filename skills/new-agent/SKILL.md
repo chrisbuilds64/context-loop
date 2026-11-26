@@ -7,6 +7,16 @@ argument-hint: "[optional: what the new agent is for]"
 
 # New Agent
 
+**Where the context is.** Every path here that begins with `context/` lies in the context of
+this session, and that folder is not always in the working folder. If `/session-start` ran in
+this conversation, it is the place found there, until `/session-end`. If `/where` switched to a
+context in this conversation, it is that one. Otherwise look, in this order: a `context` folder
+in the working folder; the place on the line marked `default` in the file
+`.context-loop/contexts.md` in the person's home folder; another folder connected to this
+session whose `context/rules.md` says `default-context: yes`. Read `context/…` as a path inside
+that place, in commands as well. If there is none, say in one line that there is no context yet
+and that `/session-start` sets one up, and stop.
+
 **The rules of this project are in `context/rules.md`.** If you have not read that file in this
 session, read it now. Where it says something different from this procedure, the rules win.
 
@@ -43,8 +53,8 @@ alone.
 2. **What do you not want from it?** One dialog, two questions, both multi-select. Header
    `Not this`: agreeing with me too easily · writing more than I asked for · making things more
    complicated than they need to be · talking around it instead of saying what it thinks.
-   Header `Limits`, what it must never do without asking: change anything outside this project
-   folder · do anything final (send, delete, publish). Still the most useful answers, and still
+   Header `Limits`, what it must never do without asking: change anything outside the folder
+   we work in · do anything final (send, delete, publish). Still the most useful answers, and still
    the ones nobody volunteers.
 
 If the skill was called with an argument, treat it as the work and ask only for direction, name

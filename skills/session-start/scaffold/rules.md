@@ -36,6 +36,10 @@ closed then loses them.
 public repository, once per start, and tell you in one line when a newer one is out. Nothing of
 your project is sent. With `no` it never looks. A rules file without this line counts as `yes`.
 
+The setting `default-context`, with the value `yes`, marks this folder as your standard context: the one that applies in every
+folder that has no context of its own. `session-start` and `where` add and remove that line. A
+rules file without it belongs to the context of one project.
+
 ## The loop
 
 Start every session with `session-start`. End it with `session-end`. The first reads where the
@@ -75,7 +79,7 @@ is loaded.
 
 - Write the session log, add its line to the index, record the decisions, update the project
   state, release the topic.
-- Commit `context/` if this folder is a git repository. Push only if `push-at-close` says yes. If
+- Commit `context/` if the folder that holds it is a git repository. Push only if `push-at-close` says yes. If
   it is not a repository, say so once and do not raise it again.
 - Never commit secrets, `.env` files or credentials.
 - After closing, say once that the next session is best started in a new chat.

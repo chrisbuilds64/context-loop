@@ -1,6 +1,6 @@
 # Context Loop — for OpenCode
 
-Nine procedures that carry context from one agent session to the next, in your own folder.
+Eleven procedures that carry context from one agent session to the next, in your own folder.
 A session starts by reading where the last one stopped and ends by writing down what the next
 one needs.
 
@@ -33,7 +33,7 @@ declares a topic, picks up the last handover on that topic and says what is due.
 AGENTS.md                        one sentence: read context/rules.md and follow it
 context/README.md                the map: every file, what it holds, what to edit to change behaviour
 context/rules.md                 how the loop behaves here — yours to change, never overwritten
-.opencode/skills/                the nine procedures, each one also a slash command
+.opencode/skills/                the eleven procedures, each one also a slash command
 .opencode/commands/              one command per procedure; session-start hands the state over first
 .opencode/session-context.sh     reports claimed topics, uncommitted work, due audits
 opencode.json                    points at AGENTS.md
@@ -64,6 +64,8 @@ example-session-log.md           what a good log looks like — an example, not 
 
 Every 14 days: `/security-audit` and `/doc-audit`. The state block at the top of
 `/session-start` says when one is due.
+
+`/manual` lists every command and the version; `/where` says which context applies.
 
 `/todo`, `/todo-add`, `/todo-done` work the list in `context/todo.json`; `/new-agent` is for the
 day a piece of work needs a different stance than the agent you have.

@@ -19,6 +19,17 @@ session.
 
 ## Step 0: Read the rules
 
+**Where the context is.** Every path here that begins with `context/` lies in the context of
+this session, and that folder is not always in the working folder. If `/session-start` ran in
+this conversation, it is the place found there, until `/session-end`. If `/where` switched to a
+context in this conversation, it is that one. Otherwise look, in this order: a `context` folder
+in the working folder; the place on the line marked `default` in the file
+`.context-loop/contexts.md` in the person's home folder; another folder connected to this
+session whose `context/rules.md` says `default-context: yes`. Read `context/…` as a path inside
+that place, in commands as well. If there is none, say in one line that there is no context yet
+and that `/session-start` sets one up, and stop.
+
+
 Read `context/rules.md` if you have not read it in this session. It says what a session log
 contains, what goes into the project state, how decisions are kept, and which steps of your own
 this project runs at the close. **Where it differs from this procedure, the rules win.** Its
@@ -63,9 +74,17 @@ it from the main subject. Lowercase, hyphens, underscore after the date. If a fi
 exists already, add `-2` to the slug; never write over a log.
 
 **Fill the six lines of the head, all of them.** `Closed` is the date and time now. `Topics` is
-the declared topic first, then the others. `Summary` is one sentence. `Keywords` are the names,
+the declared topic first, then the others. A declared topic on which nothing was done, because
+the session moved to another one, is left out: the thread of a topic is the newest log that
+names it, and this log would stand in its way. `Summary` is one sentence. `Keywords` are the names,
 systems, ids and terms somebody would search for in three months. The index is built from these
 lines, and a log with an empty head cannot be found.
+
+**If the context is not in the working folder,** the first line after the `---` that closes the
+head names the folder the session worked in, as a full path: `**Worked in:** <folder>`. The head
+keeps its six lines. A standard context holds sessions from many
+folders, and the log is the only place that says where this one happened. With no folder of the
+person's, leave the line out.
 
 **If the session made no commits, leave the "Commits" section out.**
 
@@ -165,22 +184,28 @@ empty, skip this step and do not mention it.
 ## Step 6: Commit
 
 Follow the rules, section "At the end of a session", and any principle there about commits. By
-default:
+default, in the folder that holds `context/`:
 
 ```bash
 git add context/
-git commit -m "session <YYYY-MM-DD>: <topic>"
+git commit -m "session <YYYY-MM-DD>: <topic>" -- context/
 ```
 
-Check `git status` first and do not commit if nothing changed.
+**The `-- context/` at the end is not optional.** Without it the commit takes along every file
+that somebody had staged before, outside the context. With it, those files stay staged and
+untouched.
+
+If the context is not in the working folder, run both there (`git -C <place> …`); that folder
+may be a repository when the working folder is not, and the other way round. Check `git status`
+first and do not commit if nothing under `context/` changed.
 
 **This commit holds `context/` and nothing else.** If files outside it that **this session**
-created or changed are not committed, name them and ask once whether to commit them as well. Do
-not commit the user's work unasked, and do not leave it unmentioned. Uncommitted files this
-session did not touch belong to someone else's work: leave them, and say in one line that they
-are there.
+created or changed are not committed, in the working folder or beside the context, name them
+and ask once whether to commit them as well, each in its own repository. Do not commit the
+user's work unasked, and do not leave it unmentioned. Uncommitted files this session did not
+touch belong to someone else's work: leave them, and say in one line that they are there.
 
-**Only if the project is a git repository.** Many are not, and that is a legitimate way to use
+**Only if the folder of the context is a git repository.** Many are not, and that is a legitimate way to use
 this. If there is no repository, say so once and do not raise it again in later sessions.
 
 **Push only if the rules say `push-at-close: yes`.** If the push fails or the branch has

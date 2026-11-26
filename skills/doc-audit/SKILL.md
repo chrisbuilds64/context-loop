@@ -20,6 +20,21 @@ file or the line is missing). The session hook reports the age of the last audit
 
 ## Step 0: Load context
 
+**Where the context is.** Every path here that begins with `context/` lies in the context of
+this session, and that folder is not always in the working folder. If `/session-start` ran in
+this conversation, it is the place found there, until `/session-end`. If `/where` switched to a
+context in this conversation, it is that one. Otherwise look, in this order: a `context` folder
+in the working folder; the place on the line marked `default` in the file
+`.context-loop/contexts.md` in the person's home folder; another folder connected to this
+session whose `context/rules.md` says `default-context: yes`. Read `context/…` as a path inside
+that place, in commands as well. If there is none, say in one line that there is no context yet
+and that `/session-start` sets one up, and stop.
+
+**The commands below are written for a context in the working folder.** If it lies somewhere
+else, run them from the folder that holds `context/`. The loop's own files are checked there;
+the rest of the documentation is that of the working folder.
+
+
 1. The newest `context/audits/*_doc-audit.md` — the previous audit. Open findings carry forward.
 2. `context/PROJECT-STATE.md`, `context/session-index.md`, `context/topics.md`,
    `context/session-active.md`, and the session log named in the last line of the index.

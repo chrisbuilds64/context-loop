@@ -59,7 +59,7 @@ merge_agent_dir() {
   if [ "$FRESH" = "1" ]; then
     echo "Installed: $AGENT_DIR"
   else
-    echo "Installed into $AGENT_DIR: the nine procedures and the hook"
+    echo "Installed into $AGENT_DIR: the eleven procedures and the hook"
   fi
 }
 
@@ -82,10 +82,10 @@ done < <(find "$STAGE" -mindepth 1 -maxdepth 1 | sort)
 
 echo
 COUNT=$(find "$DEST/$AGENT_DIR/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')
-if [ "$COUNT" -ge 9 ]; then
-  echo "All nine procedures are in place."
+if [ "$COUNT" -ge 11 ]; then
+  echo "All eleven procedures are in place."
 else
-  echo "WARNING: expected nine procedures, found $COUNT — check $DEST/$AGENT_DIR/skills/"
+  echo "WARNING: expected eleven procedures, found $COUNT — check $DEST/$AGENT_DIR/skills/"
   exit 1
 fi
 

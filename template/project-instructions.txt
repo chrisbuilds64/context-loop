@@ -1,5 +1,6 @@
 This project uses Context Loop. How it behaves is written in context/rules.md. Read that file at
-the start of every session and follow it. context/README.md is the map: every file the loop uses,
+the start of every session and follow it. If this folder has no context folder, the context may
+lie in another folder added to this project: loop/session-start.md says how it is found. context/README.md is the map: every file the loop uses,
 what it holds, and what to edit to change the behaviour.
 
 The procedures are plain files in loop/. Three things are different in this environment, because
@@ -21,4 +22,6 @@ What I will say, and what it means:
   "security"     the security audit  (loop/security-audit.md)
   "docs"         the documentation audit (loop/doc-audit.md)
   "new agent"    add a second agent with a different stance (loop/new-agent.md)
+  "where"        which context applies, and where it lies (loop/where.md)
+  "manual"       the version and every command, or one command explained (loop/manual.md)
   "loop?"        list these and say which ones have run in this project before

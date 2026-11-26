@@ -11,6 +11,40 @@ downloaded.
 
 ---
 
+## 1.6.0 — 2026-11-26
+
+**Your context has an address.** Until now it lay in the folder you worked in, so you always had
+to be "in the project". Now it can live in one place and be found from anywhere.
+
+- **One place for everything.** The first `/session-start` asks once where your context should
+  live: in one place for all your work (a folder `ContextLoop` in your home folder, or one you
+  name), or only in the folder you are in. With the one place, you open a session in any folder
+  and it loads from there and writes back there.
+- **A start no longer sets anything up in a new folder** once you have a standard context. It
+  says in one line where it works and where your context is.
+- **A project can have a context of its own,** kept apart from everything else. It is set up
+  only when you ask: `/where own`.
+- **New: `/where`** shows which context a session uses and where it lies, and switches to
+  another one, for a chat or for good.
+- **New: `/manual`** shows the version you have and every command with one line; `/manual
+  session-end` explains one command.
+- **The folder decides the topic.** In your standard context the start remembers which folder
+  belongs to which topic and does not ask again.
+- **In Claude Code** the start offers to allow the folder of your context in your settings, so
+  you are not asked before each file. It shows the entry and writes it only after a yes.
+- **In the Claude app,** add your `ContextLoop` folder to the project beside the folder you work
+  in. The README says how.
+
+**Nothing changes for a project you already have.** A folder with a `context` folder keeps
+using it. You are asked the new question only the first time you start in a folder without one.
+
+- **The commit at the close takes `context/` and nothing else.** Before, a file you had staged
+  yourself went into the same commit.
+
+The session hook is unchanged: it reports only on a context in the folder you opened, and never
+reads your standard context. That is loaded when you run `/session-start`. Eleven procedures
+instead of nine.
+
 ## 1.5.2 — 2026-11-26
 
 - **The start tells you when a newer version is out,** in one line, with the clicks that get it

@@ -7,7 +7,7 @@ the thing you were halfway through. Context Loop is the small habit that ends th
 starts by reading where the last one stopped, and ends by writing down what the next one needs —
 into plain files in your own folder.
 
-Nine procedures, a handful of files, MIT licensed. No account, no service, no telemetry.
+Eleven procedures, a handful of files, MIT licensed. No account, no service, no telemetry.
 What changed in each version: [CHANGELOG.md](CHANGELOG.md).
 
 ```
@@ -42,7 +42,7 @@ way into them.
 | `context/observations/` | what the work taught you, one file at a time |
 | `context/todo.json` | the work list: open items with a date, an owner and a status — with a schema beside it, and a command that checks every change |
 
-And nine procedures. They carry the steps; the settings are in `context/rules.md`:
+And eleven procedures. They carry the steps; the settings are in `context/rules.md`:
 
 - **`/session-start`** — loads the state, declares a topic, picks up the thread of that topic,
   lists what is due. On the very first run it walks you through drafting the agent's signature.
@@ -58,6 +58,10 @@ And nine procedures. They carry the steps; the settings are in `context/rules.md
 - **`/todo`** — what is due, what is next, what is with someone else, what is blocked. Read-only.
 - **`/todo-add`** — put an item on the list mid-session, when it comes up rather than at the close.
 - **`/todo-done`** — close an item, and see what that unblocks.
+- **`/where`** — which context a session uses and where it lies; switches, and gives a project a
+  context of its own.
+- **`/manual`** — the version you have and every command with one line; `/manual session-end`
+  explains one of them.
 - **`/new-agent`** — for the day a piece of work needs a different stance than the agent you have.
 
 ---
@@ -114,48 +118,67 @@ Better read here than found out later.
   is a reconstruction.
 - **You start the procedures, the agent does not.** `/session-start`, `/session-end`, `/observe`,
   the two audits and `/new-agent` run only when you call them. That is on purpose: when a session
-  begins and ends is your call. The three work-list procedures the agent may use by itself.
+  begins and ends is your call. The three work-list procedures, `/where` and `/manual` the agent
+  may use by itself; `/where` asks before it changes anything.
 - **What is written into these files is read as context.** A line in a log or a note is
   information about the past, not an instruction. The signature is yours alone; the agent adds
   to `rules.md` only a line you said yes to.
-- **Not in this stage:** syncing between devices, a team working on one loop, automatic
-  shortening of old logs.
+- **Not in this stage:** syncing between devices, a team working on one loop, merging two
+  contexts, a context reached from a phone or a browser, automatic shortening of old logs.
 
 ---
 
-## It works in a project
+## Where your context lives
 
-Context Loop belongs to one project, and a project is one folder. Everything it knows is in the
-`context` folder inside it, and everything the agent can look at is what lies under that folder.
-So the one thing to be sure of, every time you start, is that you are in your project.
+Context Loop keeps everything it knows in one folder named `context`. That folder does not have
+to be in the folder you are working in. There are two kinds, and one rule.
 
-**How much that asks of you depends on the tool.**
+- **Your standard context.** One fixed place, chosen once: a folder named `ContextLoop` in your
+  home folder unless you name another. It applies wherever you work. Open a session in any
+  folder, run `/session-start`, and it loads from there and writes back there.
+- **A context of its own for one project.** It lies in that project's folder and applies only
+  there. Nothing passes between it and your standard context, in either direction: no logs, no
+  decisions, no topics. The choice for a client's work.
 
-| Where you work | How you get into your project |
+**The rule:** if the folder you work in has a context of its own, that one applies. Otherwise
+your standard context does.
+
+The first `/session-start` asks once where your context should live. After that a start in a new
+folder creates nothing there; it says in one line where it works and where your context is. A
+context of its own is set up only when you ask for one, with `/where own`.
+
+In your standard context the folder decides the topic: the start remembers which folder belongs
+to which topic and does not ask again.
+
+**How a session finds your standard context depends on the tool.**
+
+| Where you work | How it is found |
 |---|---|
-| An editor or a terminal (Claude Code, OpenCode, Codex) | You open the folder. That is all; the tool works where you opened it. |
-| The Claude app, in a project | You create the project on your folder once. Every chat in it works there. |
-| The Claude app, in a single chat | You add the folder to each new chat yourself. |
+| An editor or a terminal (Claude Code, OpenCode, Codex) | Through a small list in your home folder, `.context-loop/contexts.md`: one line per context, one of them marked as the standard. The list holds names and places, nothing of the content. |
+| The Claude app, in a project | The app cannot read your home folder. Add your `ContextLoop` folder to the project, beside the folder you work in; the start recognises it by a line in its settings. |
+| The Claude app, in a single chat | Add the `ContextLoop` folder to the chat, each time. |
 
-`/session-start` says which folder it is in before it sets anything up. If that is not your
-project, stop there.
+**In Claude Code** the first start offers to allow the folder of your context in your settings
+(`permissions.additionalDirectories`), so that you are not asked before each file there. It
+shows the entry first and writes it only after a yes. Say no, and it shows you the entry to add
+yourself.
 
-**Choose the folder by what belongs together.** The agent reads and checks against what lies
-under it, so the folder decides how much the context is worth:
+**An existing project stays as it is.** A folder that has a `context` folder from an earlier
+version has a context of its own by the rule above, and nothing about it changes.
 
-- A folder that holds the whole of a piece of work — the texts, the code, the plans, the
-  material — gives the agent something to check a statement against. What the session logs and
-  the project state say can then be verified in the files beside them.
-- A folder that holds one corner of it gives a context that is correct about that corner and
-  knows nothing of the rest.
+`/where` shows which context a session uses, switches to another one for a chat or for good,
+and sets up a separate one. Two contexts cannot be merged yet.
 
-One large folder with several strands of work in it is fine: that is what topics are for. Each
-session names its topic and picks up the thread of that topic only.
+**What lies under a folder is what the agent can read.** A context for everything is one folder
+with everything in it: keep out of it what an agent should not see, and give work that must
+stay apart a context of its own. The same holds for the folder you work in: one that holds the
+whole of a piece of work gives the agent something to check a statement against; one that holds
+a corner of it gives a context that is right about that corner and knows nothing of the rest.
 
 ## Install
 
 In the Claude environments the way in is the plugin; in OpenCode and Codex it is files. Either
-way the first session start creates the `context/` folder in whichever project you are in.
+way the first session start asks where your context should live and creates it there.
 
 ### In the Claude apps (Cowork)
 
@@ -164,10 +187,12 @@ way the first session start creates the `context/` folder in whichever project y
    notice about components that run code
 3. Create a project on your folder: **Projects → + → Use an existing folder**. Every new chat
    you start in that project then works in that folder
-4. Start a chat in the project and run `/session-start`
+4. Start a chat in the project and run `/session-start`. It asks where your context should
+   live: in this folder, or in one place for everything. For the one place, make a folder named
+   `ContextLoop` on your computer and add it to the project as a second folder
 
-**The folder is everything.** Context Loop keeps its files in the folder the chat works in. If
-no folder is added, every chat gets an empty workspace of its own and nothing carries over to
+**A folder has to be added.** In the app Context Loop can keep its files only in a folder that
+is added to the project or the chat. If no folder is added, every chat gets an empty workspace of its own and nothing carries over to
 the next one. Connecting your computer is not the same as adding the folder.
 
 - **A project is the way that stays set up.** It keeps the folder, so you add it once.
@@ -294,7 +319,7 @@ rely on one:
 
 | | Claude Code | Claude apps (Cowork) | OpenCode |
 |---|---|---|---|
-| **How you call it** | `/context-loop:session-start` — plugin procedures are prefixed with the plugin name | `/session-start` — listed under its own name | `/session-start` — the nine procedures ship with a command each |
+| **How you call it** | `/context-loop:session-start` — plugin procedures are prefixed with the plugin name | `/session-start` — listed under its own name | `/session-start` — the eleven procedures ship with a command each |
 | **State before the first word** | The session-start hook reports claimed topics, uncommitted work and a due audit | No hook output. `/session-start` works it out from the files instead | The `/session-start` command embeds the same report — in the terminal interface, not in `opencode run` |
 | **git** | Assumed. `/session-end` commits; it pushes only if `push-at-close` in the rules says yes | Often no repository at all. The close says so once and carries on | Assumed, same as Claude Code |
 | **Where it lives** | Files in your project, or the plugin in your Claude Code config | The plugin on your account; the state files in the project's folder | Files in your project under `.opencode/`, or one global `skills.paths` entry |
@@ -312,7 +337,8 @@ and prints them as text for the agent: the rows in `context/session-active.md`, 
 uncommitted files from `git status`, and the date in the name of the newest file in
 `context/audits/`. It sends nothing anywhere, writes nothing, and never opens a file that could
 hold a secret. It also reads one number, the audit interval, from `context/rules.md`, and in a
-project without a `context/` folder it does nothing at all. About fifty lines of shell and as
+folder without a `context/` folder it does nothing at all: it never reads your standard context.
+What is in there is loaded only when you run `/session-start`. About fifty lines of shell and as
 many of comment, in `hooks/session-context.sh`, and worth reading before you install anything
 that can run code.
 
@@ -336,10 +362,10 @@ a vendor.
 ## What is in this repository
 
 ```
-skills/           the nine procedures — the source of truth for them
+skills/           the eleven procedures — the source of truth for them
   session-start/scaffold/   the state files a new project starts with
 hooks/            the session-start hook (Claude Code; OpenCode calls the same script with --plain)
-adapters/         the per-environment wiring — currently opencode/ (nine commands, one config)
+adapters/         the per-environment wiring — currently opencode/ (eleven commands, one config)
 template/         the pointer files (CLAUDE.md, the instruction block that also becomes AGENTS.md),
                   .gitignore, the example log, the README of each package
 install/          assemble.sh, install.sh, build-zip.sh, the macOS installer

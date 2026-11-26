@@ -31,7 +31,7 @@ AGENTS.md            one paragraph: read context/rules.md, the procedures are in
 context/README.md    the map: every file, what it holds, what to edit to change behaviour
 context/rules.md     how the loop behaves here — yours to change
 context/             the state: what is being worked on, what happened, what was decided
-loop/                the nine procedures the agent follows — read them, they are plain text
+loop/                the eleven procedures the agent follows — read them, they are plain text
 loop/scaffold/       the starting files, kept so an older project can be brought up to date
 example-session-log.md     what a good session log looks like
 ```

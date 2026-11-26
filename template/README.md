@@ -1,6 +1,6 @@
 # Context Loop
 
-Nine procedures and a handful of files that carry context from one agent session to the next —
+Eleven procedures and a handful of files that carry context from one agent session to the next —
 in your own folder, not in a vendor's memory.
 
 This is the package for **Claude Code**, installed as files.
@@ -42,7 +42,7 @@ invisible in Finder and in most file managers.** Select-all and drag will copy t
 and silently leave the skills and the hook behind. You get a folder that looks complete, and
 `/session-start` does not exist.
 
-Use the installer, which checks afterwards that all nine procedures arrived. If you would rather
+Use the installer, which checks afterwards that all eleven procedures arrived. If you would rather
 do it yourself, the trailing dot is what matters:
 
 ```bash
@@ -55,8 +55,8 @@ Then check:
 ls /path/to/your/project/.claude/skills
 ```
 
-You should see nine: `session-start`, `session-end`, `observe`, `todo`, `todo-add`, `todo-done`,
-`security-audit`, `doc-audit` and `new-agent`.
+You should see eleven: `session-start`, `session-end`, `observe`, `todo`, `todo-add`, `todo-done`,
+`where`, `manual`, `security-audit`, `doc-audit` and `new-agent`.
 
 ### If the skills do not show up
 
@@ -74,6 +74,8 @@ context/rules.md               how the loop behaves here — yours to change, ne
 .claude/skills/todo/           the work list: what is due, what is next, what is blocked
 .claude/skills/todo-add/       put an item on the list, mid-session
 .claude/skills/todo-done/      close an item
+.claude/skills/where/          which context applies and where it lies; switch, or set up a separate one
+.claude/skills/manual/         the version and every command, or the page of one command
 .claude/skills/new-agent/      define a second agent, when one stance is not enough
 .claude/skills/security-audit/ every 14 days: secrets, .gitignore, history, dependencies, agent reach
 .claude/skills/doc-audit/      every 14 days: do the files above still tell the truth

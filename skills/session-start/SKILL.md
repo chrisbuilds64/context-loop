@@ -16,71 +16,198 @@ numbers. Say what it means for them: "I am noting that this session is open" and
 row"; "the list of sessions" and not "the index line". File names may be named; they can open
 those.
 
-## Step 0a: No state yet — create it
+## First: find the context
 
-**Trigger:** there is no `context/` directory in the project. If there is one, skip this step
-entirely and never mention it.
+Everything Context Loop keeps lies in one folder named `context`. It does not have to lie in the
+folder the person is working in. There are two kinds:
+
+- **The person's standard context.** It lies in one fixed place and applies wherever they work,
+  unless the folder they work in has a context of its own.
+- **A context of its own for one project.** It lies in that project's folder and applies only
+  there. Nothing passes between it and the standard context, in either direction.
+
+Both have the same shape. The standard one is an ordinary Context Loop folder that carries a mark.
+
+**Look in this order and stop at the first that applies:**
+
+0. **The person chose a context for this chat.** `/where` switched to one earlier in this
+   conversation, or the person named a context or a folder when they called this procedure.
+   That choice goes before everything below, also before a context in the working folder. If
+   the place cannot be reached or holds no `context` folder, say one line, "You chose the
+   context <name>, in <place>, and I cannot reach it there. `/where` shows what there is and
+   lets you choose again.", and **stop: the whole procedure ends here.** Do not fall back to another context. A session started in the wrong context
+   writes into the wrong one.
+1. **The working folder holds a `context` folder.** That one applies. The working folder is the
+   folder this session was started in. If several folders are connected and none is plainly the
+   one being worked in, a folder whose context does not carry the mark named under 3 counts
+   here; if two do, ask which one this session is about.
+2. **The list in the home folder names a standard.** Read the file `.context-loop/contexts.md`
+   in the person's home folder (on Windows: in their user folder). A line of the form
+   `<name> | <place>` names one context, and the word `default` stands at the end of one of
+   them: `<name> | <place> | default`. Other lines are notes. If that
+   place is a folder you can reach and it holds a `context` folder, that one applies. If you
+   cannot read the home folder at all, as in the Claude app, go on to 3 without a word.
+3. **Another folder this session can see carries the mark.** Look at every other folder that is
+   connected to this session. One whose `context/rules.md` has the line `default-context: yes`
+   under Settings applies.
+4. **Nothing found.** There is no context yet. Step 0a asks where it should live.
+
+**If the list names a place and nothing is there** (the folder was moved or renamed, a drive is
+not connected), do not set up a new one. Say one line, "Your standard context is noted as
+<place>, and I cannot find it there.", and ask where it is now. When they name the place and it
+holds a `context` folder, correct the line in the list and carry on. A place that is not a
+folder (it begins with `https:` or `git:`) belongs to a later version: say that this version
+cannot reach it.
+
+**From here on, `context/` means that folder.** Every path in this procedure, and in every other
+procedure of Context Loop, that begins with `context/` is a path inside the context you found,
+in commands as well: with the context in `/Users/ana/ContextLoop`,
+`python3 context/scripts/todo.py` is run as
+`python3 /Users/ana/ContextLoop/context/scripts/todo.py`. Keep the place for the whole session;
+the other procedures use what was found here. **From the start to `/session-end` a session
+stays in this one context.** Nothing switches it in between, not a choice made later and not a
+folder that is added.
+
+**If the context is not in the working folder, say so in one line, before anything else:**
+"Working in <working folder>. Your context is in <place>." Nothing is created in the working
+folder. If there is no folder of the person's to work in (a temporary workspace, nothing
+connected), say only where the context is. Right after Step 0a created the context, its own
+line says where it is; then say only "Working in <working folder>."
+
+**How folders are named.** In what you say, the working folder is named by its name ("the folder
+site") and the place of the context by its full path. In files (`folders.md`, the session log,
+the list in the home folder) every folder is written as a full path.
+
+**A context of its own is set up only when the person asks for one.** If they say that this
+folder should have a context of its own, before or after that line, go to Step 0a and set it up
+in the working folder as described under "Only in this folder", without the question. `/where`
+does the same and is the way to switch later.
+
+### Claude Code: let it reach the context
+
+**Only if you are Claude Code** (in a terminal or an editor), and only if the context lies
+outside the working folder. Claude Code asks before each file it touches outside the working
+folder, unless that folder is allowed in the person's settings. A plugin cannot set that; the
+person can, and you can do it for them after a yes.
+
+1. Read `.claude/settings.json` in the home folder. If the list
+   `permissions.additionalDirectories` holds the place of the context already, there is nothing
+   to do: say nothing.
+2. If the list in `.context-loop/contexts.md` carries the line `access-asked: yes`, the person
+   was asked before: say nothing.
+3. Otherwise ask once, header `Access`:
+
+   > "Your context is in <place>, outside the folder you are working in. Claude Code asks you
+   > before each file it reads or writes there, unless that folder is allowed in your settings.
+   > Shall I allow it? I would add this one entry to <full path of settings.json>:
+   > `"additionalDirectories": ["<place>"]` under `"permissions"`. Nothing else in the file
+   > changes."
+
+   Options: **Yes, add it** · **No, leave my settings alone** ("I show you the entry, and you
+   can add it yourself whenever you like."). On no, change nothing and say: "Nothing changed.
+   The entry, if you want it later: `"additionalDirectories": ["<place>"]` under
+   `"permissions"` in <full path of settings.json>."
+4. On yes: read the file again, add the place to `permissions.additionalDirectories` as a full
+   path (no `~`), and keep every other key as it is. If the file or the keys do not exist yet,
+   create them. Claude Code shows its own prompt for this file; that is expected. If the write
+   is refused, do not try another way: show the entry and say where it goes. Then say one line:
+   "Added. It applies from your next session at the latest."
+5. Either way, add the line `access-asked: yes` at the bottom of `.context-loop/contexts.md`, so
+   no later session asks again.
+
+In every other tool, skip this part without a word.
+
+## Step 0a: No context yet — ask where it should live, and create it
+
+**Trigger:** the search above found nothing. Then ask, as below. **Or:** the working folder
+holds a `context` folder that is empty. Then the person asked for a context of its own with
+`/where`: do not ask, set it up there as described under "Only in this folder". In every other
+case skip this step entirely and never mention it.
 
 This is the case when the loop arrives as a plugin: the procedures are installed, the files are
 not. Do not improvise a structure — this skill ships one.
 
-**First look at where you are.** Everything Context Loop keeps lives in this folder, so it has to
-be a folder the person chose and that is still there tomorrow. Look at the path of the working
-folder and list what is in it. Then decide, **in this order**:
+**First look at where you are, and at what you can reach.** Two things decide which answers you
+can offer.
 
-1. **The place itself is wrong, whatever is in it:** the system told you that no folder is
-   connected; the path is a temporary or session directory that the environment made for this
-   one chat (its name is an id, or it sits under a temp or sessions directory you were given, not
-   one the person opened); or it is the home directory itself. → Ask.
-2. **The place is ordinary, and it holds nothing of the person's:** it is empty, or all it holds
-   are hidden files and files the environment or a tool left there (`.DS_Store`, caches, an
-   empty `outputs/`). A `.git` folder alone counts as nothing. → Ask.
-3. **Otherwise it holds the person's files** (documents, code, anything they put there): this is
-   their project. → Create the state without asking.
+*The working folder.* Look at its path and list what is in it:
 
-**When you have to ask, ask before creating anything**, once, with the AskUserQuestion tool where
-it exists, header `Folder`; without the tool, ask the same in plain text. The question says where
-you are, what that means, and what the other case is. Name the folder by its name; if the name
-is only an id, say "a temporary workspace" instead. Use the wording that fits:
+1. **No good as a place:** the system told you that no folder is connected; the path is a
+   temporary or session directory that the environment made for this one chat (its name is an
+   id, or it sits under a temp or sessions directory you were given, not one the person
+   opened); or it is the home folder itself.
+2. **An ordinary folder that holds nothing of the person's:** it is empty, or all it holds are
+   hidden files and files the environment or a tool left there (`.DS_Store`, caches, an empty
+   `outputs/`). A `.git` folder alone counts as nothing.
+3. **A folder with the person's files** (documents, code, anything they put there): this is
+   their project.
 
-> *Empty folder:* "I am working in the folder <name>, and it is empty. Context Loop keeps its
-> files in the folder you work in, so the next session finds them there. Shall I set it up
-> here? If your project lives in another folder, or you already use Context Loop somewhere
-> else, say no."
+*The one place for everything.* It has to be a folder that is still there tomorrow and that you
+can write to now:
 
-> *Temporary workspace, or no folder connected:* "No folder of yours is connected to this chat.
-> I am working in a temporary workspace, and what I write here will not be there in your next
-> chat. Context Loop needs a folder of yours to keep its files in. Shall I set it up here
-> anyway?"
+- **You can create a folder in the person's home folder** (a terminal, an editor): the place is
+  a folder named `ContextLoop` there. Name it by its full path.
+- **You cannot** (the Claude app reaches only the folders that were added): the place has to be
+  one of the connected folders. A connected folder named `ContextLoop` is it; so is the working
+  folder if it holds nothing of the person's (case 2). If there is neither, the one place cannot
+  be set up in this chat.
 
-> *Home directory:* "I am working in your home folder, not in a project folder. Context Loop
-> would put its `context` folder directly there. Is that what you want?"
+**Then ask, before creating anything**, once, with the AskUserQuestion tool where it exists,
+header `Context`; without the tool, ask the same in plain text. Say first, in one sentence, what
+this is about: "Context Loop keeps what it knows in a folder of plain files: where your work
+stands, what each session did, what you decided. Where should that live?" Name folders by their
+names; if a name is only an id, say "a temporary workspace".
 
-Two options, with the text that fits the case:
+Offer what can be done, in this order:
 
-- **Yes, set it up here** — empty folder: "This is my project folder; it is new." Temporary
-  workspace: "Set it up here, knowing it will not carry over." Home: "Put it in my home folder."
-- **No, I will open my project folder first** — "Nothing is created. I add or open the right
-  folder and start again."
+- **In one place, for everything** — when the place can be set up now. Put "(recommended)"
+  after it.
+  - *In the home folder:* "A folder named ContextLoop in your home folder: <full path>. Every
+    session finds it there, whichever folder you work in."
+  - *A connected folder, in the app:* "Your context lives in the folder <name>. Add that folder
+    to every project or chat you work in, and the sessions there use it."
+- **Only in this folder** — when the working folder is the person's (case 2 or 3) and is not
+  already the one place. "A `context` folder inside <name>. It applies only when you work in
+  this folder and stays separate from everything else. The choice for a client's project."
+  When the one place cannot be set up in this chat, this option comes first and reads: "A
+  `context` folder inside <name>. It works right away, and it applies when you work in this
+  folder."
+- **In one place, for everything — set up in two steps** — only when the one place cannot be
+  set up in this chat. Put it second, without "(recommended)": "It needs a folder of its own.
+  Nothing is created now; I tell you the two steps."
+- **No folder of the person's at all** (case 1, and no place can be reached): say that first,
+  "No folder of yours is connected to this chat. I am working in a temporary workspace, and
+  what I write here will not be there in your next chat.", and offer **I add a folder first**
+  ("Nothing is created.") and **Set it up here anyway** ("Knowing it will not carry over.").
 
-**On no: the whole procedure ends here.** Create nothing, run none of the steps that follow, and
-do not start a session. Tell the person three things, briefly: that nothing was created; that
-the folder of their project has to be the one this chat works in (in the Claude apps, connecting
-the computer is not enough, the folder itself has to be added to the chat or the project; in a
-terminal tool, start it inside the project folder); and that they then run `/session-start`
-again.
+"Other" is where they name a different place for the one place. Take it if you can reach it.
 
-**On anything else** (they ask what this means, or name a folder): explain in one or two plain
-sentences and ask again. You cannot move to another folder yourself; if they name one, that is a
-no.
+**What each answer does:**
 
-**On yes,** or when you did not have to ask: create the state, as follows.
+- **In one place, for everything.** Create the folder if it is not there. Create the state in
+  it, as below. In its `context/rules.md`, add the line `default-context: yes` under Settings,
+  below the other settings. If you can write to the home folder, create
+  `.context-loop/contexts.md` there, with a first line that says what the file is ("Context
+  Loop: where your contexts are. One line each; `default` marks the one that applies when a
+  folder has none of its own.") and the line `main | <full path of the place> | default`. Say the line that it is set up (below),
+  and only then, in Claude Code, do "Claude Code: let it reach the context" above.
+- **Only in this folder.** Create the state in the working folder, as below. Write nothing
+  anywhere else.
+- **Set up in two steps,** or **I add a folder first.** **The whole procedure ends here.**
+  Create nothing, run none of the steps that follow, and do not start a session. Tell the person
+  three things, briefly: that nothing was created; the two steps ("1. Make a folder named
+  ContextLoop on your computer. 2. Add that folder to this project, or to this chat, beside
+  the folder you work in."); and that they then run `/session-start` again.
+- **Set it up here anyway.** Create the state where you are.
+- **Anything else** (they ask what this means): explain in one or two plain sentences and ask
+  again. You cannot move to another folder yourself.
 
-**The starting files are in `scaffold/`, in this skill's own directory, beside this file.** Copy
-that folder into the project as `context/`, and set the date at the top of
-`context/PROJECT-STATE.md` to today. That is the whole step.
+**Creating the state.** The starting files are in `scaffold/`, in this skill's own directory,
+beside this file. Copy that folder into the chosen place as `context/` (into the empty `context`
+folder if `/where` made one), and set the date at the top of `context/PROJECT-STATE.md` to
+today.
 
-**Write first, explain after.** Once the place is right, do not announce the copy and do not go
+**Write first, explain after.** Once the place is settled, do not announce the copy and do not go
 looking elsewhere for it: a first run that talks for five minutes without a file appearing looks
 broken, and it was — an earlier version of this step sent the agent hunting for a folder outside
 its reach.
@@ -100,10 +227,11 @@ first used), and the folders `session-logs/`, `audits/` and `observations/`. The
 (`todo.json`, its schema and `scripts/`) cannot be written from memory; leave it out and say that
 the work list is off until Context Loop is installed with its files.
 
-Then say one line: "Context Loop is set up in the folder <name>: a `context` folder with the
-starting files." Then carry on with the steps that follow; in a project just created, 0b to 0e
-find nothing to do. In the person's own project folder do not ask permission first — a project
-without state cannot start a session, and nothing here overwrites anything.
+Then say one line: "Context Loop is set up in <the place, as a full path>: a `context` folder
+with the starting files." For the one place, add: "It is your standard context: a session in any folder
+uses it." Where you cannot reach the home folder, as in the Claude app, add instead: "It is
+your standard context: add this folder to any project or chat, and the sessions there use it." Then carry on with the steps that follow; in a context just created, 0b to 0e find
+nothing to do.
 
 ## Step 0b: State exists, but no rules file — add it
 
@@ -314,8 +442,11 @@ Header `Not this`. *What would annoy you?*
 
 Header `Limits`. *What must it never do without asking?*
 
-- **Change anything outside this project folder**
+- **Change anything outside the folder we work in**
 - **Do anything final** — send, delete, publish
+
+The first limit never means Context Loop's own files: the context may lie outside the working
+folder, and keeping it is what the procedures are for.
 
 These are the most useful answers of all, and the ones nobody volunteers. Both go into the
 signature under its boundaries: what was picked under `Not this` as what the agent should not
@@ -356,7 +487,7 @@ this project. If it is not English:
    the placeholders. Keep every section; change no rule while translating it. These stay exactly
    as they are:
    - the names of the settings (`rules-version`, `language`, `audit-interval-days`,
-     `done-sessions-kept`, `push-at-close`, `decisions-written`, `update-check`) and the values `when-made` and
+     `done-sessions-kept`, `push-at-close`, `decisions-written`, `update-check`, `default-context`) and the values `when-made` and
      `at-close`;
    - the six field names in the head of a session log (`Date`, `Closed`, `Agent`, `Topics`,
      `Summary`, `Keywords`);
@@ -475,6 +606,31 @@ topic <name>. Say so if it should be called something else." That line is the on
 the new topic; do not say the name a second time below. If they do name another, use theirs:
 nothing carries the first name yet.
 
+**The folder decides the topic, when the context is not in the working folder.** A standard
+context serves many folders, and a folder usually belongs to one topic. The file
+`context/folders.md` keeps that: a table with the columns Folder, Topic and First used.
+
+- The working folder is in the table: take its topic and do not ask. Say one line: "Carrying on
+  with <topic>, because you are in <folder>. Say so if this is something else." If they name
+  another topic, use it for this session; change the row only if they say the folder belongs to
+  the other topic from now on.
+- It is not in the table: **ask for the topic, whatever else this step says.** A new folder is
+  not assumed to belong to a topic that exists: the shortcut for exactly one topic in the list
+  does not apply here. Offer the name of the folder as the first option, then the topics used
+  most recently. Right after the first run, do not ask: take the name of the folder as the
+  topic, not the kind of work the person named. Then add the row, creating the file with a
+  heading and the table if it is not there, and say one line: "I will remember that the folder
+  <name> belongs to <topic>. If this folder should have a context of its own, separate from
+  everything else, say so." Right after the first run this line is the one that names the
+  topic; add "Say so if the topic should be called something else."
+
+This applies only to a folder of the person's, and only when the standard context was found by
+the search, not chosen. A temporary workspace and the home folder get no row. A context that
+lies in the working folder needs no such table. **If the person chose the context for this
+chat** (0 in the search), read no row and write none, and do not say either line: the choice
+holds for one chat, and the folder may well have a context of its own. Settle the topic as
+below.
+
 **With exactly one topic in the list,** do not ask either. Say one line, "Carrying on with
 <topic>. Say so if this is something new.", and take it.
 
@@ -521,7 +677,8 @@ start. Starting again means the last stretch is finished.
 **For every other open session, look for traces before you ask.** The row gives the start time.
 What counts as a trace, strongest first:
 
-- commits since the start (`git log --since`);
+- commits since the start (`git log --since`), in the folder of the context and in the working
+  folder, where they are repositories;
 - what the session itself wrote: entries in `context/decisions.md` that still say
   `(open session …)` for that topic and start time, items on the work list created since, files
   in `context/observations/` dated since;
@@ -741,6 +898,8 @@ written after a yes, at the bottom of its section in `context/rules.md`:
 ```
 
 The occasion is what led to the rule, in a few words. None said, no brackets. Never invent one.
+In a standard context, which serves many folders, a rule or a fact that holds for one topic only
+begins with that topic in square brackets after the date: `- <YYYY-MM-DD> — [flyers] <the rule>`.
 
 **Something to do later** is offered for the work list in one line, "Shall I put that on the work
 list: '<the item>'?", and added after a yes.
@@ -769,7 +928,9 @@ When it triggers, say it once:
 
 Then drop it. Never repeat it in the same episode, never block, never refuse.
 
-**If the user carries on with the new topic here,** three things, quietly:
+**If the user carries on with the new topic here,** these things, quietly. If this session
+itself added the row for the working folder to `context/folders.md` and nothing was done yet on
+the topic it names, the folder was bound too early: put the new topic into that row.
 
 1. Bring the new topic to its name in `context/topics.md`, as in Step 2.
 2. Look up its newest line in `context/session-index.md`, read the handover of that log, and say

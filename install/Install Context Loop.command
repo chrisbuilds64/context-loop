@@ -78,10 +78,10 @@ find "$DEST" -name '.DS_Store' -delete 2>/dev/null
 # --- Verify ----------------------------------------------------------------
 printf '\n'
 SKILLCOUNT=$(ls -1 "$DEST/.claude/skills" 2>/dev/null | wc -l | tr -d ' ')
-if [ "$SKILLCOUNT" = "9" ]; then
-  printf '  All nine skills are in place.\n'
+if [ "$SKILLCOUNT" = "11" ]; then
+  printf '  All eleven skills are in place.\n'
 else
-  printf '  SOMETHING WENT WRONG: expected nine skills, found %s.\n' "$SKILLCOUNT"
+  printf '  SOMETHING WENT WRONG: expected eleven skills, found %s.\n' "$SKILLCOUNT"
   printf '  Look in %s/.claude/skills/\n\n' "$DEST"
   read -n 1 -s -r -p '  Press any key to close.'
   exit 1
