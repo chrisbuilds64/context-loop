@@ -133,16 +133,21 @@ way the first session start creates the `context/` folder in whichever project y
 1. **Plugins → Add → Add marketplace**, enter `chrisbuilds64/context-loop`, **Sync**
 2. On the Plugins page, search for **Context Loop**, open it and select **Add**. Confirm the
    notice about components that run code
-3. Open a project on the folder you want to work in, and run `/session-start`
+3. Create a project on your folder: **Projects → + → Use an existing folder**. Every new chat
+   you start in that project then works in that folder
+4. Start a chat in the project and run `/session-start`
 
 **The folder is everything.** Context Loop keeps its files in the folder the chat works in. If
 no folder is added, every chat gets an empty workspace of its own and nothing carries over to
-the next one. Connecting your computer is not the same as adding the folder: the folder itself
-has to be added to the chat or the project. Before you send your first message, click the **+**
-button in the chat's message box, choose **Add folder**, and pick your project folder. Do this in
-every new chat. `/session-start` says which folder it is in, and
-asks before it sets anything up in an empty or temporary one. If the folder it names is not
-yours, stop there and add yours first.
+the next one. Connecting your computer is not the same as adding the folder.
+
+- **A project is the way that stays set up.** It keeps the folder, so you add it once.
+- **A single chat outside a project** needs the folder each time: before you send your first
+  message, click the **+** button in the chat's message box, choose **Add folder**, and pick
+  your project folder.
+
+`/session-start` says which folder it is in, and asks before it sets anything up in an empty or
+temporary one. If the folder it names is not yours, stop there and add yours first.
 
 The marketplace and the plugin carry the same name in the app. The first is the shelf, the second
 is what you take from it.

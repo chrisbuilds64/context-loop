@@ -20,6 +20,8 @@ downloaded.
   per start. Nothing of your project is sent. `update-check: no` in the settings of your rules
   file turns it off.
 - The README has a section "Updating" with the way for each tool.
+- The README names a project on your folder as the way to use Context Loop in the Claude app:
+  the project keeps the folder, so you do not add it to every chat.
 
 **To get this version in the Claude app:** Customize → Plugins → the marketplace context-loop →
 Check for updates, then start a new chat.
