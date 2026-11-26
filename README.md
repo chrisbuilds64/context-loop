@@ -149,7 +149,8 @@ is what you take from it.
 
 The app asks for access to the folder before the first run. A session in the app runs on
 Anthropic's servers, so the files the agent reads leave your computer for that purpose, as with
-any work you give the app. Context Loop itself sends nothing anywhere.
+any work you give the app. Context Loop itself sends nothing of yours anywhere. The one thing it
+reads from the network is its own newest version number (see "Updating").
 
 ### In Claude Code
 
@@ -160,6 +161,26 @@ any work you give the app. Context Loop itself sends nothing anywhere.
 
 Then `/context-loop:session-start` in any project — Claude Code prefixes plugin procedures with
 the plugin name so they cannot collide with your own.
+
+### Updating
+
+A new version does not arrive by itself in every tool. `/session-start` tells you in one line
+when a newer one is out, and how to get it:
+
+- **Claude apps:** Customize → Plugins → the marketplace **context-loop** → **Check for
+  updates**. Then start a new chat; an open chat keeps the version it started with. "Sync
+  automatically" on the marketplace has not fetched new versions reliably for us.
+- **Claude Code:** `/plugin marketplace update chrisbuilds64`, then start a new session. To have
+  it done for you: `/plugin` → Marketplaces → chrisbuilds64 → turn auto-update on. It is off by
+  default for every marketplace that is not Anthropic's own.
+- **OpenCode, Codex and the file packages:** download the new package and replace the
+  procedures. Your `context/` folder stays as it is.
+
+An update never touches your own files. What changed is in [CHANGELOG.md](CHANGELOG.md).
+
+To find out about a new version, `/session-start` reads one public file, the version number in
+this repository, once per start. It sends nothing of your project. `update-check: no` in the
+settings of `context/rules.md` turns it off.
 
 ### In OpenCode
 

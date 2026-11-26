@@ -18,6 +18,7 @@ audit-interval-days: 14
 done-sessions-kept: 2
 push-at-close: no
 decisions-written: when-made
+update-check: yes
 
 `language` is the language everything is written in that you read: this file, the map, the
 signature, session logs, the project state, decisions, and what the agent says to you. File
@@ -30,6 +31,10 @@ push to you.
 `decisions-written: when-made` has the agent write a decision into `decisions.md` the moment it
 is made. With `at-close` it records them when the session is closed; a session that is never
 closed then loses them.
+
+`update-check: yes` lets `session-start` read the newest version number of Context Loop from its
+public repository, once per start, and tell you in one line when a newer one is out. Nothing of
+your project is sent. With `no` it never looks. A rules file without this line counts as `yes`.
 
 ## The loop
 

@@ -356,7 +356,7 @@ this project. If it is not English:
    the placeholders. Keep every section; change no rule while translating it. These stay exactly
    as they are:
    - the names of the settings (`rules-version`, `language`, `audit-interval-days`,
-     `done-sessions-kept`, `push-at-close`, `decisions-written`) and the values `when-made` and
+     `done-sessions-kept`, `push-at-close`, `decisions-written`, `update-check`) and the values `when-made` and
      `at-close`;
    - the six field names in the head of a session log (`Date`, `Closed`, `Agent`, `Topics`,
      `Summary`, `Keywords`);
@@ -638,6 +638,38 @@ One line each. Name the date, do not grade the delay. You see the repository; yo
 the rest of the user's life, and a finding that arrives as a reproach gets read as noise.
 
 **If nothing is due, say nothing.** An empty list is not a status report.
+
+### A newer version of Context Loop
+
+Unless the rules say `update-check: no`, look once whether a newer version exists. A person who
+installed this does not find out by themselves: the Claude app does not fetch a new version
+until its marketplace is checked by hand.
+
+1. Read the one line in `VERSION`, beside this file. That is the version you are running. If
+   the file is not there, skip this part without a word.
+2. Fetch the newest version number, with whatever you have: a shell
+   (`curl -fsS -m 5 https://raw.githubusercontent.com/chrisbuilds64/context-loop/main/.claude-plugin/plugin.json`)
+   or a tool that reads a web page. Take the `version` value. The request carries nothing of the
+   project: it is a plain read of a public file.
+3. **If it cannot be fetched — no network, no permission, a timeout, an answer that is not what
+   you expected — say nothing and carry on.** Never show the error, never ask for a permission
+   only for this, and never try a second way after the first one failed.
+4. Compare the numbers part by part, as numbers: 1.10.0 is newer than 1.9.0. If yours is the
+   same or newer, say nothing.
+5. If a newer one exists, say it in one line, after what is due, with the way that fits where
+   you are running:
+   - as a plugin in the Claude app: "Context Loop <new> is out; you have <yours>. To get it:
+     Customize → Plugins → the marketplace context-loop → Check for updates, then start a new
+     chat."
+   - as a plugin in Claude Code: "… To get it: `/plugin marketplace update chrisbuilds64`, then
+     start a new session."
+   - as files (the procedures are in `loop/`, `.opencode/` or `.claude/skills/` of the project):
+     "… To get it: download the new package and replace the procedures; your `context/` folder
+     stays as it is."
+   If you cannot tell which it is, name the first way and add "or see the README". Add where
+   the changes are listed: `https://github.com/chrisbuilds64/context-loop/blob/main/CHANGELOG.md`.
+
+Say it once per session, here, and do not come back to it. Do not update anything yourself.
 
 ## Step 7: Do not propose a focus
 

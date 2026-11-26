@@ -31,6 +31,15 @@ MODE="${2:-claude-code}"
 
 mkdir -p "$OUT"
 
+# The start procedure compares its own version with the published one, and a skill can only read
+# its own directory. So the number stands twice, and this is where a mismatch is caught.
+PLUGIN_VERSION="$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' "$ROOT/.claude-plugin/plugin.json")"
+SKILL_VERSION="$(tr -d '[:space:]' < "$ROOT/skills/session-start/VERSION")"
+if [ "$PLUGIN_VERSION" != "$SKILL_VERSION" ]; then
+  echo "version mismatch: plugin.json $PLUGIN_VERSION, skills/session-start/VERSION $SKILL_VERSION" >&2
+  exit 1
+fi
+
 strip_frontmatter() {
   awk 'NR==1 && /^---$/ {fm=1; next} fm==1 && /^---$/ {fm=2; next} fm!=1 {print}' "$1"
 }
@@ -50,6 +59,7 @@ case "$MODE" in
   # The starting files travel beside the procedures here as well: session-start reads them from
   # "scaffold/ beside this file" to bring an older project up to date, in every layout.
   cp -R "$ROOT/skills/session-start/scaffold" "$OUT/loop/scaffold"
+  cp "$ROOT/skills/session-start/VERSION" "$OUT/loop/VERSION"
   cp "$ROOT/template/project-instructions.txt" "$OUT/"
   cp "$ROOT/template/README-app.md" "$OUT/README.md"
 
@@ -68,6 +78,7 @@ case "$MODE" in
     strip_frontmatter "$SKILL/SKILL.md" > "$OUT/loop/$NAME.md"
   done
   cp -R "$ROOT/skills/session-start/scaffold" "$OUT/loop/scaffold"
+  cp "$ROOT/skills/session-start/VERSION" "$OUT/loop/VERSION"
   cp "$ROOT/template/project-instructions.txt" "$OUT/AGENTS.md"
   cp "$ROOT/template/README-agents.md" "$OUT/README.md"
 

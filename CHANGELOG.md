@@ -11,6 +11,19 @@ downloaded.
 
 ---
 
+## 1.5.2 — unreleased
+
+- **The start tells you when a newer version is out,** in one line, with the clicks that get it
+  in the tool you are using. Before, the Claude app stayed on an old version until its
+  marketplace was checked by hand, and nothing said so.
+- For that, `/session-start` reads one public file, the version number in this repository, once
+  per start. Nothing of your project is sent. `update-check: no` in the settings of your rules
+  file turns it off.
+- The README has a section "Updating" with the way for each tool.
+
+**To get this version in the Claude app:** Customize → Plugins → the marketplace context-loop →
+Check for updates, then start a new chat.
+
 ## 1.5.1 — 2026-11-26
 
 From the first run of 1.5.0 by someone who does not write software.
