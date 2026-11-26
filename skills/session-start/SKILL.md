@@ -172,6 +172,9 @@ Offer what can be done, in this order:
   When the one place cannot be set up in this chat, this option comes first and reads: "A
   `context` folder inside <name>. It works right away, and it applies when you work in this
   folder."
+- **I already have a context** — always offered, except when no folder of the person's can be
+  reached at all. "It lies in a folder from earlier work with Context Loop. You name the folder,
+  and it becomes your standard context. Nothing new is created."
 - **In one place, for everything — set up in two steps** — only when the one place cannot be
   set up in this chat. Put it second, without "(recommended)": "It needs a folder of its own.
   Nothing is created now; I tell you the two steps."
@@ -193,6 +196,16 @@ Offer what can be done, in this order:
   and only then, in Claude Code, do "Claude Code: let it reach the context" above.
 - **Only in this folder.** Create the state in the working folder, as below. Write nothing
   anywhere else.
+- **I already have a context.** Create nothing. Ask in plain text: "Which folder is it in?" The
+  folder has to be one you can reach, and it has to hold a `context` folder; in the Claude app
+  it has to be added to the project or the chat. If it does not hold one, say so and ask again;
+  if they have none after all, ask the first question again. When it does: in its
+  `context/rules.md`, add the line `default-context: yes` under Settings, below the other
+  settings; if you can write to the home folder, create `.context-loop/contexts.md` as
+  described above, with the line `<name of the folder> | <its full path> | default`. Say one
+  line: "<full path> is your standard context now. Nothing was created." Then, in Claude Code,
+  do "Claude Code: let it reach the context" above, and carry on with the steps that follow in
+  that context. Its agent, its topics and its sessions are already there.
 - **Set up in two steps,** or **I add a folder first.** **The whole procedure ends here.**
   Create nothing, run none of the steps that follow, and do not start a session. Tell the person
   three things, briefly: that nothing was created; the two steps ("1. Make a folder named

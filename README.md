@@ -143,7 +143,8 @@ to be in the folder you are working in. There are two kinds, and one rule.
 **The rule:** if the folder you work in has a context of its own, that one applies. Otherwise
 your standard context does.
 
-The first `/session-start` asks once where your context should live. After that a start in a new
+The first `/session-start` asks once where your context should live. If you already have one
+from earlier work, you name its folder and it becomes your standard. After that a start in a new
 folder creates nothing there; it says in one line where it works and where your context is. A
 context of its own is set up only when you ask for one, with `/where own`.
 

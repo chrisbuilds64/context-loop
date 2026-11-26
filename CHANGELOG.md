@@ -18,7 +18,8 @@ to be "in the project". Now it can live in one place and be found from anywhere.
 
 - **One place for everything.** The first `/session-start` asks once where your context should
   live: in one place for all your work (a folder `ContextLoop` in your home folder, or one you
-  name), or only in the folder you are in. With the one place, you open a session in any folder
+  name), only in the folder you are in, or in a folder that already holds a context from
+  earlier work, which then becomes your standard. With the one place, you open a session in any folder
   and it loads from there and writes back there.
 - **A start no longer sets anything up in a new folder** once you have a standard context. It
   says in one line where it works and where your context is.
@@ -44,6 +45,9 @@ using it. You are asked the new question only the first time you start in a fold
 The session hook is unchanged: it reports only on a context in the folder you opened, and never
 reads your standard context. That is loaded when you run `/session-start`. Eleven procedures
 instead of nine.
+
+**To get this version in the Claude app:** Customize → Plugins → the marketplace context-loop →
+Check for updates, then start a new chat. `/manual` shows the version you have.
 
 ## 1.5.2 — 2026-11-26
 
