@@ -11,7 +11,7 @@ downloaded.
 
 ---
 
-## 1.5.1 — unreleased
+## 1.5.1 — 2026-11-26
 
 From the first run of 1.5.0 by someone who does not write software.
 
