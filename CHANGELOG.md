@@ -11,7 +11,7 @@ downloaded.
 
 ---
 
-## 1.5.0 — unreleased
+## 1.5.0 — 2026-11-26
 
 From the first test runs by people outside the team.
 
