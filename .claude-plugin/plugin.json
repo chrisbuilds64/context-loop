@@ -1,7 +1,7 @@
 {
   "name": "context-loop",
   "displayName": "Context Loop",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Session continuity in your own files: start a session by loading the state, end it by writing down what the next one needs, and keep what the work taught you in between. Includes a work list with a schema, a security audit, a documentation audit, a decision log and a key inventory.",
   "author": {
     "name": "Christian Moser",

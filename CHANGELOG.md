@@ -11,6 +11,23 @@ downloaded.
 
 ---
 
+## 1.5.1 — unreleased
+
+From the first run of 1.5.0 by someone who does not write software.
+
+- **The first run asks in plain words.** "Where should it start when it gets a task: from the
+  details, from the goal, or from the person?" replaces bottom-up, top-down and outside-in.
+  Every option says what it means.
+- **"Not sure, pick for me."** The start suggests the starting point that usually fits your
+  kind of work, and says which one it took.
+- **Limits have a place.** You can say that the agent must not change anything outside the
+  project folder, and must not do anything final without asking. Both go into its signature.
+  They are instructions to the agent, not locks.
+- **It says once what a signature is,** and why the questions matter, before it asks.
+- **No internal words in the chat.** What the agent tells you while it works is said in plain
+  words.
+- The README says where to add the folder in the Claude app.
+
 ## 1.5.0 — 2026-11-26
 
 From the first test runs by people outside the team.

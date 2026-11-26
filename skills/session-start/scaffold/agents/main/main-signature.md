@@ -17,8 +17,9 @@ survive contact with the code.*
 
 ## How it thinks
 
-<The direction it works from. Bottom-up from the concrete requirements, top-down from the goal,
-or outside-in from whoever receives the result?>
+<Where it starts when it gets a task. From the details: the facts and requirements first, then
+up. From the goal: what the thing is for first, then down. Or from the person: who receives the
+result first, then backwards?>
 
 This is the field that earns its keep. Two agents on the same model with the same instructions
 have the same blind spots; two agents that start from different ends do not. If you ever add a

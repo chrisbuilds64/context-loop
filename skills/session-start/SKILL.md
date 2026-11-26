@@ -10,6 +10,12 @@ argument-hint: "[optional: topic for this session]"
 You are beginning a working session. Work through the steps in order. Do no other work until
 the last step is done.
 
+**What you say to the person is said in plain words, in every step.** The names this procedure
+uses for its own parts stay inside it: no "row", no "slug", no "claimed", no "scaffold", no step
+numbers. Say what it means for them: "I am noting that this session is open" and not "adding the
+row"; "the list of sessions" and not "the index line". File names may be named; they can open
+those.
+
 ## Step 0a: No state yet — create it
 
 **Trigger:** there is no `context/` directory in the project. If there is one, skip this step
@@ -235,50 +241,101 @@ signature template is the part everyone skips and then misses.
 
 One short message, on its own, before anything is asked:
 
-> This project has no agent signature yet. I will ask about three things, one at a time: the
-> work, the agent's name and how it thinks, and what it should not do. Then I draft the
-> signature and you correct it. The signature is not written until you have seen a
-> summary of your answers and said yes.
+> Before we start, I set up your agent. I will ask about four things, one at a time: the work,
+> the agent's name, where it starts when it gets a task, and what it should not do. It takes
+> about a minute. Your answers decide how it works with you in every session. From them I draft
+> its signature, the short text that says who the agent is, and you correct it. Nothing is
+> written until you have seen a summary of your answers and said yes.
 
-Three questions in one message read as a form. The person answers one of them, and the drafting
+Several questions in one message read as a form. The person answers one of them, and the drafting
 starts before they expected it. Announcing the shape first is what stops that.
 
-### Ask three questions — one per message, numbered, wait for each answer
+**"Signature" is the word, and it is explained once, here.** After that, use it without
+explaining it again, and do not swap it for "profile" or "persona": the file carries the name,
+and so do the map and the README.
+
+### Ask about four things — one per message, numbered, wait for each answer
 
 **Use the AskUserQuestion tool** for each of them — the small dialog with options, not a line
 of chat. It shows the question as a step, it always offers a free-text answer under "Other", and
-the person cannot mistake it for three questions at once. If the tool is not available in this
-environment, ask the same question in plain text, one per message.
+the person cannot mistake it for several questions at once. If the tool is not available in this
+environment, ask the same question in plain text, one per message, with the options as a short
+list.
 
-**1 of 3 — the work.** Header `Work`. *What do you want to do with an agent in this project?*
-Options: building software · writing · reviewing or auditing · operating a system. "Other" takes
-the answer that fits none of them, and two sentences is plenty.
+**Every option is said in plain words, with what it means beside it.** No term of the trade
+stands alone: not "bottom-up", not "abstraction", not "hedge". The person answering may never
+have written a line of code.
 
-**2 of 3 — name and direction.** Two parts. First ask for the **name** in plain text, "What
-should the agent be called?", and wait — the name decides the directory. Then the dialog, header `Thinks`: *Which end does it work from?*
-Options: **bottom-up** from the concrete requirements · **top-down** from the goal ·
-**outside-in** from whoever receives the result. This matters more than it sounds: a different
-direction is the whole reason to have a second agent later — same model, different blind spot.
+**1 of 4 — the work.** Header `Work`. *What will you mostly use this agent for?* Options, each
+with its description:
 
-**3 of 3 — what you do not want.** Header `Not this`, multi-select. *What should it not do?*
-Options: agree too easily · write more than was asked · add abstractions nobody needed · hedge
-instead of saying what it thinks. The most useful answer of the three, and the one nobody
-volunteers.
+- **Building** — making software, websites, tools
+- **Writing** — texts, scripts, posts, documents
+- **Checking** — reviewing work and finding problems
+- **Running things** — keeping a system or a process going
+
+"Other" takes the answer that fits none of them, and two sentences is plenty.
+
+**2 of 4 — the name.** In plain text, not in the dialog: *"What should the agent be called?"*
+Wait for the answer; the name decides the directory. **Do not suggest a name and do not offer a
+default.** This is the first thing the person makes their own, and a suggested name is waved
+through.
+
+**3 of 4 — where it starts.** Header `Starts from`. *When it gets a task, where should it
+start?* Options, each with its description:
+
+- **From the details** — gathers the facts and requirements first, then builds up. Good for
+  checking and for precise work.
+- **From the goal** — settles what the thing is for first, then works down to the details. Good
+  for planning and building.
+- **From the person** — thinks first about who receives the result, then works backwards. Good
+  for writing and for anything made for customers.
+- **Not sure, pick for me**
+
+Put the one that usually fits their answer to the first question at the top and mark it as the
+suggestion: the details for checking and for running things, the goal for building, the person
+for writing. On "Not sure, pick for me", take that one and say in one line which you took and
+why. This matters more than it sounds: a different starting point is the whole reason to have a
+second agent later — same model, different blind spot.
+
+**4 of 4 — what you do not want.** Two questions in one dialog, both multi-select. If the tool
+is not available, ask them one after the other.
+
+Header `Not this`. *What would annoy you?*
+
+- **Agreeing with me too easily**
+- **Writing more than I asked for**
+- **Making things more complicated than they need to be**
+- **Talking around it** instead of saying what it thinks
+
+Header `Limits`. *What must it never do without asking?*
+
+- **Change anything outside this project folder**
+- **Do anything final** — send, delete, publish
+
+These are the most useful answers of all, and the ones nobody volunteers. What is picked under
+`Limits` goes into the signature under its boundaries, word for word. It is an instruction to
+the agent, not a lock: if the person asks whether it is enforced, say so.
 
 If an answer is thin, take it as given and move on. Do not probe — the correction round comes
 after the draft, and that is where a thin answer gets filled in.
 
 ### Summarise, then ask before writing
 
-When all three are answered, show three lines — one per answer, in the person's own words — and
-ask one question in the dialog, header `Draft`: **"Shall I draft the signature from this?"**
+When all four are answered, show them in two or three plain sentences, in the person's own
+words:
+
+> **<Name>** helps with <the work>. It starts from <the details | the goal | the person>. It
+> will not <what was picked>, and it asks before it <the limits>.
+
+Then one question in the dialog, header `Draft`: **"Shall I draft the signature from this?"**
 Options: yes, draft it · change something first. Nothing is written before the yes. If they
-change a line, update it and ask again.
+change something, update it and ask again.
 
 ### Then write it
 
 Fill `context/agents/main/main-signature.md` with **real content, not the template prompts**:
-role, how it thinks, voice, boundaries, drift warnings — all derived from the three answers and
+role, how it thinks, voice, boundaries, drift warnings — all derived from the answers and
 written out properly. Replace the placeholders. Delete the instructions to themselves.
 
 **Write it in the language the person answered in.** The file is theirs; the template is only
@@ -329,7 +386,7 @@ header `Signature`: **"Is this right, or shall I change something?"** Options: i
 it · change something. Do not carry on into the session before the answer.
 
 On a change: take what they say, rewrite the part it concerns, show that part again and ask
-again. As often as they want. A thin answer to one of the three questions is filled in here.
+again. As often as they want. A thin answer to one of the questions is filled in here.
 
 When they say it is right, say, in your own words, the thing that makes this work:
 

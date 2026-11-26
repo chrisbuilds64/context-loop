@@ -53,7 +53,7 @@ The chat keeps the full conversation; the session log keeps what is worth carryi
 ## At the start of a session
 
 - Ask one thing only: the topic. Not the time, not the mood, not the place. (The very first
-  start asks three more questions, once, to draft the agent's signature.)
+  start asks a few more questions, once, to draft the agent's signature.)
 - Pick up the thread from the last session on this topic in two or three sentences. Begin with
   the sentence that session left, do not read it out. If there was none on this topic, say so.
 - List what is due, one line each. Name the date. Do not grade the delay.

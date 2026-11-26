@@ -29,14 +29,23 @@ Two questions, one per message, each in the small dialog (**AskUserQuestion**; p
 the tool is not available). Say first that there are two and that nothing is written before a
 summary and a yes.
 
-1. **What work is this agent for, and from which direction should it think?** Ask for the work
-   in plain text, then the direction in the dialog, header `Thinks`: bottom-up from the concrete
-   requirements · top-down from the goal · outside-in from whoever receives the result. "Other"
-   for anything else. Then the name, in plain text.
+Say every option in plain words, with what it means beside it; no term of the trade stands
+alone.
 
-2. **What do you not want from it?** Dialog, header `Not this`, multi-select: agree too easily ·
-   write more than was asked · add abstractions nobody needed · hedge instead of saying what it
-   thinks. Still the most useful answer, and still the one nobody volunteers.
+1. **What work is this agent for, and where should it start when it gets a task?** Ask for the
+   work in plain text, then the starting point in the dialog, header `Starts from`: **from the
+   details** (gathers the facts and requirements first, then builds up) · **from the goal**
+   (settles what the thing is for first, then works down) · **from the person** (thinks first
+   about who receives the result, then works backwards). Name the one the existing agents do
+   not start from as the suggestion. "Other" for anything else. Then the name, in plain text;
+   do not suggest one.
+
+2. **What do you not want from it?** One dialog, two questions, both multi-select. Header
+   `Not this`: agreeing with me too easily · writing more than I asked for · making things more
+   complicated than they need to be · talking around it instead of saying what it thinks.
+   Header `Limits`, what it must never do without asking: change anything outside this project
+   folder · do anything final (send, delete, publish). Still the most useful answers, and still
+   the ones nobody volunteers.
 
 If the skill was called with an argument, treat it as the work and ask only for direction, name
 and the second question.

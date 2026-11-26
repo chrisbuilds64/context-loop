@@ -22,7 +22,7 @@ Then, in OpenCode:
 /session-start
 ```
 
-The first run asks three questions and writes the agent's signature. Every run after that
+The first run asks about four things and writes the agent's signature. Every run after that
 declares a topic, picks up the last handover on that topic and says what is due.
 
 **If the commands do not show up:** OpenCode reads skills and config at startup. Restart it.

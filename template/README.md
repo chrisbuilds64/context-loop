@@ -98,7 +98,7 @@ example-session-log.md         what a good log looks like — an example, not yo
 
 Run `/session-start`.
 
-The first time, it says what is about to happen and then asks three questions, one at a time,
+The first time, it says what is about to happen and then asks about four things, one at a time,
 each in a small dialog — what you want to do with an agent here, what it should be called and
 how it should think, and what you do not want from it. It shows a summary, asks whether to
 draft, and only then writes the agent's signature and carries straight on.

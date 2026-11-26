@@ -20,7 +20,7 @@ Open this folder as your project in the tool. That is the setup.
 Say **"start"** to begin and **"close"** to end. Say **"loop?"** to see every procedure and which
 ones have run here before.
 
-The first run asks three questions and writes the agent's signature. Every run after that
+The first run asks about four things and writes the agent's signature. Every run after that
 declares a topic, picks up the last handover on that topic and says what is due. If you skip the
 close, the next session has no handover to read. That is the surest way to break this.
 

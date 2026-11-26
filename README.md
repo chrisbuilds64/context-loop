@@ -138,7 +138,9 @@ way the first session start creates the `context/` folder in whichever project y
 **The folder is everything.** Context Loop keeps its files in the folder the chat works in. If
 no folder is added, every chat gets an empty workspace of its own and nothing carries over to
 the next one. Connecting your computer is not the same as adding the folder: the folder itself
-has to be added to the chat or the project. `/session-start` says which folder it is in, and
+has to be added to the chat or the project. Before you send your first message, click the **+**
+button in the chat's message box, choose **Add folder**, and pick your project folder. Do this in
+every new chat. `/session-start` says which folder it is in, and
 asks before it sets anything up in an empty or temporary one. If the folder it names is not
 yours, stop there and add yours first.
 
