@@ -123,6 +123,35 @@ Better read here than found out later.
 
 ---
 
+## It works in a project
+
+Context Loop belongs to one project, and a project is one folder. Everything it knows is in the
+`context` folder inside it, and everything the agent can look at is what lies under that folder.
+So the one thing to be sure of, every time you start, is that you are in your project.
+
+**How much that asks of you depends on the tool.**
+
+| Where you work | How you get into your project |
+|---|---|
+| An editor or a terminal (Claude Code, OpenCode, Codex) | You open the folder. That is all; the tool works where you opened it. |
+| The Claude app, in a project | You create the project on your folder once. Every chat in it works there. |
+| The Claude app, in a single chat | You add the folder to each new chat yourself. |
+
+`/session-start` says which folder it is in before it sets anything up. If that is not your
+project, stop there.
+
+**Choose the folder by what belongs together.** The agent reads and checks against what lies
+under it, so the folder decides how much the context is worth:
+
+- A folder that holds the whole of a piece of work — the texts, the code, the plans, the
+  material — gives the agent something to check a statement against. What the session logs and
+  the project state say can then be verified in the files beside them.
+- A folder that holds one corner of it gives a context that is correct about that corner and
+  knows nothing of the rest.
+
+One large folder with several strands of work in it is fine: that is what topics are for. Each
+session names its topic and picks up the thread of that topic only.
+
 ## Install
 
 In the Claude environments the way in is the plugin; in OpenCode and Codex it is files. Either
