@@ -11,7 +11,7 @@ downloaded.
 
 ---
 
-## 1.5.2 — unreleased
+## 1.5.2 — 2026-11-26
 
 - **The start tells you when a newer version is out,** in one line, with the clicks that get it
   in the tool you are using. Before, the Claude app stayed on an old version until its
